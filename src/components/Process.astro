@@ -1,0 +1,34 @@
+---
+import { GRID, circles, partialMonogram } from '../lib/dots';
+
+const steps = [
+	{ title: 'Definir', desc: 'Entendemos cómo funciona tu negocio y acordamos qué problema resolvemos primero.' },
+	{ title: 'Diseñar', desc: 'Pantallas y flujos que pruebas antes de que escribamos código.' },
+	{ title: 'Construir', desc: 'Entregas cada dos semanas, en un entorno donde puedes usarlas.' },
+	{ title: 'Evolucionar', desc: 'Medimos el uso real y añadimos módulos a medida que tu negocio crece.' },
+].map((s, i) => ({ ...s, ...partialMonogram((i + 1) / 4) }));
+---
+
+<section id="proceso" class="py-24 md:py-36">
+	<div class="wrap">
+		<h2 class="t-h2 max-w-[16ch]">Cómo trabajamos</h2>
+		<p class="t-lead measure mt-6 text-tinta/75">
+			El mismo proceso para un producto nuevo y para adaptar Gyms o Schools a tu operación.
+		</p>
+		<ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				steps.map((s, i) => (
+					<li>
+						<svg class="dots h-28 w-auto text-burdeos" viewBox={`3 2.5 ${GRID - 6} 15`} aria-hidden="true">
+							<g class="text-tinta/15" set:html={circles(s.off)} />
+							<g set:html={circles(s.on)} />
+						</svg>
+						<p class="mt-6 font-display text-[0.95rem] font-medium text-tinta/60">Paso {i + 1}</p>
+						<h3 class="t-h3 mt-1">{s.title}</h3>
+						<p class="mt-2 max-w-[32ch] text-tinta/80">{s.desc}</p>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>

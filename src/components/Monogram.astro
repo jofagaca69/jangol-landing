@@ -1,0 +1,28 @@
+---
+import { GRID, MONOGRAM, circles, parseSprite } from '../lib/dots';
+
+interface Props {
+	class?: string;
+	label?: string;
+}
+
+const { class: className = '', label } = Astro.props;
+const dots = parseSprite(MONOGRAM);
+// Crop the viewBox to the J itself so it sits flush next to the wordmark.
+const pad = 0.5;
+const xs = dots.map((d) => d.x);
+const ys = dots.map((d) => d.y);
+const x0 = Math.min(...xs) - pad;
+const y0 = Math.min(...ys) - pad;
+const vb = `${x0} ${y0} ${Math.max(...xs) - x0 + pad} ${Math.max(...ys) - y0 + pad}`;
+---
+
+<svg
+	class:list={['dots', className]}
+	viewBox={vb}
+	role={label ? 'img' : undefined}
+	aria-label={label}
+	aria-hidden={label ? undefined : 'true'}
+	data-grid={GRID}
+	set:html={circles(dots)}
+/>

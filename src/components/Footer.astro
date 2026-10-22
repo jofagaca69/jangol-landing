@@ -1,0 +1,20 @@
+---
+import Monogram from './Monogram.astro';
+import { CONTACT_EMAIL } from '../data/products';
+---
+
+<footer class="on-dark border-t border-crema/10 bg-tinta py-10 text-crema/70">
+	<div class="wrap flex flex-wrap items-center justify-between gap-6">
+		<a href="#top" class="flex items-center gap-2.5 text-crema" aria-label="Volver al inicio">
+			<Monogram class="h-6 w-auto" />
+			<span class="font-display text-xl font-bold tracking-[-0.04em]">Jangol</span>
+		</a>
+		<ul class="flex flex-wrap gap-6 text-[0.95rem]">
+			<li><a href="#productos" class="hover:text-crema">Productos</a></li>
+			<li><a href="#a-medida" class="hover:text-crema">A la medida</a></li>
+			<li><a href="#proceso" class="hover:text-crema">Proceso</a></li>
+			<li><a href={`mailto:${CONTACT_EMAIL}`} class="hover:text-crema">{CONTACT_EMAIL}</a></li>
+		</ul>
+		<p class="text-[0.9rem]">© {new Date().getFullYear()} Jangol</p>
+	</div>
+</footer>

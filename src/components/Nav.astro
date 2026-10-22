@@ -1,0 +1,32 @@
+---
+import Monogram from './Monogram.astro';
+
+const links = [
+	{ href: '#productos', label: 'Productos' },
+	{ href: '#a-medida', label: 'A la medida' },
+	{ href: '#proceso', label: 'Proceso' },
+];
+---
+
+<header class="on-dark absolute inset-x-0 top-0 z-20 text-crema" data-nav>
+	<nav class="wrap flex items-center justify-between py-5" aria-label="Principal">
+		<a href="#top" class="flex items-center gap-2.5" aria-label="Jangol, inicio">
+			<Monogram class="h-8 w-auto" />
+			<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
+		</a>
+		<div class="flex items-center gap-7">
+			<ul class="hidden items-center gap-7 md:flex">
+				{
+					links.map((l) => (
+						<li>
+							<a href={l.href} class="font-display text-[0.98rem] font-medium opacity-85 transition-opacity hover:opacity-100">
+								{l.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+			<a href="#contacto" class="btn btn-crema !px-5 !py-2.5">Pedir demo</a>
+		</div>
+	</nav>
+</header>

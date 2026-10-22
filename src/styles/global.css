@@ -1,0 +1,321 @@
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/work-sans';
+@import 'tailwindcss';
+
+/* Paleta "Burdeos y agua" (Jangol_2V, paleta 01) */
+@theme {
+	--color-crema: #efe7db;
+	--color-crema-deep: #e4d9c9;
+	--color-tinta: #1a1a1a;
+	--color-tinta-soft: #2a2826;
+	--color-burdeos: #751c39;
+	--color-burdeos-deep: #5c142c;
+	--color-petroleo: #0c3d45;
+	--color-petroleo-deep: #082c32;
+	--color-agua: #cce6e8;
+
+	--font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-sans: 'Work Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+	--ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
+}
+
+@layer base {
+	html {
+		@apply bg-crema text-tinta antialiased;
+		-webkit-text-size-adjust: 100%;
+	}
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+	.lenis.lenis-smooth {
+		scroll-behavior: auto !important;
+	}
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+	body {
+		@apply bg-crema font-sans text-tinta;
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		overflow-x: clip;
+	}
+	::selection {
+		@apply bg-burdeos text-crema;
+	}
+	:focus-visible {
+		outline: 2px solid var(--color-burdeos);
+		outline-offset: 3px;
+	}
+	.on-dark :focus-visible {
+		outline-color: var(--color-agua);
+	}
+}
+
+@layer components {
+	/* Type scale, ratio 1.25 */
+	.t-display {
+		@apply font-display font-bold;
+		line-height: 0.86;
+		letter-spacing: -0.045em;
+	}
+	.t-h2 {
+		@apply font-display font-bold;
+		font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.75rem);
+		line-height: 0.98;
+		letter-spacing: -0.035em;
+	}
+	.t-h3 {
+		@apply font-display font-semibold;
+		font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5625rem);
+		line-height: 1.15;
+		letter-spacing: -0.015em;
+	}
+	.t-lead {
+		font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+		line-height: 1.5;
+	}
+	.measure {
+		max-width: 62ch;
+	}
+
+	.wrap {
+		@apply mx-auto w-full max-w-[84rem] px-4 sm:px-8 lg:px-12;
+	}
+
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-[0.98rem] font-semibold transition-colors duration-300;
+	}
+	.btn-burdeos {
+		@apply bg-burdeos text-crema hover:bg-burdeos-deep;
+	}
+	.btn-crema {
+		@apply bg-crema text-tinta hover:bg-white;
+	}
+	.btn-ghost {
+		@apply border border-current hover:bg-current/10;
+	}
+
+	.dots {
+		fill: currentColor;
+		display: block;
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+}
+
+/* ---------- Character select ---------- */
+.select {
+	--slant: 7vw;
+	position: relative;
+	display: flex;
+	height: 100%;
+	isolation: isolate;
+}
+.fighter {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	overflow: hidden;
+	container-type: size;
+	color: var(--ink);
+	background: var(--bg);
+	transition: filter 0.5s var(--ease-snap);
+}
+.fighter[data-id='gyms'] {
+	--bg: var(--color-burdeos);
+	--ink: var(--color-crema);
+	clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+.fighter[data-id='schools'] {
+	--bg: var(--color-petroleo);
+	--ink: var(--color-agua);
+	margin-left: calc(var(--slant) * -1 + 10px);
+	clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+/* The light panel: a service, not a platform. */
+.fighter[data-id='custom'] {
+	--bg: var(--color-crema-deep);
+	--ink: var(--color-tinta);
+	margin-left: calc(var(--slant) * -1 + 10px);
+	clip-path: polygon(var(--slant) 0, 100% 0, 100% 100%, 0 100%);
+}
+.fighter[data-id='custom'] .cursor {
+	stroke: var(--color-burdeos);
+}
+.fighter[aria-current='false'] {
+	filter: saturate(0.35) brightness(0.62);
+}
+/* Dimming a light panel the same way turns it grey; keep it warm. */
+.fighter[data-id='custom'][aria-current='false'] {
+	filter: sepia(0.3) brightness(0.68);
+}
+.fighter-inner {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-rows: minmax(0, 1fr) auto;
+	grid-template-columns: minmax(0, 1fr);
+	padding: 7.5rem clamp(1rem, 3vw, 3rem) 7.5rem;
+}
+.fighter[data-id='gyms'] .fighter-inner {
+	padding-right: calc(var(--slant) + 1.5rem);
+}
+/* The copy sits low, where the left edge has slanted outward and the right inward. */
+.fighter[data-id='schools'] .fighter-inner {
+	padding-left: calc(var(--slant) * 0.35 + 1.5rem);
+	padding-right: calc(var(--slant) + 1.5rem);
+	text-align: center;
+}
+.fighter[data-id='custom'] .fighter-inner {
+	padding-left: calc(var(--slant) + 1.5rem);
+	text-align: right;
+}
+.portrait {
+	position: relative;
+	align-self: center;
+	justify-self: center;
+	/* Sized from the row it sits in, leaving room for the cursor corners. */
+	height: min(86%, 28rem);
+	max-width: 100%;
+	aspect-ratio: 1;
+}
+.cursor {
+	position: absolute;
+	inset: -5%;
+	width: 110%;
+	height: 110%;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 3px;
+	vector-effect: non-scaling-stroke;
+	overflow: visible;
+}
+.cursor path {
+	vector-effect: non-scaling-stroke;
+}
+
+.fighter-name {
+	font-size: clamp(3rem, 15cqi, 10rem);
+}
+.fighter[data-id='schools'] .fighter-name {
+	font-size: clamp(2.75rem, 13cqi, 9rem);
+}
+.fighter[data-id='custom'] .fighter-name {
+	font-size: clamp(2.25rem, 10cqi, 7rem);
+}
+.fighter-pick::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	cursor: pointer;
+}
+.fighter-pick:focus-visible {
+	outline: none;
+}
+.fighter-pick:focus-visible .fighter-name {
+	text-decoration: underline;
+	text-decoration-thickness: 0.06em;
+	text-underline-offset: 0.12em;
+}
+.moves li::before {
+	content: '';
+	display: inline-block;
+	width: 0.42em;
+	height: 0.42em;
+	margin-right: 0.5em;
+	border-radius: 50%;
+	background: currentColor;
+	vertical-align: 0.12em;
+}
+.fighter[data-id='schools'] .moves {
+	justify-content: center;
+	margin-inline: auto;
+}
+.fighter[data-id='custom'] .moves {
+	justify-content: flex-end;
+	margin-left: auto;
+}
+
+.flash {
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	pointer-events: none;
+	opacity: 0;
+}
+
+@media (max-width: 767px) {
+	.select {
+		--slant: 6svh;
+		flex-direction: column;
+	}
+	.fighter[data-id='gyms'] {
+		clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+	}
+	.fighter[data-id='schools'],
+	.fighter[data-id='custom'] {
+		margin-left: 0;
+		margin-top: calc(var(--slant) * -1 + 8px);
+		clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
+	}
+	.fighter[data-id='schools'] {
+		clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+	}
+	.fighter-inner {
+		grid-template-rows: 1fr;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.25rem 1rem;
+	}
+	.fighter[data-id='gyms'] .fighter-inner {
+		padding: 4.5rem 1rem calc(var(--slant) + 0.25rem);
+	}
+	.fighter[data-id='schools'] .fighter-inner {
+		padding: calc(var(--slant) + 0.25rem) 1rem;
+		text-align: left;
+	}
+	.fighter[data-id='custom'] .fighter-inner {
+		padding: calc(var(--slant) + 0.25rem) 1rem 7.75rem;
+		text-align: left;
+	}
+	/* Room for the confirm button that sits over this panel. */
+	.fighter[data-id='custom'] {
+		flex-basis: 5.5rem;
+	}
+	.portrait {
+		height: auto;
+		width: min(28vw, 15svh);
+		grid-column: 2;
+		grid-row: 1;
+	}
+	.fighter[data-id='schools'] .portrait {
+		grid-column: 1;
+	}
+	.fighter[data-id='schools'] .fighter-copy {
+		grid-column: 2;
+	}
+	.fighter-copy {
+		grid-column: 1;
+		grid-row: 1;
+	}
+	.fighter-name {
+		font-size: clamp(2.25rem, 11vw, 3.75rem);
+	}
+	.cursor {
+		stroke-width: 2px;
+	}
+	.moves {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fighter {
+		transition: none;
+	}
+}

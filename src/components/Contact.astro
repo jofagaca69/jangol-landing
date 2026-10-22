@@ -1,0 +1,51 @@
+---
+import { CONTACT_EMAIL, products } from '../data/products';
+
+const interests = [
+	...products.map((p) => ({ value: p.id, label: p.name })),
+	{ value: 'custom', label: 'Software a la medida' },
+	{ value: 'unsure', label: 'Aún no lo sé' },
+];
+const field =
+	'mt-2 w-full rounded-xl border border-crema/25 bg-tinta-soft px-4 py-3.5 text-crema placeholder:text-crema/40 focus:border-agua focus:outline-none';
+---
+
+<section id="contacto" class="on-dark bg-tinta py-24 text-crema md:py-36">
+	<div class="wrap grid gap-14 md:grid-cols-12">
+		<div class="md:col-span-5">
+			<h2 class="t-h2 max-w-[12ch]">Pide una demo o cuéntanos tu idea</h2>
+			<p class="t-lead measure mt-8 text-crema/75">
+				Te respondemos en un día hábil. Si prefieres escribir directo, nuestro correo es{' '}
+				<a href={`mailto:${CONTACT_EMAIL}`} class="text-agua underline underline-offset-4">{CONTACT_EMAIL}</a>.
+			</p>
+		</div>
+
+		<form class="grid gap-6 md:col-span-6 md:col-start-7" data-contact data-email={CONTACT_EMAIL} novalidate>
+			<div class="grid gap-6 sm:grid-cols-2">
+				<label class="block">
+					<span class="font-display font-medium">Nombre</span>
+					<input class={field} name="name" autocomplete="name" required />
+				</label>
+				<label class="block">
+					<span class="font-display font-medium">Correo</span>
+					<input class={field} name="email" type="email" autocomplete="email" required />
+				</label>
+			</div>
+			<label class="block">
+				<span class="font-display font-medium">¿Qué te interesa?</span>
+				<select class={field} name="interest" data-interest>
+					{interests.map((o) => <option value={o.value}>{o.label}</option>)}
+				</select>
+			</label>
+			<label class="block">
+				<span class="font-display font-medium">Mensaje</span>
+				<textarea class={`${field} min-h-36 resize-y`} name="message" placeholder="Cuántas sedes o estudiantes tienes, qué usas hoy, qué te gustaría resolver."></textarea>
+			</label>
+			<p class="min-h-6 text-[0.95rem] text-agua" role="status" data-contact-status></p>
+			<div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+				<button type="submit" class="btn btn-crema">Enviar mensaje</button>
+				<p class="text-[0.9rem] text-crema/60">Se abrirá tu correo con el mensaje listo para enviar.</p>
+			</div>
+		</form>
+	</div>
+</section>
