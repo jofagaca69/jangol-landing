@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Process from '../components/Process.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { customFaqs, fit, services } from '../data/custom';
+import { CODE, GRID, circles, parseSprite } from '../lib/dots';
+---
+
+<Layout
+	title="Software a la medida"
+	description="Jangol diseña, construye y mantiene aplicaciones web y móviles, integraciones y automatizaciones para negocios que no encajan en un software genérico."
+>
+	<section class="on-dark bg-tinta pt-32 pb-20 text-crema md:pt-40 md:pb-28">
+		<div class="wrap grid gap-10 md:grid-cols-12">
+			<div class="md:col-span-8">
+				<p class="font-display text-[clamp(1.1rem,0.95rem+0.6vw,1.6rem)] font-medium opacity-80">Hecho por Jangol</p>
+				<h1 class="t-display max-w-[9ch] text-[clamp(3.5rem,1.5rem+9vw,9rem)]">Software a la medida</h1>
+				<p class="t-lead measure mt-8 text-crema/80">
+					Cuando tu operación no cabe en una plataforma, la construimos contigo. El mismo equipo define la solución, la diseña, la
+					programa y la sigue mejorando después del lanzamiento.
+				</p>
+				<div class="mt-10 flex flex-wrap gap-3">
+					<a href="/contacto?interes=custom" class="btn btn-crema">Cuéntanos tu proyecto</a>
+					<a href="#proceso" class="btn btn-ghost">Cómo trabajamos</a>
+				</div>
+			</div>
+			<svg
+				class="dots self-end text-crema-deep max-md:hidden md:col-span-4"
+				viewBox={`0 0 ${GRID} ${GRID}`}
+				aria-hidden="true"
+				set:html={circles(parseSprite(CODE))}
+			/>
+		</div>
+	</section>
+
+	<section class="py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[14ch]">Qué construimos</h2>
+			<div class="mt-14 border-b border-tinta/15">
+				{
+					services.map((s) => (
+						<article class="grid gap-6 border-t border-tinta/15 py-10 md:grid-cols-12">
+							<h3 class="font-display text-[clamp(1.6rem,1.3rem+1.2vw,2.3rem)] leading-[1.05] font-bold tracking-[-0.03em] md:col-span-4">
+								{s.title}
+							</h3>
+							<p class="measure text-[1.1rem] text-tinta/85 md:col-span-4">{s.desc}</p>
+							<ul class="grid content-start gap-2 text-tinta/65 md:col-span-4">
+								{s.examples.map((e) => (
+									<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+										<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-burdeos" aria-hidden="true" />
+										{e}
+									</li>
+								))}
+							</ul>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-crema-deep py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[18ch]">¿Plataforma o a la medida?</h2>
+			<p class="t-lead measure mt-6 text-tinta/75">
+				No siempre hace falta construir desde cero. A veces la respuesta es una plataforma con un módulo propio encima.
+			</p>
+			<div class="mt-14 grid gap-6 md:grid-cols-2">
+				{
+					[
+						{ ...fit.platform, cls: 'bg-crema', links: [{ href: '/gyms', label: 'Jangol for Gyms' }, { href: '/schools', label: 'Jangol for Schools' }] },
+						{ ...fit.custom, cls: 'on-dark bg-tinta text-crema', links: [{ href: '/contacto?interes=custom', label: 'Cuéntanos tu proyecto' }] },
+					].map((c) => (
+						<div class:list={['flex flex-col rounded-[2rem] p-8 md:p-10', c.cls]}>
+							<h3 class="t-h3">{c.title}</h3>
+							<ul class="mt-6 grid gap-3">
+								{c.items.map((i) => (
+									<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+										<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-current opacity-60" aria-hidden="true" />
+										{i}
+									</li>
+								))}
+							</ul>
+							<div class="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-8">
+								{c.links.map((l) => (
+									<a href={l.href} class="font-display font-semibold underline decoration-2 underline-offset-4">
+										{l.label}
+									</a>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<Process />
+
+	<div class="border-t border-tinta/10">
+		<Faq items={customFaqs} />
+	</div>
+
+	<CtaBand
+		theme="gyms"
+		title="Cuéntanos qué quieres resolver"
+		text="En la primera conversación vemos si podemos ayudarte y por dónde empezaríamos."
+		href="/contacto?interes=custom"
+		label="Cuéntanos tu proyecto"
+	/>
+</Layout>

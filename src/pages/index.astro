@@ -1,22 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
 import CharacterSelect from '../components/CharacterSelect.astro';
-import Products from '../components/Products.astro';
+import Platforms from '../components/Platforms.astro';
 import Custom from '../components/Custom.astro';
 import Process from '../components/Process.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+import LatestResources from '../components/LatestResources.astro';
+import CtaBand from '../components/CtaBand.astro';
 ---
 
-<Layout>
-	<Nav />
-	<main>
-		<CharacterSelect />
-		<Products />
-		<Custom />
-		<Process />
-		<Contact />
-	</main>
-	<Footer />
+<Layout home>
+	<CharacterSelect />
+	<Platforms />
+	<Custom />
+	<Process />
+	<LatestResources />
+	<CtaBand
+		title="Pide una demo o cuéntanos tu idea"
+		text="Te respondemos en un día hábil."
+		href="/contacto"
+		label="Pedir demo"
+	/>
 </Layout>

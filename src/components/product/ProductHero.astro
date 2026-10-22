@@ -1,0 +1,44 @@
+---
+import type { Product } from '../../data/products';
+import { GRID, circles, parseSprite } from '../../lib/dots';
+
+interface Props {
+	product: Product;
+}
+
+const { product: p } = Astro.props;
+---
+
+<section class="on-dark relative overflow-hidden bg-[var(--accent)] pt-32 text-[var(--accent-ink)] md:pt-40">
+	<div class="wrap grid gap-10 pb-16 md:grid-cols-12 md:pb-24">
+		<div class="md:col-span-7 lg:col-span-7">
+			<p class="font-display text-[clamp(1.1rem,0.95rem+0.6vw,1.6rem)] font-medium opacity-80">Jangol for</p>
+			<h1 class="t-display text-[clamp(4.5rem,2rem+12vw,12rem)]">{p.short}</h1>
+			<p class="t-h3 measure mt-8 max-w-[28ch]">{p.tagline}</p>
+			<p class="mt-4 opacity-80">{p.audience}</p>
+			<div class="mt-10 flex flex-wrap gap-3">
+				<a href={`/contacto?interes=${p.id}`} class="btn btn-crema">Pedir demo</a>
+				<a href="#modulos" class="btn btn-ghost">Ver los módulos</a>
+			</div>
+		</div>
+		<svg
+			class="dots self-center opacity-95 max-md:mx-auto max-md:w-3/4 md:col-span-5"
+			viewBox={`0 0 ${GRID} ${GRID}`}
+			aria-hidden="true"
+			set:html={circles(parseSprite(p.sprite))}
+		/>
+	</div>
+	<nav class="border-t border-current/20" aria-label={`Módulos de ${p.name}`}>
+		<ul class="wrap flex gap-x-8 overflow-x-auto py-5 whitespace-nowrap [scrollbar-width:none]">
+			{
+				p.modules.map((m) => (
+					<li>
+						<a href={`#${m.id}`} class="font-display font-medium opacity-80 transition-opacity hover:opacity-100">
+							{m.title}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+</section>

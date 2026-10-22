@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Página no encontrada" description="Esta página no existe o cambió de dirección.">
+	<section class="on-dark flex min-h-[80svh] items-end bg-tinta pt-32 pb-20 text-crema">
+		<div class="wrap">
+			<h1 class="t-display text-[clamp(5rem,3rem+12vw,14rem)]">404</h1>
+			<p class="t-lead measure mt-6 text-crema/80">Esta página no existe o cambió de dirección. Desde aquí puedes ir a:</p>
+			<div class="mt-10 flex flex-wrap gap-3">
+				<a href="/" class="btn btn-crema">Inicio</a>
+				<a href="/gyms" class="btn btn-ghost">Jangol for Gyms</a>
+				<a href="/schools" class="btn btn-ghost">Jangol for Schools</a>
+				<a href="/a-la-medida" class="btn btn-ghost">Software a la medida</a>
+			</div>
+		</div>
+	</section>
+</Layout>

@@ -1,20 +1,60 @@
 ---
 import Monogram from './Monogram.astro';
-import { CONTACT_EMAIL } from '../data/products';
+import { CONTACT_EMAIL, products } from '../data/products';
+
+const columns = [
+	{
+		title: 'Plataformas',
+		links: products.map((p) => ({ href: p.href, label: p.name })),
+	},
+	{
+		title: 'Servicios',
+		links: [
+			{ href: '/a-la-medida', label: 'Software a la medida' },
+			{ href: '/a-la-medida#proceso', label: 'Cómo trabajamos' },
+		],
+	},
+	{
+		title: 'Recursos',
+		links: [{ href: '/recursos', label: 'Artículos y guías' }],
+	},
+	{
+		title: 'Contacto',
+		links: [
+			{ href: '/contacto', label: 'Pedir demo' },
+			{ href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
+		],
+	},
+];
 ---
 
-<footer class="on-dark border-t border-crema/10 bg-tinta py-10 text-crema/70">
-	<div class="wrap flex flex-wrap items-center justify-between gap-6">
-		<a href="#top" class="flex items-center gap-2.5 text-crema" aria-label="Volver al inicio">
-			<Monogram class="h-6 w-auto" />
-			<span class="font-display text-xl font-bold tracking-[-0.04em]">Jangol</span>
-		</a>
-		<ul class="flex flex-wrap gap-6 text-[0.95rem]">
-			<li><a href="#productos" class="hover:text-crema">Productos</a></li>
-			<li><a href="#a-medida" class="hover:text-crema">A la medida</a></li>
-			<li><a href="#proceso" class="hover:text-crema">Proceso</a></li>
-			<li><a href={`mailto:${CONTACT_EMAIL}`} class="hover:text-crema">{CONTACT_EMAIL}</a></li>
-		</ul>
-		<p class="text-[0.9rem]">© {new Date().getFullYear()} Jangol</p>
+<footer class="on-dark bg-tinta pt-20 pb-10 text-crema/70">
+	<div class="wrap">
+		<div class="grid gap-12 border-b border-crema/10 pb-14 md:grid-cols-12">
+			<div class="md:col-span-4">
+				<a href="/" class="inline-flex items-center gap-2.5 text-crema" aria-label="Jangol, inicio">
+					<Monogram class="h-8 w-auto" />
+					<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
+				</a>
+				<p class="mt-5 max-w-[30ch]">Casa de software. Hacemos plataformas para gimnasios y colegios, y construimos a la medida.</p>
+			</div>
+			<div class="grid grid-cols-2 gap-10 sm:grid-cols-4 md:col-span-8">
+				{
+					columns.map((c) => (
+						<div>
+							<p class="font-display font-semibold text-crema">{c.title}</p>
+							<ul class="mt-4 grid gap-2.5 text-[0.95rem]">
+								{c.links.map((l) => (
+									<li>
+										<a href={l.href} class="break-words transition-colors hover:text-crema">{l.label}</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</div>
+		</div>
+		<p class="mt-8 text-[0.9rem]">© {new Date().getFullYear()} Jangol</p>
 	</div>
 </footer>

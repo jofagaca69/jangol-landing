@@ -8,19 +8,37 @@ const interests = [
 ];
 const field =
 	'mt-2 w-full rounded-xl border border-crema/25 bg-tinta-soft px-4 py-3.5 text-crema placeholder:text-crema/40 focus:border-agua focus:outline-none';
+const next = [
+	'Te escribimos en un día hábil para coordinar una llamada.',
+	'En la llamada vemos cómo trabajas hoy y te mostramos la plataforma o conversamos tu proyecto.',
+	'Te enviamos una propuesta con alcance, plazos y costo.',
+];
 ---
 
-<section id="contacto" class="on-dark bg-tinta py-24 text-crema md:py-36">
+<section id="contacto" class="on-dark bg-tinta pt-32 pb-24 text-crema md:pt-40 md:pb-32">
 	<div class="wrap grid gap-14 md:grid-cols-12">
 		<div class="md:col-span-5">
-			<h2 class="t-h2 max-w-[12ch]">Pide una demo o cuéntanos tu idea</h2>
+			<h1 class="t-h2 max-w-[12ch]">Pide una demo o cuéntanos tu idea</h1>
 			<p class="t-lead measure mt-8 text-crema/75">
-				Te respondemos en un día hábil. Si prefieres escribir directo, nuestro correo es{' '}
+				Si prefieres escribir directo, nuestro correo es{' '}
 				<a href={`mailto:${CONTACT_EMAIL}`} class="text-agua underline underline-offset-4">{CONTACT_EMAIL}</a>.
 			</p>
+			<h2 class="mt-14 font-display text-[1.1rem] font-semibold">Qué pasa después</h2>
+			<ol class="mt-5 grid gap-5">
+				{
+					next.map((n, i) => (
+						<li class="grid grid-cols-[2rem_1fr] gap-3">
+							<span class="grid size-8 place-items-center rounded-full border border-crema/30 font-display text-[0.9rem] font-semibold">
+								{i + 1}
+							</span>
+							<span class="pt-1 text-crema/80">{n}</span>
+						</li>
+					))
+				}
+			</ol>
 		</div>
 
-		<form class="grid gap-6 md:col-span-6 md:col-start-7" data-contact data-email={CONTACT_EMAIL} novalidate>
+		<form class="grid content-start gap-6 md:col-span-6 md:col-start-7" data-contact data-email={CONTACT_EMAIL} novalidate>
 			<div class="grid gap-6 sm:grid-cols-2">
 				<label class="block">
 					<span class="font-display font-medium">Nombre</span>
@@ -31,6 +49,10 @@ const field =
 					<input class={field} name="email" type="email" autocomplete="email" required />
 				</label>
 			</div>
+			<label class="block">
+				<span class="font-display font-medium">Empresa o institución <span class="text-crema/50">(opcional)</span></span>
+				<input class={field} name="company" autocomplete="organization" />
+			</label>
 			<label class="block">
 				<span class="font-display font-medium">¿Qué te interesa?</span>
 				<select class={field} name="interest" data-interest>

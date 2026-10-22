@@ -1,0 +1,27 @@
+---
+interface Props {
+	items: { q: string; a: string }[];
+	title?: string;
+}
+
+const { items, title = 'Preguntas frecuentes' } = Astro.props;
+---
+
+<section class="py-24 md:py-32">
+	<div class="wrap grid gap-10 md:grid-cols-12">
+		<h2 class="t-h2 max-w-[10ch] md:col-span-4">{title}</h2>
+		<div class="border-b border-tinta/15 md:col-span-7 md:col-start-6">
+			{
+				items.map((f) => (
+					<details class="faq border-t border-tinta/15">
+						<summary class="flex items-center justify-between gap-6 py-6 font-display text-[1.2rem] font-semibold">
+							{f.q}
+							<span class="faq-sign" aria-hidden="true" />
+						</summary>
+						<p class="measure pb-7 text-tinta/80">{f.a}</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+</section>

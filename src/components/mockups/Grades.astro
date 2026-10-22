@@ -1,0 +1,43 @@
+---
+import Frame from './Frame.astro';
+
+const rows = [
+	{ course: 'Matemática', grades: [16, 17, 18] },
+	{ course: 'Comunicación', grades: [15, 15, 17] },
+	{ course: 'Ciencia y tecnología', grades: [18, 17, 18] },
+	{ course: 'Inglés', grades: [14, 16, 16] },
+	{ course: 'Arte', grades: [19, 18, 19] },
+];
+const avg = (g: number[]) => (g.reduce((a, b) => a + b, 0) / g.length).toFixed(1);
+---
+
+<Frame title="Boletín · 2.º secundaria A">
+	<div class="flex items-center justify-between gap-3">
+		<p class="ui-h">Joaquín Herrera</p>
+		<span class="ui-chip ui-chip-ok">Asistencia 96%</span>
+	</div>
+	<table class="ui-table mt-3 w-full">
+		<thead>
+			<tr>
+				<th class="text-left">Curso</th>
+				<th>I</th>
+				<th>II</th>
+				<th>III</th>
+				<th>Prom.</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				rows.map((r, i) => (
+					<tr class="ui-in" style={`--i:${i}`}>
+						<td class="truncate text-left font-semibold">{r.course}</td>
+						{r.grades.map((g) => (
+							<td class="tabular-nums">{g}</td>
+						))}
+						<td class="font-semibold tabular-nums text-[var(--accent)]">{avg(r.grades)}</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</Frame>

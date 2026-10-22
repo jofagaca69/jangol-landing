@@ -1,0 +1,35 @@
+---
+import Frame from './Frame.astro';
+
+const months = [
+	{ m: 'Marzo', state: 'ok', label: 'Pagada' },
+	{ m: 'Abril', state: 'ok', label: 'Pagada' },
+	{ m: 'Mayo', state: 'ok', label: 'Pagada' },
+	{ m: 'Junio', state: 'warn', label: 'Vence el 30' },
+	{ m: 'Julio', state: 'idle', label: 'Por emitir' },
+];
+---
+
+<Frame title="Estado de cuenta">
+	<div class="flex items-end justify-between gap-3">
+		<span>
+			<span class="ui-h block">Sofía Mendoza</span>
+			<span class="block text-tinta/55">3.º primaria · Descuento por hermanos 10%</span>
+		</span>
+	</div>
+	<ul class="mt-3 grid gap-1">
+		{
+			months.map((r, i) => (
+				<li class="ui-row ui-in grid-cols-[1fr_auto_auto]" style={`--i:${i}`}>
+					<span class="font-semibold">Pensión de {r.m.toLowerCase()}</span>
+					<span class="tabular-nums">$243</span>
+					<span class:list={['ui-chip', `ui-chip-${r.state}`]}>{r.label}</span>
+				</li>
+			))
+		}
+	</ul>
+	<div class="mt-3 flex items-center justify-between gap-3 rounded-xl bg-tinta/5 px-3 py-2.5">
+		<span>Por pagar este mes <strong class="font-semibold tabular-nums">$243</strong></span>
+		<span class="ui-btn">Pagar</span>
+	</div>
+</Frame>

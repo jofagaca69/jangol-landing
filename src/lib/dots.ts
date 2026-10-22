@@ -137,6 +137,33 @@ export function circles(dots: Dot[], count = dots.length): string {
 		.join('');
 }
 
+/**
+ * A QR-looking code drawn with the same dots: three finder squares and a
+ * deterministic scatter in between. Decorative only; it does not scan.
+ */
+export function qrDots(seed = 7, size = 21): Dot[] {
+	const finder = (x: number, y: number) => {
+		for (const [fx, fy] of [[0, 0], [size - 7, 0], [0, size - 7]]) {
+			const dx = x - fx;
+			const dy = y - fy;
+			if (dx >= 0 && dx < 7 && dy >= 0 && dy < 7) {
+				const ring = Math.max(Math.abs(dx - 3), Math.abs(dy - 3));
+				return ring === 3 || ring <= 1 ? 1 : 0;
+			}
+		}
+		return -1;
+	};
+	const dots: Dot[] = [];
+	for (let y = 0; y < size; y++) {
+		for (let x = 0; x < size; x++) {
+			const f = finder(x, y);
+			const on = f === -1 ? Math.abs(Math.sin((x + 1) * 12.9898 + (y + 1) * 78.233 + seed) * 43758.5453) % 1 > 0.52 : f === 1;
+			if (on) dots.push({ x: x + 0.5, y: y + 0.5, r: BASE_R });
+		}
+	}
+	return dots;
+}
+
 /** Monogram with only the first `share` of its dots filled, top to bottom. */
 export function partialMonogram(share: number): { on: Dot[]; off: Dot[] } {
 	const dots = parseSprite(MONOGRAM);

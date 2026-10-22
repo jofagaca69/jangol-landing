@@ -1,0 +1,36 @@
+---
+import type { Module } from '../../data/products';
+import Mockup from '../mockups/Mockup.astro';
+
+interface Props {
+	module: Module;
+}
+
+const { module: m } = Astro.props;
+---
+
+<article id={m.id} class="grid scroll-mt-28 gap-8 border-t border-tinta/15 py-14 first:border-t-0 first:pt-0 md:py-20 xl:grid-cols-9 xl:gap-12" data-module>
+	<div class="xl:col-span-4">
+		<h3 class="font-display text-[clamp(1.75rem,1.3rem+1.6vw,2.6rem)] leading-[1.02] font-bold tracking-[-0.03em]">{m.title}</h3>
+		<p class="mt-5 text-tinta/60">{m.problem}</p>
+		<p class="t-lead mt-4">{m.summary}</p>
+		<ul class="mt-6 grid gap-2.5">
+			{
+				m.details.map((d) => (
+					<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+						<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-[var(--accent)]" aria-hidden="true" />
+						<span class="text-tinta/85">{d}</span>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+	<figure class="xl:col-span-5">
+		<div class="stage" data-mock aria-hidden="true">
+			<div class="relative w-full max-w-[26rem]">
+				<Mockup id={m.mockup} />
+			</div>
+		</div>
+		<figcaption class="sr-only">{m.mockupLabel}</figcaption>
+	</figure>
+</article>
