@@ -1,0 +1,33 @@
+---
+import type { MockupId } from '../../data/products';
+import Members from './Members.astro';
+import Checkin from './Checkin.astro';
+import Classes from './Classes.astro';
+import Payments from './Payments.astro';
+import Retention from './Retention.astro';
+import Enrollment from './Enrollment.astro';
+import Grades from './Grades.astro';
+import Fees from './Fees.astro';
+import Notices from './Notices.astro';
+import Timetable from './Timetable.astro';
+
+interface Props {
+	id: MockupId;
+}
+
+const views = {
+	members: Members,
+	checkin: Checkin,
+	classes: Classes,
+	payments: Payments,
+	retention: Retention,
+	enrollment: Enrollment,
+	grades: Grades,
+	fees: Fees,
+	notices: Notices,
+	timetable: Timetable,
+};
+const View = views[Astro.props.id];
+---
+
+<View />

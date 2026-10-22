@@ -1,0 +1,24 @@
+---
+import ResourceList from './ResourceList.astro';
+import { getRecursos } from '../lib/recursos';
+
+const latest = (await getRecursos()).slice(0, 3);
+---
+
+{
+	latest.length > 0 && (
+		<section class="border-t border-tinta/10 py-24 md:py-32">
+			<div class="wrap">
+				<div class="flex flex-wrap items-end justify-between gap-6">
+					<h2 class="t-h2 max-w-[14ch]">Guías para tu negocio</h2>
+					<a href="/recursos" class="font-display font-semibold underline decoration-2 underline-offset-4">
+						Ver todos los recursos
+					</a>
+				</div>
+				<div class="mt-12">
+					<ResourceList items={latest} />
+				</div>
+			</div>
+		</section>
+	)
+}

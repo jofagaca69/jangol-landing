@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
-import { fighters, type FighterId, type ProductId } from '../data/products';
+import { fighters, type FighterId } from '../data/products';
 import { MONOGRAM, burst, fit, parseSprite, type Dot } from '../lib/dots';
 
 gsap.registerPlugin(SplitText);
@@ -22,7 +22,7 @@ const sprites = Object.fromEntries(fighters.map((f) => [f.id, parseSprite(f.spri
 	FighterId,
 	Dot[]
 >;
-const productColor: Record<FighterId, string> = { gyms: 'burdeos', schools: 'petroleo', custom: 'burdeos' };
+const productColor: Record<FighterId, string> = { gyms: 'burdeos', schools: 'petroleo', custom: 'tinta' };
 const productName = (id: string) => fighters.find((f) => f.id === id)?.name ?? '';
 
 let lenis: Lenis | null = null;
@@ -50,7 +50,8 @@ function initSmoothScroll() {
 }
 
 function scrollToEl(target: HTMLElement | 0) {
-	if (lenis) lenis.scrollTo(target, { duration: 1.3 });
+	// Leave room for the fixed nav.
+	if (lenis) lenis.scrollTo(target, { duration: 1.3, offset: target === 0 ? 0 : -80 });
 	else if (target === 0) window.scrollTo({ top: 0 });
 	else target.scrollIntoView();
 }
@@ -66,13 +67,6 @@ function initAnchors() {
 		});
 	});
 }
-
-/* ---------- Shared product state ---------- */
-type SelectDetail = { id: FighterId; from: 'hero' | 'tabs' | 'demo' };
-const emit = (detail: SelectDetail) =>
-	document.dispatchEvent(new CustomEvent<SelectDetail>('jangol:select', { detail }));
-const onSelect = (fn: (d: SelectDetail) => void) =>
-	document.addEventListener('jangol:select', (e) => fn((e as CustomEvent<SelectDetail>).detail));
 
 /* ---------- Character select (hero) ---------- */
 function initCharacterSelect() {
@@ -133,31 +127,39 @@ function initCharacterSelect() {
 				stagger: { each: 0.003, from: 'center' },
 			});
 		}
-		if (changed) emit({ id, from: 'hero' });
 	}
 
 	function confirm() {
 		if (busy) return;
 		const id = active;
-		// Custom software has its own section; the platforms share the tabs.
-		const section = $(id === 'custom' ? '#a-medida' : '#productos');
-		emit({ id, from: 'hero' });
-		if (reduceMotion || !section) {
-			if (section) scrollToEl(section);
+		const href = fighters.find((f) => f.id === id)!.href;
+		if (reduceMotion) {
+			window.location.href = href;
 			return;
 		}
 		busy = true;
 		const circles = circlesOf(byId(id));
 		const home = sprites[id];
+		// The flash fills the screen with the product colour, which is the colour its page opens with.
 		gsap
-			.timeline({ onComplete: () => (busy = false) })
+			.timeline()
 			.set(flash, { backgroundColor: token(productColor[id]) })
-			.to(flash, { opacity: 0.85, duration: 0.12, ease: 'power2.out' })
-			.to(flash, { opacity: 0, duration: 0.5, ease: 'power2.in' })
 			.add(morph(circles, burst(fit(home, circles.length)), { duration: 0.7, ease: 'expo.out', stagger: { each: 0.001, from: 'center' } }), 0)
-			.call(() => scrollToEl(section), [], 0.3)
-			.add(morph(circles, home, { duration: 0.01, stagger: 0 }), 1.6);
+			.to(flash, { opacity: 1, duration: 0.35, ease: 'power2.in' }, 0.15)
+			.call(() => (window.location.href = href), [], 0.55);
 	}
+
+	// Coming back with the browser's back button restores the page from cache mid-flash.
+	window.addEventListener('pageshow', (e) => {
+		if (!e.persisted) return;
+		busy = false;
+		gsap.set(flash, { opacity: 0 });
+		panels.forEach((f) => {
+			const c = circlesOf(f);
+			const s = fit(sprites[f.dataset.id as FighterId], c.length);
+			gsap.set(c, { attr: { cx: (i: number) => s[i].x, cy: (i: number) => s[i].y, r: (i: number) => s[i].r } });
+		});
+	});
 
 	panels.forEach((f) => {
 		const id = f.dataset.id as FighterId;
@@ -233,49 +235,72 @@ function initCharacterSelect() {
 	}
 }
 
-/* ---------- Product tabs ---------- */
-function initProducts() {
-	const root = $('[data-products]');
-	if (!root) return;
-	const tabs = $$<HTMLButtonElement>('[data-tab]', root);
-	const showcase = $('[data-showcase]', root)!;
-	const dots = $$<SVGCircleElement>('[data-showcase-dots] circle', root);
-	let current = tabs.find((t) => t.getAttribute('aria-selected') === 'true')!.dataset.tab as ProductId;
+/* ---------- Nav ---------- */
+function initNav() {
+	const nav = $('[data-nav]');
+	if (!nav) return;
+	const toggle = $<HTMLButtonElement>('[data-nav-toggle]', nav)!;
+	const sheet = $('[data-nav-sheet]', nav)!;
 
-	function setTab(id: ProductId, animate = true) {
-		if (id === current) return;
-		current = id;
-		tabs.forEach((t) => {
-			const on = t.dataset.tab === id;
-			t.setAttribute('aria-selected', String(on));
-			t.tabIndex = on ? 0 : -1;
-		});
-		$$('[data-panel]', root!).forEach((p) => (p.hidden = p.dataset.panel !== id));
-		const panel = $(`[data-panel="${id}"]`, root!)!;
-		const d = animate && !reduceMotion ? 0.7 : 0;
-		gsap.to(showcase, { backgroundColor: token(productColor[id]), duration: d, ease: 'power2.inOut' });
-		gsap.to(showcase, { color: token(id === 'gyms' ? 'crema' : 'agua'), duration: d });
-		morph(dots, sprites[id]);
-		if (d) gsap.from(panel.children, { opacity: 0, y: 14, duration: 0.5, stagger: 0.06, ease: 'power3.out' });
+	// Over the home hero the bar stays transparent; elsewhere it turns solid as soon as the page moves.
+	const threshold = () => (nav.hasAttribute('data-home') ? window.innerHeight - 80 : 24);
+	const update = () => nav.toggleAttribute('data-solid', window.scrollY > threshold());
+	update();
+	window.addEventListener('scroll', update, { passive: true });
+
+	const setOpen = (open: boolean) => {
+		toggle.setAttribute('aria-expanded', String(open));
+		sheet.hidden = !open;
+		document.documentElement.style.overflow = open ? 'hidden' : '';
+		if (open) lenis?.stop();
+		else lenis?.start();
+	};
+	toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+	window.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && !sheet.hidden) {
+			setOpen(false);
+			toggle.focus();
+		}
+	});
+	narrow.addEventListener('change', (e) => !e.matches && setOpen(false));
+}
+
+/* ---------- Product pages: mockups and module index ---------- */
+function initMockups() {
+	const mocks = $$('[data-mock]');
+	if (!mocks.length) return;
+	if (reduceMotion || !('IntersectionObserver' in window)) {
+		mocks.forEach((m) => m.setAttribute('data-live', ''));
+		return;
 	}
+	const io = new IntersectionObserver(
+		(entries) =>
+			entries.forEach((e) => {
+				if (!e.isIntersecting) return;
+				e.target.setAttribute('data-live', '');
+				io.unobserve(e.target);
+			}),
+		{ threshold: 0.35 },
+	);
+	mocks.forEach((m) => io.observe(m));
+}
 
-	tabs.forEach((t, i) => {
-		t.addEventListener('click', () => {
-			setTab(t.dataset.tab as ProductId);
-			emit({ id: current, from: 'tabs' });
-		});
-		t.addEventListener('keydown', (e) => {
-			const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-			if (!dir) return;
-			e.preventDefault();
-			const next = tabs[(i + dir + tabs.length) % tabs.length];
-			next.focus();
-			next.click();
-		});
-	});
-	onSelect(({ id, from }) => {
-		if (from !== 'tabs' && id !== 'custom') setTab(id);
-	});
+function initModuleSpy() {
+	const links = $$('[data-spy-link]');
+	if (!links.length) return;
+	const modules = $$('[data-module]');
+	const mark = (id: string) =>
+		links.forEach((l) => l.setAttribute('aria-current', String(l.dataset.spyLink === id)));
+
+	// The active module is the last one whose top has passed the upper third of the viewport.
+	const update = () => {
+		const line = window.innerHeight * 0.35;
+		let current = modules[0];
+		for (const m of modules) if (m.getBoundingClientRect().top <= line) current = m;
+		mark(current.id);
+	};
+	update();
+	window.addEventListener('scroll', update, { passive: true });
 }
 
 /* ---------- Contact ---------- */
@@ -285,16 +310,16 @@ function initContact() {
 	const interest = $<HTMLSelectElement>('[data-interest]', form)!;
 	const status = $('[data-contact-status]', form)!;
 
-	onSelect(({ id }) => (interest.value = id));
-	$$<HTMLAnchorElement>('[data-demo]').forEach((a) =>
-		a.addEventListener('click', () => emit({ id: a.dataset.demo as SelectDetail['id'], from: 'demo' })),
-	);
+	// Links across the site pass the product as ?interes=gyms|schools|custom.
+	const preset = new URLSearchParams(window.location.search).get('interes');
+	if (preset && [...interest.options].some((o) => o.value === preset)) interest.value = preset;
 
 	form.addEventListener('submit', (e) => {
 		e.preventDefault();
 		const data = new FormData(form);
 		const name = String(data.get('name') ?? '').trim();
 		const email = String(data.get('email') ?? '').trim();
+		const company = String(data.get('company') ?? '').trim();
 		const emailField = form.elements.namedItem('email') as HTMLInputElement;
 
 		if (!name) {
@@ -310,7 +335,14 @@ function initContact() {
 
 		const topic = interest.selectedOptions[0].textContent ?? '';
 		const subject = `${topic}: ${name}`;
-		const body = [`Nombre: ${name}`, `Correo: ${email}`, `Interés: ${topic}`, '', String(data.get('message') ?? '')].join('\n');
+		const body = [
+			`Nombre: ${name}`,
+			`Correo: ${email}`,
+			...(company ? [`Empresa: ${company}`] : []),
+			`Interés: ${topic}`,
+			'',
+			String(data.get('message') ?? ''),
+		].join('\n');
 		const to = form.dataset.email!;
 		window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 		status.textContent = `Abrimos tu correo con el mensaje listo. Si no se abrió, escríbenos a ${to}.`;
@@ -319,6 +351,8 @@ function initContact() {
 
 initSmoothScroll();
 initAnchors();
+initNav();
 initCharacterSelect();
-initProducts();
+initMockups();
+initModuleSpy();
 initContact();

@@ -1,16 +1,24 @@
 ---
 import Monogram from './Monogram.astro';
 
+interface Props {
+	home?: boolean;
+}
+
+const { home = false } = Astro.props;
 const links = [
-	{ href: '#productos', label: 'Productos' },
-	{ href: '#a-medida', label: 'A la medida' },
-	{ href: '#proceso', label: 'Proceso' },
+	{ href: '/gyms', label: 'Gyms' },
+	{ href: '/schools', label: 'Schools' },
+	{ href: '/a-la-medida', label: 'A la medida' },
+	{ href: '/recursos', label: 'Recursos' },
 ];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? 'page' : undefined);
 ---
 
-<header class="on-dark absolute inset-x-0 top-0 z-20 text-crema" data-nav>
-	<nav class="wrap flex items-center justify-between py-5" aria-label="Principal">
-		<a href="#top" class="flex items-center gap-2.5" aria-label="Jangol, inicio">
+<header class="nav on-dark text-crema" data-nav data-home={home ? '' : undefined}>
+	<nav class="wrap flex items-center justify-between py-4" aria-label="Principal">
+		<a href="/" class="relative z-10 flex items-center gap-2.5" aria-label="Jangol, inicio">
 			<Monogram class="h-8 w-auto" />
 			<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
 		</a>
@@ -19,14 +27,41 @@ const links = [
 				{
 					links.map((l) => (
 						<li>
-							<a href={l.href} class="font-display text-[0.98rem] font-medium opacity-85 transition-opacity hover:opacity-100">
+							<a href={l.href} class="nav-link font-display text-[0.98rem] font-medium" aria-current={current(l.href)}>
 								{l.label}
 							</a>
 						</li>
 					))
 				}
 			</ul>
-			<a href="#contacto" class="btn btn-crema !px-5 !py-2.5">Pedir demo</a>
+			<a href="/contacto" class="btn btn-crema !px-5 !py-2.5 max-md:hidden" aria-current={current('/contacto')}>Pedir demo</a>
+			<button
+				type="button"
+				class="nav-toggle relative z-10 md:hidden"
+				aria-expanded="false"
+				aria-controls="menu-movil"
+				data-nav-toggle
+			>
+				<span class="sr-only">Menú</span>
+				<span class="nav-toggle-bars" aria-hidden="true"></span>
+			</button>
 		</div>
 	</nav>
+
+	<div id="menu-movil" class="nav-sheet md:hidden" hidden data-nav-sheet>
+		<ul class="wrap grid gap-1 pt-24">
+			{
+				links.map((l) => (
+					<li>
+						<a href={l.href} class="block py-2 font-display text-[2.5rem] leading-tight font-bold tracking-[-0.03em]" aria-current={current(l.href)}>
+							{l.label}
+						</a>
+					</li>
+				))
+			}
+			<li class="mt-8">
+				<a href="/contacto" class="btn btn-crema w-full">Pedir demo</a>
+			</li>
+		</ul>
+	</div>
 </header>

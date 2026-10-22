@@ -1,0 +1,52 @@
+---
+import Frame from './Frame.astro';
+
+const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
+const hours = ['8:00', '9:00', '10:30', '11:30'];
+// [day, hour, course, tone]
+const blocks: [number, number, string, 'a' | 'b' | 'c' | 'd'][] = [
+	[0, 0, 'Matemát.', 'a'],
+	[1, 0, 'Comunic.', 'b'],
+	[2, 0, 'Matemát.', 'a'],
+	[3, 0, 'Ciencia', 'c'],
+	[4, 0, 'Comunic.', 'b'],
+	[0, 1, 'Ciencia', 'c'],
+	[1, 1, 'Arte', 'd'],
+	[2, 1, 'Inglés', 'b'],
+	[3, 1, 'Matemát.', 'a'],
+	[4, 1, 'Ed. física', 'd'],
+	[0, 2, 'Inglés', 'b'],
+	[1, 2, 'Matemát.', 'a'],
+	[2, 2, 'Ciencia', 'c'],
+	[4, 2, 'Arte', 'd'],
+	[0, 3, 'Comunic.', 'b'],
+	[2, 3, 'Ed. física', 'd'],
+	[3, 3, 'Inglés', 'b'],
+	[4, 3, 'Matemát.', 'a'],
+];
+---
+
+<Frame title="Horario · 1.º secundaria B">
+	<div class="ui-grid" style={`--cols:${days.length}`}>
+		<span />
+		{days.map((d) => <span class="text-center font-semibold">{d}</span>)}
+		{
+			hours.map((h, y) => (
+				<>
+					<span class="text-tinta/55 tabular-nums">{h}</span>
+					{days.map((_, x) => {
+						const b = blocks.find(([bx, by]) => bx === x && by === y);
+						const clash = x === 3 && y === 2;
+						return b ? (
+							<span class:list={['ui-block ui-in', `ui-block-${b[3]}`]} style={`--i:${x + y}`}>{b[2]}</span>
+						) : clash ? (
+							<span class="ui-block ui-block-clash ui-in" style={`--i:${x + y}`}>Cruce: Prof. Ruiz</span>
+						) : (
+							<span />
+						);
+					})}
+				</>
+			))
+		}
+	</div>
+</Frame>

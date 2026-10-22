@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, topics } from '../lib/recursos';
+
+interface Props {
+	items: CollectionEntry<'recursos'>[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="border-b border-tinta/15">
+	{
+		items.map((r) => (
+			<li class="border-t border-tinta/15">
+				<a href={`/recursos/${r.id}`} class="group grid gap-3 py-8 md:grid-cols-12 md:gap-8">
+					<p class="text-[0.95rem] text-tinta/60 md:col-span-3">
+						{topics[r.data.topic]}
+						<br class="max-md:hidden" />
+						<span class="md:hidden">, </span>
+						<time datetime={r.data.date.toISOString()}>{formatDate(r.data.date)}</time>
+					</p>
+					<div class="md:col-span-8">
+						<h3 class="t-h3 decoration-2 underline-offset-4 group-hover:underline">{r.data.title}</h3>
+						<p class="measure mt-2 text-tinta/75">{r.data.description}</p>
+					</div>
+				</a>
+			</li>
+		))
+	}
+</ul>

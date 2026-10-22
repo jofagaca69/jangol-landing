@@ -1,0 +1,34 @@
+---
+import Monogram from '../Monogram.astro';
+
+interface Props {
+	kind?: 'window' | 'phone';
+	/** Section of the app shown in the window bar. */
+	title?: string;
+	class?: string;
+}
+
+const { kind = 'window', title, class: className } = Astro.props;
+---
+
+{
+	kind === 'phone' ? (
+		<div class={className}>
+			<div class="ui ui-phone">
+				<div class="ui-phone-notch" />
+				<slot />
+			</div>
+		</div>
+	) : (
+		<div class:list={['ui ui-window', className]}>
+			<div class="ui-bar">
+				<Monogram class="h-3.5 w-auto text-[var(--accent)]" />
+				<span class="font-semibold">Jangol</span>
+				{title && <span class="text-tinta/50">{title}</span>}
+			</div>
+			<div class="ui-body">
+				<slot />
+			</div>
+		</div>
+	)
+}

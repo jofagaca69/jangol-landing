@@ -1,10 +1,5 @@
 ---
-const work = [
-	{ title: 'Aplicaciones web y móviles', desc: 'Herramientas internas, portales para clientes o un producto nuevo.' },
-	{ title: 'Integraciones', desc: 'Conectamos tu software con pasarelas de pago, facturación, CRM o lo que ya usas.' },
-	{ title: 'Automatización', desc: 'Los procesos que hoy viven en hojas de cálculo pasan a un sistema.' },
-	{ title: 'Mantenimiento y evolución', desc: 'Seguimos con el producto después del lanzamiento.' },
-];
+import { services } from '../data/custom';
 ---
 
 <section id="a-medida" class="bg-crema-deep py-24 md:py-36">
@@ -14,11 +9,11 @@ const work = [
 			<p class="t-lead measure mt-8 text-tinta/80">
 				Jangol es una casa de software. El mismo equipo define la solución contigo, la construye y la sigue mejorando después del lanzamiento.
 			</p>
-			<a href="#contacto" class="btn btn-burdeos mt-10" data-demo="custom">Cuéntanos tu proyecto</a>
+			<a href="/a-la-medida" class="btn btn-burdeos mt-10">Ver software a la medida</a>
 		</div>
 		<ul class="self-end border-b border-tinta/15 md:col-span-5 md:col-start-8">
 			{
-				work.map((w) => (
+				services.map((w) => (
 					<li class="border-t border-tinta/15 py-6">
 						<h3 class="t-h3">{w.title}</h3>
 						<p class="mt-1.5 text-tinta/75">{w.desc}</p>

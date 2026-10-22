@@ -1,0 +1,33 @@
+---
+import Frame from './Frame.astro';
+
+const steps = ['Estudiante', 'Familia', 'Documentos', 'Pago'];
+const docs = [
+	{ name: 'Partida de nacimiento', done: true },
+	{ name: 'Documento de identidad', done: true },
+	{ name: 'Libreta del año anterior', done: true },
+	{ name: 'Certificado de vacunas', done: false },
+];
+---
+
+<div class="mx-auto w-[15.5rem]">
+	<Frame kind="phone">
+		<p class="text-tinta/55">Matrícula 2027 · 3.º primaria</p>
+		<p class="ui-h mt-0.5">Sofía Mendoza</p>
+		<ol class="mt-3 flex gap-1" aria-hidden="true">
+			{steps.map((s, i) => <li class:list={['ui-step', i < 2 && 'ui-step-done', i === 2 && 'ui-step-on']} title={s} />)}
+		</ol>
+		<p class="mt-1.5 font-semibold">Paso 3 de 4: documentos</p>
+		<ul class="mt-3 grid gap-1">
+			{
+				docs.map((d, i) => (
+					<li class="ui-row ui-in grid-cols-[1rem_1fr]" style={`--i:${i}`}>
+						<span class:list={['ui-check', d.done && 'ui-check-on']} />
+						<span class:list={['truncate', !d.done && 'text-tinta/55']}>{d.name}</span>
+					</li>
+				))
+			}
+		</ul>
+		<span class="ui-btn mt-4 flex w-full justify-center">Subir certificado</span>
+	</Frame>
+</div>

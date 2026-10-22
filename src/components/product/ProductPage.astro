@@ -1,0 +1,108 @@
+---
+import type { Product } from '../../data/products';
+import { onboarding, products, shared } from '../../data/products';
+import { GRID, circles, partialMonogram } from '../../lib/dots';
+import ProductHero from './ProductHero.astro';
+import ModuleRow from './ModuleRow.astro';
+import Faq from '../Faq.astro';
+import CtaBand from '../CtaBand.astro';
+
+interface Props {
+	product: Product;
+}
+
+const { product: p } = Astro.props;
+const other = products.find((o) => o.id !== p.id)!;
+const steps = onboarding.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / onboarding.length) }));
+---
+
+<div class={`theme-${p.id}`}>
+	<ProductHero product={p} />
+
+	<section id="modulos" class="scroll-mt-20 py-24 md:py-32">
+		<div class="wrap">
+			<div class="grid gap-8 md:grid-cols-12 md:items-end">
+				<h2 class="t-h2 md:col-span-7">Qué hace {p.name}</h2>
+				<p class="t-lead measure text-tinta/75 md:col-span-5">{p.intro}</p>
+			</div>
+
+			<div class="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12">
+				<nav class="max-lg:hidden lg:col-span-3" aria-label="Módulos">
+					<ol class="sticky top-28 grid gap-1 border-l border-tinta/15" data-spy>
+						{
+							p.modules.map((m) => (
+								<li>
+									<a href={`#${m.id}`} class="spy-link" data-spy-link={m.id}>
+										{m.title}
+									</a>
+								</li>
+							))
+						}
+					</ol>
+				</nav>
+				<div class="lg:col-span-9">
+					{p.modules.map((m) => <ModuleRow module={m} />)}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-crema-deep py-24 md:py-32">
+		<div class="wrap grid gap-12 md:grid-cols-12">
+			<div class="md:col-span-5">
+				<h2 class="t-h2 max-w-[12ch]">Lo que viene en las dos plataformas</h2>
+				<p class="t-lead measure mt-6 text-tinta/75">
+					{p.name} y {other.name} están construidas sobre la misma base, así que las cuentas, los cobros y los permisos funcionan igual en
+					las dos.
+				</p>
+				<a href={other.href} class="mt-8 inline-block font-display font-semibold underline decoration-2 underline-offset-4">
+					Conocer {other.name}
+				</a>
+			</div>
+			<dl class="grid gap-x-10 sm:grid-cols-2 md:col-span-6 md:col-start-7">
+				{
+					shared.map((s) => (
+						<div class="border-t border-tinta/20 py-6">
+							<dt class="t-h3">{s.title}</dt>
+							<dd class="mt-2 text-tinta/75">{s.desc}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</section>
+
+	<section class="py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[16ch]">Cómo empiezas</h2>
+			<p class="t-lead measure mt-6 text-tinta/75">Nosotros hacemos la configuración y la migración. Tu equipo empieza a usarla con sus datos reales.</p>
+			<ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+				{
+					steps.map((s, i) => (
+						<li>
+							<svg class="dots h-24 w-auto text-[var(--accent)]" viewBox={`3 2.5 ${GRID - 6} 15`} aria-hidden="true">
+								<g class="text-tinta/15" set:html={circles(s.off)} />
+								<g set:html={circles(s.on)} />
+							</svg>
+							<p class="mt-6 font-display text-[0.95rem] font-medium text-tinta/60">Paso {i + 1}</p>
+							<h3 class="t-h3 mt-1">{s.title}</h3>
+							<p class="mt-2 max-w-[32ch] text-tinta/80">{s.desc}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<div class="border-t border-tinta/10">
+		<Faq items={p.faqs} />
+	</div>
+
+	<CtaBand
+		theme={p.id}
+		title={`Mira ${p.name} con los datos de tu ${p.id === 'gyms' ? 'gimnasio' : 'colegio'}`}
+		text="En la demo revisamos cómo trabajas hoy y qué módulos necesitas. Después te enviamos una propuesta."
+		href={`/contacto?interes=${p.id}`}
+		label={`Pedir demo de ${p.name}`}
+	/>
+</div>

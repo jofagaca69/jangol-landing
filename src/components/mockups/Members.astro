@@ -1,0 +1,32 @@
+---
+import Frame from './Frame.astro';
+
+const rows = [
+	{ name: 'Camila Rojas', plan: 'Mensual libre', until: '28 oct', state: 'ok', label: 'Al día' },
+	{ name: 'Diego Fernández', plan: 'Trimestral', until: '03 nov', state: 'warn', label: 'Vence en 5 días' },
+	{ name: 'Lucía Paredes', plan: '12 sesiones', until: '7 de 12', state: 'ok', label: 'Al día' },
+	{ name: 'Mateo Silva', plan: 'Mensual libre', until: '14 oct', state: 'bad', label: 'Vencido' },
+	{ name: 'Valentina Cruz', plan: 'Anual', until: '02 ago', state: 'pause', label: 'Congelado' },
+];
+---
+
+<Frame title="Socios">
+	<div class="flex items-center justify-between gap-3">
+		<p class="ui-h">Socios activos <span class="text-tinta/45">248</span></p>
+		<span class="ui-btn">Nuevo socio</span>
+	</div>
+	<ul class="mt-3 grid gap-1">
+		{
+			rows.map((r, i) => (
+				<li class="ui-row ui-in grid-cols-[1.6rem_1fr_auto]" style={`--i:${i}`}>
+					<span class="ui-avatar">{r.name.split(' ').map((w) => w[0]).join('')}</span>
+					<span class="min-w-0">
+						<span class="block truncate font-semibold">{r.name}</span>
+						<span class="block truncate text-tinta/55">{r.plan} · {r.until}</span>
+					</span>
+					<span class:list={['ui-chip', `ui-chip-${r.state}`]}>{r.label}</span>
+				</li>
+			))
+		}
+	</ul>
+</Frame>

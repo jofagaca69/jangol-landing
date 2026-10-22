@@ -1,0 +1,25 @@
+---
+import Monogram from './Monogram.astro';
+
+interface Props {
+	title: string;
+	text?: string;
+	href: string;
+	label: string;
+	/** Product colour for the band; defaults to ink. */
+	theme?: 'gyms' | 'schools' | 'custom';
+}
+
+const { title, text, href, label, theme = 'custom' } = Astro.props;
+---
+
+<section class:list={['on-dark', `theme-${theme}`, 'overflow-hidden bg-[var(--accent)] py-24 text-[var(--accent-ink)] md:py-32']}>
+	<div class="wrap grid items-end gap-10 md:grid-cols-12">
+		<div class="md:col-span-8">
+			<h2 class="t-h2 max-w-[16ch]">{title}</h2>
+			{text && <p class="t-lead measure mt-6 opacity-80">{text}</p>}
+			<a href={href} class="btn btn-crema mt-10">{label}</a>
+		</div>
+		<Monogram class="ml-auto h-40 w-auto opacity-90 max-md:hidden md:col-span-4 md:h-56" />
+	</div>
+</section>
