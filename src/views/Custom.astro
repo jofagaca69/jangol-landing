@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Process from '../components/Process.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { customFaqs, fit, services } from '../data/custom';
+import { products } from '../data/products';
+import { CODE, GRID, circles, parseSprite } from '../lib/dots';
+import { meta } from '../i18n/meta';
+import { asLang, path } from '../i18n/routes';
+import { breadcrumbs, service, webPage } from '../lib/schema';
+
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang].custom;
+const contact = `${path('contact', lang)}?interes=custom`;
+const copy = {
+	es: {
+		label: 'Hecho por Jangol',
+		h1: 'Desarrollo de software a la medida',
+		lead: 'Cuando tu operación no cabe en una plataforma, la construimos contigo. El mismo equipo define la solución, la diseña, la programa y la sigue mejorando después del lanzamiento. Trabajamos con negocios en toda Colombia.',
+		tell: 'Cuéntanos tu proyecto',
+		how: 'Cómo trabajamos',
+		build: 'Qué construimos',
+		fitTitle: '¿Plataforma o a la medida?',
+		fitText: 'No siempre hace falta construir desde cero. A veces la respuesta es una plataforma con un módulo propio encima.',
+		guide: 'Lee la guía para decidir',
+		ctaTitle: 'Cuéntanos qué quieres resolver',
+		ctaText: 'En la primera conversación vemos si podemos ayudarte y por dónde empezaríamos.',
+		crumb: 'Software a la medida',
+	},
+	en: {
+		label: 'Built by Jangol',
+		h1: 'Custom software development',
+		lead: 'When your operation does not fit a platform, we build it with you. The same team defines the solution, designs it, writes the code and keeps improving it after launch. We work with businesses across Colombia.',
+		tell: 'Tell us about your project',
+		how: 'How we work',
+		build: 'What we build',
+		fitTitle: 'Platform or custom build?',
+		fitText: 'You do not always need to start from scratch. Sometimes the answer is a platform with a module of your own on top.',
+		guide: 'Read the guide to decide',
+		ctaTitle: 'Tell us what you want to solve',
+		ctaText: 'In the first conversation we see whether we can help and where we would start.',
+		crumb: 'Custom software',
+	},
+}[lang];
+const guideHref = lang === 'es' ? '/recursos/plataforma-o-a-la-medida/' : '/en/resources/platform-or-custom-software/';
+const schema = [
+	webPage({ url: path('custom', lang), name: m.title, description: m.description, lang }),
+	service({ url: path('custom', lang), name: copy.h1, description: copy.lead, lang, offers: services[lang] }),
+	breadcrumbs(lang, [{ name: copy.crumb, url: path('custom', lang) }]),
+];
+const cards = [
+	{ ...fit[lang].platform, cls: 'bg-crema', links: products[lang].map((p) => ({ href: p.href, label: p.name })) },
+	{ ...fit[lang].custom, cls: 'on-dark bg-tinta text-crema', links: [{ href: contact, label: copy.tell }] },
+];
+---
+
+<Layout title={m.title} description={m.description} schema={schema}>
+	<section class="on-dark bg-tinta pt-32 pb-20 text-crema md:pt-40 md:pb-28">
+		<div class="wrap grid gap-10 md:grid-cols-12">
+			<div class="md:col-span-8">
+				<p class="font-display text-[clamp(1.1rem,0.95rem+0.6vw,1.6rem)] font-medium opacity-85">{copy.label}</p>
+				<h1 class="t-display max-w-[11ch] text-[clamp(3.25rem,1.5rem+7vw,8rem)]">{copy.h1}</h1>
+				<p class="t-lead measure mt-8 text-crema/85">{copy.lead}</p>
+				<div class="mt-10 flex flex-wrap gap-3">
+					<a href={contact} class="btn btn-crema">{copy.tell}</a>
+					<a href="#proceso" class="btn btn-ghost">{copy.how}</a>
+				</div>
+			</div>
+			<svg
+				class="dots self-end text-crema-deep max-md:hidden md:col-span-4"
+				viewBox={`0 0 ${GRID} ${GRID}`}
+				aria-hidden="true"
+				set:html={circles(parseSprite(CODE))}
+			/>
+		</div>
+	</section>
+
+	<section class="py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[14ch]">{copy.build}</h2>
+			<div class="mt-14 border-b border-tinta/15">
+				{
+					services[lang].map((s) => (
+						<article class="grid gap-6 border-t border-tinta/15 py-10 md:grid-cols-12">
+							<h3 class="font-display text-[clamp(1.6rem,1.3rem+1.2vw,2.3rem)] leading-[1.05] font-bold tracking-[-0.03em] md:col-span-4">{s.title}</h3>
+							<p class="measure text-[1.1rem] text-tinta/85 md:col-span-4">{s.desc}</p>
+							<ul class="grid content-start gap-2 text-tinta/70 md:col-span-4">
+								{s.examples.map((e) => (
+									<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+										<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-burdeos" aria-hidden="true" />
+										{e}
+									</li>
+								))}
+							</ul>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-crema-deep py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[18ch]">{copy.fitTitle}</h2>
+			<p class="t-lead measure mt-6 text-tinta/75">
+				{copy.fitText} <a href={guideHref} class="link">{copy.guide}</a>.
+			</p>
+			<div class="mt-14 grid gap-6 md:grid-cols-2">
+				{
+					cards.map((c) => (
+						<div class:list={['flex flex-col rounded-[2rem] p-8 md:p-10', c.cls]}>
+							<h3 class="t-h3">{c.title}</h3>
+							<ul class="mt-6 grid gap-3">
+								{c.items.map((i) => (
+									<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+										<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-current opacity-60" aria-hidden="true" />
+										{i}
+									</li>
+								))}
+							</ul>
+							<div class="mt-auto flex flex-wrap gap-x-6 pt-6">
+								{c.links.map((l) => (
+									<a href={l.href} class="inline-flex min-h-11 items-center font-display font-semibold underline decoration-2 underline-offset-4">
+										{l.label}
+									</a>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<Process />
+
+	<div class="border-t border-tinta/10">
+		<Faq items={customFaqs[lang]} />
+	</div>
+
+	<CtaBand theme="gyms" title={copy.ctaTitle} text={copy.ctaText} href={contact} label={copy.tell} />
+</Layout>

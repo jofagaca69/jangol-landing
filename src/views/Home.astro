@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CharacterSelect from '../components/CharacterSelect.astro';
+import Platforms from '../components/Platforms.astro';
+import Custom from '../components/Custom.astro';
+import Process from '../components/Process.astro';
+import LatestResources from '../components/LatestResources.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { meta } from '../i18n/meta';
+import { asLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { products } from '../data/products';
+import { softwareApp, webPage, website } from '../lib/schema';
+
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang].home;
+const [gyms, schools] = products[lang];
+const copy = {
+	es: {
+		intro: 'Jangol es una empresa colombiana de software. Tenemos dos plataformas,',
+		and: 'para gimnasios, y',
+		forSchools: 'para colegios. Cuando un negocio necesita algo que ninguna de las dos resuelve,',
+		custom: 'desarrollamos el software a la medida',
+		ctaTitle: 'Pide una demo o cuéntanos tu idea',
+		ctaText: 'Te respondemos en un día hábil.',
+	},
+	en: {
+		intro: 'Jangol is a Colombian software company. We have two platforms,',
+		and: 'for gyms, and',
+		forSchools: 'for schools. When a business needs something neither of them covers,',
+		custom: 'we build the software for it',
+		ctaTitle: 'Book a demo or tell us your idea',
+		ctaText: 'We answer within one business day.',
+	},
+}[lang];
+const schema = [website(), webPage({ url: path('home', lang), name: m.title, description: m.description, lang }), softwareApp(gyms, lang), softwareApp(schools, lang)];
+---
+
+<Layout title={m.title} description={m.description} schema={schema} home motion>
+	<CharacterSelect />
+	<section class="border-b border-tinta/10 py-16 md:py-24">
+		<div class="wrap">
+			<p class="t-lead measure-wide text-tinta/85">
+				{copy.intro} <a href={gyms.href} class="link">{gyms.name}</a>
+				{copy.and} <a href={schools.href} class="link">{schools.name}</a>
+				{copy.forSchools} <a href={path('custom', lang)} class="link">{copy.custom}</a>.
+			</p>
+		</div>
+	</section>
+	<Platforms />
+	<Custom />
+	<Process />
+	<LatestResources />
+	<CtaBand title={copy.ctaTitle} text={copy.ctaText} href={path('contact', lang)} label={t(lang).demo} />
+</Layout>

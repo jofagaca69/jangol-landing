@@ -1,0 +1,46 @@
+---
+import TextPage from '../views/TextPage.astro';
+import { company } from '../data/company';
+import { path } from '../i18n/routes';
+---
+
+<TextPage
+	route="about"
+	heading="Nosotros"
+	lead="Jangol es una casa de software colombiana. Hacemos plataformas para gimnasios y colegios, y desarrollamos software a la medida."
+	pageType="AboutPage"
+>
+	<p>
+		Hacemos software para negocios que hoy se administran con hojas de cálculo, cuadernos y grupos de WhatsApp. En gimnasios y colegios
+		los problemas se repiten: nadie sabe con certeza quién está al día con los pagos, se forman filas en recepción o en secretaría y la
+		misma información se copia a mano de un lado a otro. Para ellos hicimos
+		<a href={path('gyms', 'es')}>Jangol for Gyms</a> y <a href={path('schools', 'es')}>Jangol for Schools</a>.
+	</p>
+	<p>
+		Las dos plataformas comparten la misma base de cuentas, pagos y permisos, y están hechas para cómo se trabaja en Colombia: cobros con
+		PSE, Nequi y Daviplata, factura electrónica DIAN, y en el caso de los colegios, la escala de valoración del Decreto 1290 y los reportes
+		del SIMAT.
+	</p>
+	<p>
+		Cuando un negocio necesita algo que ninguna plataforma resuelve, lo <a href={path('custom', 'es')}>desarrollamos a la medida</a>. El
+		mismo equipo define el alcance, diseña, programa y mantiene el producto después del lanzamiento.
+	</p>
+
+	<h2>Cómo trabajamos</h2>
+	<p>
+		Hablamos primero de tu operación y después de tecnología. Entregamos avances cada dos semanas en un entorno donde puedes usarlos, y el
+		soporte lo da el mismo equipo que construye. En nuestras <a href={path('resources', 'es')}>guías</a> compartimos lo que aprendemos en
+		el día a día con nuestros clientes.
+	</p>
+
+	<h2>Datos de la empresa</h2>
+	<ul>
+		<li>Razón social: {company.legalName}</li>
+		<li>NIT: {company.nit}</li>
+		<li>Fundada en: {company.foundingYear}</li>
+		<li>Equipo fundador: {company.founders.join(', ')}</li>
+		<li>Ubicación: {company.city}, {company.country}</li>
+		<li>Correo: <a href={`mailto:${company.email}`}>{company.email}</a></li>
+	</ul>
+	<p>¿Quieres conocernos? <a href={path('contact', 'es')}>Pide una demo o cuéntanos tu idea</a>.</p>
+</TextPage>

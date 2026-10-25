@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Contact from '../components/Contact.astro';
+import { meta } from '../i18n/meta';
+import { asLang, path } from '../i18n/routes';
+import { breadcrumbs, webPage } from '../lib/schema';
+
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang].contact;
+const schema = [
+	webPage({ url: path('contact', lang), name: m.title, description: m.description, lang, type: 'ContactPage' }),
+	breadcrumbs(lang, [{ name: lang === 'es' ? 'Contacto' : 'Contact', url: path('contact', lang) }]),
+];
+---
+
+<Layout title={m.title} description={m.description} schema={schema}>
+	<Contact />
+</Layout>

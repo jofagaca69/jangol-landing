@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ResourceList from '../components/ResourceList.astro';
+import { getRecursos } from '../lib/recursos';
+import { meta } from '../i18n/meta';
+import { asLang, path } from '../i18n/routes';
+import { breadcrumbs, webPage } from '../lib/schema';
+
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang].resources;
+const recursos = await getRecursos(lang);
+const copy = {
+	es: {
+		h1: 'Recursos',
+		lead: 'Guías prácticas para administrar gimnasios y colegios en Colombia. Te sirven uses o no nuestro software.',
+		h2: 'Todas las guías',
+		text: 'Las escribe el equipo que construye Jangol for Gyms, Jangol for Schools y los proyectos a la medida, a partir de lo que vemos en la operación diaria de nuestros clientes.',
+	},
+	en: {
+		h1: 'Resources',
+		lead: 'Practical guides for running gyms and schools in Colombia. They are useful whether or not you use our software.',
+		h2: 'All guides',
+		text: 'They are written by the team that builds Jangol for Gyms, Jangol for Schools and our custom projects, based on what we see in our clients\' day-to-day operations.',
+	},
+}[lang];
+const schema = [
+	webPage({ url: path('resources', lang), name: m.title, description: m.description, lang, type: 'CollectionPage' }),
+	breadcrumbs(lang, [{ name: copy.h1, url: path('resources', lang) }]),
+];
+---
+
+<Layout title={m.title} description={m.description} schema={schema}>
+	<section class="on-dark bg-tinta pt-32 pb-16 text-crema md:pt-40 md:pb-24">
+		<div class="wrap">
+			<h1 class="t-display text-[clamp(3.5rem,1.5rem+9vw,9rem)]">{copy.h1}</h1>
+			<p class="t-lead measure mt-8 text-crema/85">{copy.lead}</p>
+		</div>
+	</section>
+	<section class="py-20 md:py-28">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[14ch]">{copy.h2}</h2>
+			<p class="t-lead measure mt-6 text-tinta/75">{copy.text}</p>
+			<div class="mt-12">
+				<ResourceList items={recursos} />
+			</div>
+		</div>
+	</section>
+</Layout>

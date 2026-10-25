@@ -1,0 +1,56 @@
+---
+import TextPage from '../views/TextPage.astro';
+import { company } from '../data/company';
+import { path } from '../i18n/routes';
+---
+
+<TextPage route="terms" heading="Términos de uso del sitio web" lead="Condiciones para usar jangol.com.co." updated={company.legalUpdated}>
+	<p>
+		Este sitio pertenece a {company.legalName} (NIT {company.nit}), en adelante {company.brand}. Al navegarlo aceptas estos términos. Los
+		servicios que contrates, como Jangol for Gyms, Jangol for Schools o un desarrollo a la medida, se rigen además por el contrato o la
+		propuesta que firmemos contigo.
+	</p>
+
+	<h2>1. Para qué sirve el sitio</h2>
+	<p>
+		El sitio presenta nuestras plataformas y servicios, publica guías sobre la administración de gimnasios y colegios, y te permite
+		pedir una demo o escribirnos. La información es general y no reemplaza una asesoría para tu caso.
+	</p>
+
+	<h2>2. Información de productos</h2>
+	<p>
+		Las pantallas que mostramos son representaciones de las plataformas con datos de ejemplo; los nombres, montos y cifras que aparecen en
+		ellas no corresponden a personas ni instituciones reales. Las funciones, los alcances y los precios definitivos son los que quedan en
+		la propuesta que te enviamos.
+	</p>
+
+	<h2>3. Propiedad intelectual</h2>
+	<p>
+		Los textos, el diseño, el logotipo, los íconos y el código de este sitio son de {company.brand} o se usan con licencia. Puedes citar
+		o compartir nuestras guías con un enlace a la fuente. Para cualquier otro uso necesitas nuestra autorización por escrito.
+	</p>
+
+	<h2>4. Uso permitido</h2>
+	<p>
+		No puedes usar el sitio para enviar información falsa, suplantar a otra persona, intentar acceder a sistemas sin permiso ni interferir
+		con su funcionamiento.
+	</p>
+
+	<h2>5. Enlaces a otros sitios</h2>
+	<p>Algunas páginas enlazan a sitios de terceros. No controlamos su contenido ni sus políticas, y no respondemos por ellos.</p>
+
+	<h2>6. Responsabilidad</h2>
+	<p>
+		Procuramos que el sitio esté disponible y que la información sea correcta, pero puede haber interrupciones o errores. {company.brand}
+		no responde por daños derivados del uso del sitio, salvo en los casos que la ley colombiana no permita excluir.
+	</p>
+
+	<h2>7. Datos personales</h2>
+	<p>Tratamos los datos que nos envías según nuestra <a href={path('privacy', 'es')}>política de tratamiento de datos personales</a>.</p>
+
+	<h2>8. Ley aplicable</h2>
+	<p>
+		Estos términos se rigen por las leyes de la República de Colombia. Si tienes una inquietud, escríbenos a
+		<a href={`mailto:${company.email}`}>{company.email}</a> y buscaremos resolverla directamente.
+	</p>
+</TextPage>

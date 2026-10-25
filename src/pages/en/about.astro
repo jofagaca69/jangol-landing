@@ -1,0 +1,45 @@
+---
+import TextPage from '../../views/TextPage.astro';
+import { company } from '../../data/company';
+import { path } from '../../i18n/routes';
+---
+
+<TextPage
+	route="about"
+	heading="About us"
+	lead="Jangol is a Colombian software house. We build platforms for gyms and schools, and develop custom software."
+	pageType="AboutPage"
+>
+	<p>
+		We build software for businesses that run on spreadsheets, notebooks and WhatsApp groups today. Gyms and schools share the same
+		problems: nobody knows for sure who is up to date with payments, lines form at the front desk or the school office, and the same
+		information is copied by hand from one place to another. For them we built
+		<a href={path('gyms', 'en')}>Jangol for Gyms</a> and <a href={path('schools', 'en')}>Jangol for Schools</a>.
+	</p>
+	<p>
+		Both platforms share the same base of accounts, payments and permissions, and they are built for how business works in Colombia:
+		payments with PSE, Nequi and Daviplata, DIAN electronic invoicing and, for schools, the Decreto 1290 grading scale and SIMAT reporting.
+	</p>
+	<p>
+		When a business needs something no platform covers, we <a href={path('custom', 'en')}>build it as custom software</a>. The same team
+		defines the scope, designs, writes the code and maintains the product after launch.
+	</p>
+
+	<h2>How we work</h2>
+	<p>
+		We talk about your operation first and technology second. We deliver progress every two weeks in an environment where you can use it,
+		and support comes from the same team that builds. In our <a href={path('resources', 'en')}>guides</a> we share what we learn working
+		with our clients day to day.
+	</p>
+
+	<h2>Company details</h2>
+	<ul>
+		<li>Company name: {company.legalName}</li>
+		<li>Tax ID (NIT): {company.nit}</li>
+		<li>Founded: {company.foundingYear}</li>
+		<li>Founding team: {company.founders.join(', ')}</li>
+		<li>Location: {company.city}, {company.country}</li>
+		<li>Email: <a href={`mailto:${company.email}`}>{company.email}</a></li>
+	</ul>
+	<p>Want to meet us? <a href={path('contact', 'en')}>Book a demo or tell us your idea</a>.</p>
+</TextPage>
