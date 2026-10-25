@@ -1,0 +1,47 @@
+---
+/** Shell for long-form pages: privacy policy, terms and about. */
+import Layout from '../layouts/Layout.astro';
+import { asLang, path, type RouteKey } from '../i18n/routes';
+import { meta } from '../i18n/meta';
+import { breadcrumbs, webPage } from '../lib/schema';
+import { formatDate } from '../lib/recursos';
+
+interface Props {
+	route: Extract<RouteKey, 'about' | 'privacy' | 'terms'>;
+	heading: string;
+	lead?: string;
+	/** Shows a "last updated" line, for legal pages. */
+	updated?: string;
+	pageType?: string;
+}
+
+const { route, heading, lead, updated, pageType } = Astro.props;
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang][route];
+const schema = [
+	webPage({ url: path(route, lang), name: m.title, description: m.description, lang, type: pageType }),
+	breadcrumbs(lang, [{ name: heading, url: path(route, lang) }]),
+];
+---
+
+<Layout title={m.title} description={m.description} schema={schema}>
+	<section class="on-dark bg-tinta pt-32 pb-16 text-crema md:pt-40 md:pb-20">
+		<div class="wrap">
+			<h1 class="t-h2 max-w-[20ch]">{heading}</h1>
+			{lead && <p class="t-lead measure mt-6 text-crema/85">{lead}</p>}
+			{
+				updated && (
+					<p class="mt-8 text-[0.95rem] text-crema/70">
+						{lang === 'es' ? 'Última actualización:' : 'Last updated:'}{' '}
+						<time datetime={updated}>{formatDate(new Date(updated), lang)}</time>
+					</p>
+				)
+			}
+		</div>
+	</section>
+	<div class="wrap py-16 md:py-24">
+		<div class="prose-jangol mx-auto">
+			<slot />
+		</div>
+	</div>
+</Layout>

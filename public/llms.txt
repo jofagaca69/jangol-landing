@@ -1,0 +1,31 @@
+# Jangol
+
+> Jangol es una empresa colombiana de software. Hace dos plataformas, Jangol for Gyms (software para gimnasios) y Jangol for Schools (software para colegios), y desarrolla software a la medida para negocios en Colombia. Jangol is a Colombian software company that builds gym and school management platforms and custom software.
+
+Las plataformas funcionan con cobros por PSE, Nequi y Daviplata y emiten factura electrónica DIAN. Jangol for Schools usa la escala de valoración del Decreto 1290 y deja lista la información de matrícula para el SIMAT.
+
+## Plataformas
+
+- [Jangol for Gyms: software para gimnasios](https://jangol.com.co/gyms/): membresías, check-in con QR, reservas de clases, cobros y seguimiento de asistencia.
+- [Jangol for Schools: software para colegios](https://jangol.com.co/schools/): matrícula en línea, asistencia y notas, pensiones, comunicación con familias y horarios.
+- [Desarrollo de software a la medida](https://jangol.com.co/a-la-medida/): aplicaciones web y móviles, integraciones, automatización y mantenimiento.
+
+## Guías
+
+- [Cómo detectar a los socios que están por irse](https://jangol.com.co/recursos/socios-que-dejan-de-venir/)
+- [Lista para pasar la matrícula de tu colegio a digital](https://jangol.com.co/recursos/matricula-en-linea-checklist/)
+- [¿Plataforma o software a la medida?](https://jangol.com.co/recursos/plataforma-o-a-la-medida/)
+
+## Empresa
+
+- [Nosotros](https://jangol.com.co/nosotros/)
+- [Contacto y demo](https://jangol.com.co/contacto/)
+- [Política de tratamiento de datos](https://jangol.com.co/privacidad/)
+
+## English
+
+- [Home](https://jangol.com.co/en/)
+- [Jangol for Gyms](https://jangol.com.co/en/gyms/)
+- [Jangol for Schools](https://jangol.com.co/en/schools/)
+- [Custom software development](https://jangol.com.co/en/custom-software/)
+- [Resources](https://jangol.com.co/en/resources/)

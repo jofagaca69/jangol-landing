@@ -1,0 +1,93 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ResourceList from '../components/ResourceList.astro';
+import { formatDate, getRecursos, recursoPath, wordCount } from '../lib/recursos';
+import { productById } from '../data/products';
+import { articlePath, path, type ArticleKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { blogPosting, breadcrumbs, webPage } from '../lib/schema';
+import { ogImagePath } from '../lib/og';
+
+interface Props {
+	entry: CollectionEntry<'recursos'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { topic, lang, title, description, date, updated, author, translationKey } = entry.data;
+const s = t(lang);
+const url = recursoPath(entry);
+const related = (await getRecursos(lang)).filter((r) => r.id !== entry.id).slice(0, 2);
+const alternates = { es: articlePath(translationKey as ArticleKey, 'es'), en: articlePath(translationKey as ArticleKey, 'en') };
+const cta =
+	topic === 'custom'
+		? {
+				title: lang === 'es' ? '¿Tienes un proyecto en mente?' : 'Have a project in mind?',
+				href: `${path('contact', lang)}?interes=custom`,
+				label: lang === 'es' ? 'Cuéntanos tu proyecto' : 'Tell us about your project',
+			}
+		: {
+				title: `${lang === 'es' ? 'Conoce' : 'Meet'} ${productById(topic, lang).name}`,
+				href: productById(topic, lang).href,
+				label: `${lang === 'es' ? 'Ver' : 'See'} ${productById(topic, lang).name}`,
+			};
+const schema = [
+	webPage({ url, name: title, description, lang }),
+	blogPosting({ url, title, description, lang, published: date, modified: updated, author, image: ogImagePath(url), wordCount: wordCount(entry.body) }),
+	breadcrumbs(lang, [
+		{ name: s.nav.resources, url: path('resources', lang) },
+		{ name: title, url },
+	]),
+];
+---
+
+<Layout title={`${title} | Jangol`} description={description} ogType="article" schema={schema} alternates={alternates}>
+	<article>
+		<header class="on-dark bg-tinta pt-32 pb-16 text-crema md:pt-40 md:pb-20">
+			<div class="wrap">
+				<nav aria-label={lang === 'es' ? 'Ruta de navegación' : 'Breadcrumb'}>
+					<ol class="flex flex-wrap gap-x-2 font-display font-medium text-crema/75">
+						<li><a href={path('home', lang)} class="inline-flex min-h-11 items-center hover:text-crema">{s.breadcrumbHome}</a></li>
+						<li aria-hidden="true" class="inline-flex min-h-11 items-center">/</li>
+						<li><a href={path('resources', lang)} class="inline-flex min-h-11 items-center hover:text-crema">{s.nav.resources}</a></li>
+					</ol>
+				</nav>
+				<h1 class="t-h2 mt-4 max-w-[20ch]">{title}</h1>
+				<p class="t-lead measure mt-6 text-crema/80">{description}</p>
+				<p class="mt-8 text-[0.95rem] text-crema/70">
+					{s.resources.by} <a href={path('about', lang)} class="underline underline-offset-4 hover:text-crema">{author}</a>
+					{' · '}{s.topics[topic]}{' · '}
+					<time datetime={date.toISOString()}>{formatDate(date, lang)}</time>
+					{
+						updated && (
+							<>
+								{' · '}
+								{s.resources.updated} <time datetime={updated.toISOString()}>{formatDate(updated, lang)}</time>
+							</>
+						)
+					}
+				</p>
+			</div>
+		</header>
+		<div class="wrap py-16 md:py-24">
+			<div class="prose-jangol mx-auto">
+				<Content />
+			</div>
+		</div>
+	</article>
+	{
+		related.length > 0 && (
+			<section class="border-t border-tinta/10 pb-24">
+				<div class="wrap pt-16">
+					<h2 class="t-h3">{s.resources.related}</h2>
+					<div class="mt-8">
+						<ResourceList items={related} />
+					</div>
+				</div>
+			</section>
+		)
+	}
+	<CtaBand theme={topic} title={cta.title} href={cta.href} label={cta.label} />
+</Layout>

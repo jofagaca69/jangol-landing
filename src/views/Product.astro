@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductPage from '../components/product/ProductPage.astro';
+import { productById, type ProductId } from '../data/products';
+import { asLang } from '../i18n/routes';
+import { breadcrumbs, softwareApp, webPage } from '../lib/schema';
+
+interface Props {
+	id: ProductId;
+}
+
+const lang = asLang(Astro.currentLocale);
+const product = productById(Astro.props.id, lang);
+const schema = [
+	webPage({ url: product.href, name: product.seoTitle, description: product.description, lang }),
+	softwareApp(product, lang),
+	breadcrumbs(lang, [{ name: product.name, url: product.href }]),
+];
+---
+
+<Layout title={product.seoTitle} description={product.description} schema={schema}>
+	<ProductPage product={product} />
+</Layout>

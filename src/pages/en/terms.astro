@@ -1,0 +1,55 @@
+---
+import TextPage from '../../views/TextPage.astro';
+import { company } from '../../data/company';
+import { path } from '../../i18n/routes';
+---
+
+<TextPage route="terms" heading="Website terms of use" lead="Conditions for using jangol.com.co." updated={company.legalUpdated}>
+	<p>
+		This site belongs to {company.legalName} (NIT {company.nit}), referred to here as {company.brand}. By browsing it you accept these
+		terms. Any service you hire, such as Jangol for Gyms, Jangol for Schools or a custom project, is also governed by the contract or
+		proposal we sign with you. The Spanish version of these terms is the one that governs.
+	</p>
+
+	<h2>1. What the site is for</h2>
+	<p>
+		The site presents our platforms and services, publishes guides on running gyms and schools, and lets you book a demo or write to us.
+		The information is general and does not replace advice for your specific case.
+	</p>
+
+	<h2>2. Product information</h2>
+	<p>
+		The screens we show are representations of the platforms with sample data; the names, amounts and figures in them do not belong to
+		real people or institutions. Final features, scope and prices are the ones stated in the proposal we send you.
+	</p>
+
+	<h2>3. Intellectual property</h2>
+	<p>
+		The text, design, logo, icons and code of this site belong to {company.brand} or are used under license. You may quote or share our
+		guides with a link to the source. Any other use requires our written permission.
+	</p>
+
+	<h2>4. Acceptable use</h2>
+	<p>
+		You may not use the site to send false information, impersonate someone else, try to access systems without permission or interfere
+		with how it works.
+	</p>
+
+	<h2>5. Links to other sites</h2>
+	<p>Some pages link to third-party sites. We do not control their content or policies and are not responsible for them.</p>
+
+	<h2>6. Liability</h2>
+	<p>
+		We try to keep the site available and the information accurate, but there may be outages or mistakes. {company.brand} is not liable
+		for damage arising from the use of the site, except where Colombian law does not allow that exclusion.
+	</p>
+
+	<h2>7. Personal data</h2>
+	<p>We handle the data you send us under our <a href={path('privacy', 'en')}>personal data policy</a>.</p>
+
+	<h2>8. Governing law</h2>
+	<p>
+		These terms are governed by the laws of the Republic of Colombia. If you have a concern, write to
+		<a href={`mailto:${company.email}`}>{company.email}</a> and we will try to resolve it directly.
+	</p>
+</TextPage>

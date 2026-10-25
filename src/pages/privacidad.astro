@@ -1,0 +1,104 @@
+---
+import TextPage from '../views/TextPage.astro';
+import { company } from '../data/company';
+import { path } from '../i18n/routes';
+---
+
+<TextPage
+	route="privacy"
+	heading="Política de tratamiento de datos personales"
+	lead="Cómo recogemos, usamos y protegemos tus datos personales, y cómo puedes ejercer tus derechos como titular."
+	updated={company.legalUpdated}
+>
+	<p>
+		Esta política aplica a los datos personales que {company.brand} trata a través del sitio web jangol.com.co y de sus plataformas
+		Jangol for Gyms y Jangol for Schools. La seguimos conforme a la Ley Estatutaria 1581 de 2012, el Decreto 1377 de 2013 (compilado en el
+		Decreto 1074 de 2015) y las demás normas colombianas de protección de datos.
+	</p>
+
+	<h2>1. Responsable del tratamiento</h2>
+	<ul>
+		<li>Razón social: {company.legalName}</li>
+		<li>NIT: {company.nit}</li>
+		<li>Dirección: {company.address}, {company.city}, {company.country}</li>
+		<li>Correo para asuntos de datos personales: <a href={`mailto:${company.email}`}>{company.email}</a></li>
+		<li>Teléfono: {company.phone}</li>
+	</ul>
+
+	<h2>2. Qué datos recogemos</h2>
+	<p>
+		Cuando escribes en el formulario de contacto recogemos tu nombre, tu correo, el nombre de tu empresa o institución si lo indicas, el
+		producto que te interesa y el mensaje que nos envías. No pedimos datos sensibles en el formulario y te pedimos que no los incluyas en el
+		mensaje.
+	</p>
+	<p>
+		Al visitar el sitio, nuestro proveedor de red (Cloudflare) registra datos técnicos como la dirección IP, el navegador y las páginas
+		visitadas, con fines de seguridad y medición agregada. El sitio no usa cookies de publicidad.
+	</p>
+
+	<h2>3. Para qué usamos tus datos</h2>
+	<ul>
+		<li>Responder tu solicitud, coordinar una demo y enviarte la propuesta que pediste.</li>
+		<li>Hacer seguimiento comercial de esa misma solicitud.</li>
+		<li>Prestar el servicio a los clientes que contratan nuestras plataformas o un desarrollo a la medida.</li>
+		<li>Cumplir obligaciones legales, contables y tributarias, como la facturación electrónica.</li>
+		<li>Proteger el sitio y las plataformas frente a usos indebidos.</li>
+	</ul>
+	<p>No vendemos tus datos ni los usamos para fines distintos de los que aquí se describen sin pedirte una nueva autorización.</p>
+
+	<h2>4. Datos que tratamos por cuenta de nuestros clientes</h2>
+	<p>
+		Los gimnasios y colegios que usan Jangol for Gyms o Jangol for Schools son responsables de los datos de sus socios, estudiantes y
+		familias. En ese caso {company.brand} actúa como encargado del tratamiento: trata esos datos solo para prestar el servicio, siguiendo
+		las instrucciones del cliente y el contrato firmado con él. Si eres socio de un gimnasio o familia de un colegio y quieres ejercer tus
+		derechos, puedes dirigirte a la institución o escribirnos y le haremos llegar tu solicitud.
+	</p>
+
+	<h2>5. Datos de niñas, niños y adolescentes</h2>
+	<p>
+		Jangol for Schools guarda información de estudiantes menores de edad. Esos datos se tratan respetando el interés superior de los
+		menores y sus derechos fundamentales, como exige el artículo 7 de la Ley 1581 de 2012. El colegio es quien obtiene la autorización de
+		los padres o representantes legales, y el acceso a la información queda limitado a las personas que la necesitan para su función.
+	</p>
+
+	<h2>6. Tus derechos como titular</h2>
+	<p>De acuerdo con el artículo 8 de la Ley 1581 de 2012, puedes:</p>
+	<ul>
+		<li>Conocer, actualizar y rectificar tus datos personales.</li>
+		<li>Pedir prueba de la autorización que nos diste.</li>
+		<li>Saber qué uso le hemos dado a tus datos.</li>
+		<li>Presentar quejas ante la Superintendencia de Industria y Comercio por infracciones a la ley.</li>
+		<li>Revocar la autorización o pedir que suprimamos tus datos, cuando no exista un deber legal o contractual de conservarlos.</li>
+		<li>Acceder gratis a tus datos personales.</li>
+	</ul>
+
+	<h2>7. Cómo hacer una consulta o un reclamo</h2>
+	<p>
+		Escríbenos a <a href={`mailto:${company.email}`}>{company.email}</a> con tu nombre, tu documento de identidad, la descripción de lo
+		que pides y un dato de contacto para responderte.
+	</p>
+	<ul>
+		<li>Respondemos las consultas en un máximo de diez días hábiles. Si no alcanzamos, te avisamos el motivo y respondemos dentro de los cinco días hábiles siguientes.</li>
+		<li>Atendemos los reclamos en un máximo de quince días hábiles. Si no alcanzamos, te avisamos el motivo y respondemos dentro de los ocho días hábiles siguientes.</li>
+	</ul>
+	<p>Si el reclamo llega incompleto, te pedimos lo que falte dentro de los cinco días hábiles siguientes a recibirlo.</p>
+
+	<h2>8. Proveedores y transferencias</h2>
+	<p>
+		Para operar el sitio y las plataformas usamos proveedores de infraestructura, correo y formularios, algunos con servidores fuera de
+		Colombia. Entre ellos están Cloudflare (red y seguridad del sitio) y Web3Forms (envío del formulario de contacto a nuestro correo). Les
+		compartimos solo lo necesario para prestar su servicio y exigimos que protejan la información con medidas equivalentes a las nuestras.
+	</p>
+
+	<h2>9. Seguridad y conservación</h2>
+	<p>
+		Protegemos la información con cifrado en tránsito, control de accesos por rol y copias de seguridad. Conservamos los datos de contacto
+		mientras dure la relación comercial o la solicitud, y después solo el tiempo que exijan las normas contables y tributarias.
+	</p>
+
+	<h2>10. Autorización y cambios a esta política</h2>
+	<p>
+		Al marcar la casilla de autorización del <a href={path('contact', 'es')}>formulario de contacto</a> aceptas el tratamiento de tus datos
+		según esta política. Si la cambiamos de forma importante, lo publicaremos en esta página con la nueva fecha de actualización.
+	</p>
+</TextPage>

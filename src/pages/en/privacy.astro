@@ -1,0 +1,103 @@
+---
+import TextPage from '../../views/TextPage.astro';
+import { company } from '../../data/company';
+import { path } from '../../i18n/routes';
+---
+
+<TextPage
+	route="privacy"
+	heading="Personal data policy"
+	lead="How we collect, use and protect your personal data, and how you can exercise your rights."
+	updated={company.legalUpdated}
+>
+	<p>
+		This policy covers the personal data {company.brand} processes through the jangol.com.co website and the Jangol for Gyms and Jangol
+		for Schools platforms. It follows Colombian Statutory Law 1581 of 2012, Decree 1377 of 2013 (now part of Decree 1074 of 2015) and the
+		other Colombian data protection rules. The Spanish version of this policy is the one that governs.
+	</p>
+
+	<h2>1. Data controller</h2>
+	<ul>
+		<li>Company name: {company.legalName}</li>
+		<li>Tax ID (NIT): {company.nit}</li>
+		<li>Address: {company.address}, {company.city}, {company.country}</li>
+		<li>Email for personal data matters: <a href={`mailto:${company.email}`}>{company.email}</a></li>
+		<li>Phone: {company.phone}</li>
+	</ul>
+
+	<h2>2. What data we collect</h2>
+	<p>
+		When you use the contact form we collect your name, your email, your company or school name if you give it, the product you are
+		interested in and your message. The form does not ask for sensitive data, and we ask you not to include any in your message.
+	</p>
+	<p>
+		When you visit the site, our network provider (Cloudflare) logs technical data such as your IP address, browser and the pages you
+		visit, for security and aggregate measurement. The site does not use advertising cookies.
+	</p>
+
+	<h2>3. What we use your data for</h2>
+	<ul>
+		<li>To answer your request, set up a demo and send you the proposal you asked for.</li>
+		<li>To follow up on that same request.</li>
+		<li>To provide the service to clients who use our platforms or hire a custom project.</li>
+		<li>To meet legal, accounting and tax obligations, such as electronic invoicing.</li>
+		<li>To protect the site and the platforms from misuse.</li>
+	</ul>
+	<p>We do not sell your data, and we do not use it for other purposes without asking for a new authorization.</p>
+
+	<h2>4. Data we process on behalf of our clients</h2>
+	<p>
+		Gyms and schools that use Jangol for Gyms or Jangol for Schools are the controllers of their members', students' and families' data.
+		In that case {company.brand} acts as a processor: it handles that data only to provide the service, following the client's
+		instructions and the contract signed with them. If you are a gym member or a school family and want to exercise your rights, you can
+		contact the institution or write to us and we will pass your request on.
+	</p>
+
+	<h2>5. Data about children and teenagers</h2>
+	<p>
+		Jangol for Schools stores information about students under 18. That data is handled in the best interest of the minors and with
+		respect for their fundamental rights, as Article 7 of Law 1581 of 2012 requires. The school obtains authorization from parents or legal
+		guardians, and access is limited to the people who need the information for their role.
+	</p>
+
+	<h2>6. Your rights</h2>
+	<p>Under Article 8 of Law 1581 of 2012 you can:</p>
+	<ul>
+		<li>Know, update and correct your personal data.</li>
+		<li>Ask for proof of the authorization you gave us.</li>
+		<li>Be told how we have used your data.</li>
+		<li>File complaints with the Superintendence of Industry and Commerce (SIC) for violations of the law.</li>
+		<li>Revoke your authorization or ask us to delete your data, unless a legal or contractual duty requires us to keep it.</li>
+		<li>Access your personal data free of charge.</li>
+	</ul>
+
+	<h2>7. How to make a request or a complaint</h2>
+	<p>
+		Write to <a href={`mailto:${company.email}`}>{company.email}</a> with your name, your ID number, a description of what you are asking
+		for and a way to reach you.
+	</p>
+	<ul>
+		<li>We answer requests within ten business days. If we need more time, we tell you why and answer within the next five business days.</li>
+		<li>We resolve complaints within fifteen business days. If we need more time, we tell you why and answer within the next eight business days.</li>
+	</ul>
+	<p>If a complaint is incomplete, we ask you for what is missing within five business days of receiving it.</p>
+
+	<h2>8. Providers and transfers</h2>
+	<p>
+		To run the site and the platforms we use infrastructure, email and form providers, some with servers outside Colombia. They include
+		Cloudflare (site network and security) and Web3Forms (delivering the contact form to our inbox). We share only what each one needs to
+		provide its service and require them to protect the information with measures equivalent to ours.
+	</p>
+
+	<h2>9. Security and retention</h2>
+	<p>
+		We protect information with encryption in transit, role-based access control and backups. We keep contact data while the business
+		relationship or the request lasts, and afterwards only as long as accounting and tax rules require.
+	</p>
+
+	<h2>10. Authorization and changes to this policy</h2>
+	<p>
+		By ticking the authorization box on the <a href={path('contact', 'en')}>contact form</a> you agree to the processing of your data
+		under this policy. If we change it in a significant way, we will publish the change on this page with a new update date.
+	</p>
+</TextPage>

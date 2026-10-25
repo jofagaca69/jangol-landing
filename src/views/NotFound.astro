@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { products } from '../data/products';
+import { asLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = asLang(Astro.currentLocale);
+const s = t(lang);
+const links = [
+	...products[lang].map((p) => ({ href: p.href, label: p.name })),
+	{ href: path('custom', lang), label: s.footer.customSoftware },
+	{ href: path('resources', lang), label: s.nav.resources },
+	{ href: path('contact', lang), label: s.demo },
+];
+---
+
+<Layout title={`${s.notFound.title} | Jangol`} description={s.notFound.description} noindex>
+	<section class="on-dark flex min-h-[80svh] items-end bg-tinta pt-32 pb-20 text-crema">
+		<div class="wrap">
+			<p class="t-display text-[clamp(5rem,3rem+12vw,14rem)]" aria-hidden="true">404</p>
+			<h1 class="t-h2 mt-4">{s.notFound.title}</h1>
+			<p class="t-lead measure mt-6 text-crema/85">{s.notFound.text}</p>
+			<div class="mt-10 flex flex-wrap gap-3">
+				<a href={path('home', lang)} class="btn btn-crema">{s.notFound.home}</a>
+				{links.map((l) => <a href={l.href} class="btn btn-ghost">{l.label}</a>)}
+			</div>
+		</div>
+	</section>
+</Layout>
