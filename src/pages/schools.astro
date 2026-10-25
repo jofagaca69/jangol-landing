@@ -1,14 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProductPage from '../components/product/ProductPage.astro';
-import { productById } from '../data/products';
-
-const product = productById('schools');
+import View from '../views/Product.astro';
 ---
 
-<Layout
-	title={product.name}
-	description="Software para colegios, academias e institutos: matrícula en línea, asistencia y notas, pensiones, comunicación con familias y horarios."
->
-	<ProductPage product={product} />
-</Layout>
+<View id="schools" />

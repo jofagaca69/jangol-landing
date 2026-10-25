@@ -1,27 +1,30 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { formatDate, topics } from '../lib/recursos';
+import { formatDate, recursoPath } from '../lib/recursos';
+import { t } from '../i18n/ui';
 
 interface Props {
 	items: CollectionEntry<'recursos'>[];
+	/** Heading level for each item; h3 under a section heading, h2 on the list page. */
+	as?: 'h2' | 'h3';
 }
 
-const { items } = Astro.props;
+const { items, as: Heading = 'h3' } = Astro.props;
 ---
 
 <ul class="border-b border-tinta/15">
 	{
 		items.map((r) => (
 			<li class="border-t border-tinta/15">
-				<a href={`/recursos/${r.id}`} class="group grid gap-3 py-8 md:grid-cols-12 md:gap-8">
-					<p class="text-[0.95rem] text-tinta/60 md:col-span-3">
-						{topics[r.data.topic]}
+				<a href={recursoPath(r)} class="group grid gap-3 py-8 md:grid-cols-12 md:gap-8">
+					<p class="text-[0.95rem] text-tinta/65 md:col-span-3">
+						{t(r.data.lang).topics[r.data.topic]}
 						<br class="max-md:hidden" />
 						<span class="md:hidden">, </span>
-						<time datetime={r.data.date.toISOString()}>{formatDate(r.data.date)}</time>
+						<time datetime={r.data.date.toISOString()}>{formatDate(r.data.date, r.data.lang)}</time>
 					</p>
 					<div class="md:col-span-8">
-						<h3 class="t-h3 decoration-2 underline-offset-4 group-hover:underline">{r.data.title}</h3>
+						<Heading class="t-h3 decoration-2 underline-offset-4 group-hover:underline">{r.data.title}</Heading>
 						<p class="measure mt-2 text-tinta/75">{r.data.description}</p>
 					</div>
 				</a>

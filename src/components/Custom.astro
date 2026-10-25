@@ -1,19 +1,32 @@
 ---
 import { services } from '../data/custom';
+import { asLang, path } from '../i18n/routes';
+
+const lang = asLang(Astro.currentLocale);
+const copy = {
+	es: {
+		title: 'Y si lo que necesitas no existe, lo construimos',
+		text: 'Jangol también desarrolla software a la medida. El mismo equipo define la solución contigo, la construye y la sigue mejorando después del lanzamiento.',
+		cta: 'Ver software a la medida',
+	},
+	en: {
+		title: 'If what you need does not exist, we build it',
+		text: 'Jangol also builds custom software. The same team defines the solution with you, builds it and keeps improving it after launch.',
+		cta: 'See custom software',
+	},
+}[lang];
 ---
 
 <section id="a-medida" class="bg-crema-deep py-24 md:py-36">
 	<div class="wrap grid gap-12 md:grid-cols-12">
 		<div class="md:col-span-6">
-			<h2 class="t-h2 max-w-[13ch]">Y si lo que necesitas no existe, lo construimos</h2>
-			<p class="t-lead measure mt-8 text-tinta/80">
-				Jangol es una casa de software. El mismo equipo define la solución contigo, la construye y la sigue mejorando después del lanzamiento.
-			</p>
-			<a href="/a-la-medida" class="btn btn-burdeos mt-10">Ver software a la medida</a>
+			<h2 class="t-h2 max-w-[13ch]">{copy.title}</h2>
+			<p class="t-lead measure mt-8 text-tinta/80">{copy.text}</p>
+			<a href={path('custom', lang)} class="btn btn-burdeos mt-10">{copy.cta}</a>
 		</div>
 		<ul class="self-end border-b border-tinta/15 md:col-span-5 md:col-start-8">
 			{
-				services.map((w) => (
+				services[lang].map((w) => (
 					<li class="border-t border-tinta/15 py-6">
 						<h3 class="t-h3">{w.title}</h3>
 						<p class="mt-1.5 text-tinta/75">{w.desc}</p>

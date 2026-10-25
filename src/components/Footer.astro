@@ -1,52 +1,63 @@
 ---
 import Monogram from './Monogram.astro';
-import { CONTACT_EMAIL, products } from '../data/products';
+import { products } from '../data/products';
+import { company, isSet, whatsappUrl } from '../data/company';
+import { asLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
 
+const lang = asLang(Astro.currentLocale);
+const s = t(lang).footer;
 const columns = [
+	{ title: s.platforms, links: products[lang].map((p) => ({ href: p.href, label: p.name })) },
 	{
-		title: 'Plataformas',
-		links: products.map((p) => ({ href: p.href, label: p.name })),
-	},
-	{
-		title: 'Servicios',
+		title: s.services,
 		links: [
-			{ href: '/a-la-medida', label: 'Software a la medida' },
-			{ href: '/a-la-medida#proceso', label: 'Cómo trabajamos' },
+			{ href: path('custom', lang), label: s.customSoftware },
+			{ href: `${path('custom', lang)}#proceso`, label: s.process },
+			{ href: path('resources', lang), label: s.guides },
 		],
 	},
 	{
-		title: 'Recursos',
-		links: [{ href: '/recursos', label: 'Artículos y guías' }],
+		title: s.company,
+		links: [
+			{ href: path('about', lang), label: s.aboutUs },
+			{ href: path('privacy', lang), label: s.privacy },
+			{ href: path('terms', lang), label: s.terms },
+		],
 	},
 	{
-		title: 'Contacto',
+		title: s.contact,
 		links: [
-			{ href: '/contacto', label: 'Pedir demo' },
-			{ href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
+			{ href: path('contact', lang), label: t(lang).demo },
+			{ href: `mailto:${company.email}`, label: company.email },
+			...(whatsappUrl ? [{ href: whatsappUrl, label: 'WhatsApp' }] : []),
 		],
 	},
 ];
+const legal = [company.legalName, `${s.nit} ${company.nit}`, [company.city, company.country].filter(isSet).join(', ')];
 ---
 
-<footer class="on-dark bg-tinta pt-20 pb-10 text-crema/70">
+<footer class="on-dark bg-tinta pt-20 pb-10 text-crema/75">
 	<div class="wrap">
 		<div class="grid gap-12 border-b border-crema/10 pb-14 md:grid-cols-12">
 			<div class="md:col-span-4">
-				<a href="/" class="inline-flex items-center gap-2.5 text-crema" aria-label="Jangol, inicio">
+				<a href={path('home', lang)} class="inline-flex items-center gap-2.5 py-1 text-crema" aria-label={t(lang).homeAria}>
 					<Monogram class="h-8 w-auto" />
 					<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
 				</a>
-				<p class="mt-5 max-w-[30ch]">Casa de software. Hacemos plataformas para gimnasios y colegios, y construimos a la medida.</p>
+				<p class="mt-5 max-w-[32ch]">{t(lang).slogan}. {s.about}</p>
 			</div>
 			<div class="grid grid-cols-2 gap-10 sm:grid-cols-4 md:col-span-8">
 				{
 					columns.map((c) => (
 						<div>
 							<p class="font-display font-semibold text-crema">{c.title}</p>
-							<ul class="mt-4 grid gap-2.5 text-[0.95rem]">
+							<ul class="mt-3 grid gap-0.5 text-[0.95rem]">
 								{c.links.map((l) => (
 									<li>
-										<a href={l.href} class="break-words transition-colors hover:text-crema">{l.label}</a>
+										<a href={l.href} class="inline-flex min-h-11 items-center break-all transition-colors hover:text-crema">
+											{l.label}
+										</a>
 									</li>
 								))}
 							</ul>
@@ -55,6 +66,9 @@ const columns = [
 				}
 			</div>
 		</div>
-		<p class="mt-8 text-[0.9rem]">© {new Date().getFullYear()} Jangol</p>
+		<div class="mt-8 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 text-[0.9rem]">
+			<p>© {new Date().getFullYear()} Jangol</p>
+			<p><span class="sr-only">{s.legal}: </span>{legal.filter(Boolean).join(' · ')}</p>
+		</div>
 	</div>
 </footer>

@@ -1,16 +1,21 @@
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { path, type Lang } from '../i18n/routes';
 
-export const topics = {
-	gyms: 'Gimnasios',
-	schools: 'Colegios',
-	custom: 'Software a la medida',
-} as const;
-
-/** Published articles, newest first. */
-export async function getRecursos() {
-	const all = await getCollection('recursos', ({ data }) => !data.draft);
+/** Published articles in one language, newest first. */
+export async function getRecursos(lang: Lang) {
+	const all = await getCollection('recursos', ({ data }) => !data.draft && data.lang === lang);
 	return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-const fmt = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-export const formatDate = (d: Date) => fmt.format(d);
+/** Entry ids look like "es/socios-que-dejan-de-venir"; the slug is the file name. */
+export const recursoSlug = (entry: CollectionEntry<'recursos'>) => entry.id.split('/').pop()!;
+
+export const recursoPath = (entry: CollectionEntry<'recursos'>) => `${path('resources', entry.data.lang)}${recursoSlug(entry)}/`;
+
+const formats: Record<Lang, Intl.DateTimeFormat> = {
+	es: new Intl.DateTimeFormat('es-CO', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
+	en: new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
+};
+export const formatDate = (d: Date, lang: Lang) => formats[lang].format(d);
+
+export const wordCount = (body = '') => body.split(/\s+/).filter(Boolean).length;

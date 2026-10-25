@@ -1,35 +1,54 @@
 ---
 import Frame from './Frame.astro';
+import { asLang } from '../../i18n/routes';
 
-const months = [
-	{ m: 'Marzo', state: 'ok', label: 'Pagada' },
-	{ m: 'Abril', state: 'ok', label: 'Pagada' },
-	{ m: 'Mayo', state: 'ok', label: 'Pagada' },
-	{ m: 'Junio', state: 'warn', label: 'Vence el 30' },
-	{ m: 'Julio', state: 'idle', label: 'Por emitir' },
-];
+const c = {
+	es: {
+		title: 'Estado de cuenta',
+		sub: 'Grado 3.° · Descuento por hermanos 10%',
+		months: ['febrero', 'marzo', 'abril', 'mayo', 'junio'],
+		item: (m: string) => `Pensión de ${m}`,
+		labels: { ok: 'Pagada', warn: 'Vence el 30', idle: 'Por emitir' },
+		due: 'Por pagar este mes',
+		amount: '$ 485.000',
+		pay: 'Pagar con PSE',
+	},
+	en: {
+		title: 'Account statement',
+		sub: 'Grade 3 · Sibling discount 10%',
+		months: ['February', 'March', 'April', 'May', 'June'],
+		item: (m: string) => `${m} tuition`,
+		labels: { ok: 'Paid', warn: 'Due on the 30th', idle: 'Not issued yet' },
+		due: 'Due this month',
+		amount: 'COP 485,000',
+		pay: 'Pay with PSE',
+	},
+}[asLang(Astro.currentLocale)];
+const states = ['ok', 'ok', 'ok', 'warn', 'idle'] as const;
 ---
 
-<Frame title="Estado de cuenta">
+<Frame title={c.title}>
 	<div class="flex items-end justify-between gap-3">
 		<span>
 			<span class="ui-h block">Sofía Mendoza</span>
-			<span class="block text-tinta/55">3.º primaria · Descuento por hermanos 10%</span>
+			<span class="block text-tinta/65">{c.sub}</span>
 		</span>
 	</div>
 	<ul class="mt-3 grid gap-1">
 		{
-			months.map((r, i) => (
+			c.months.map((m, i) => (
 				<li class="ui-row ui-in grid-cols-[1fr_auto_auto]" style={`--i:${i}`}>
-					<span class="font-semibold">Pensión de {r.m.toLowerCase()}</span>
-					<span class="tabular-nums">$243</span>
-					<span class:list={['ui-chip', `ui-chip-${r.state}`]}>{r.label}</span>
+					<span class="font-semibold">{c.item(m)}</span>
+					<span class="tabular-nums">{c.amount}</span>
+					<span class:list={['ui-chip', `ui-chip-${states[i]}`]}>{c.labels[states[i]]}</span>
 				</li>
 			))
 		}
 	</ul>
 	<div class="mt-3 flex items-center justify-between gap-3 rounded-xl bg-tinta/5 px-3 py-2.5">
-		<span>Por pagar este mes <strong class="font-semibold tabular-nums">$243</strong></span>
-		<span class="ui-btn">Pagar</span>
+		<span>
+			{c.due} <strong class="font-semibold tabular-nums">{c.amount}</strong>
+		</span>
+		<span class="ui-btn">{c.pay}</span>
 	</div>
 </Frame>

@@ -1,8 +1,23 @@
 ---
 import { products } from '../data/products';
+import { asLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
 import Mockup from './mockups/Mockup.astro';
 
-const rows = products.map((p) => ({
+const lang = asLang(Astro.currentLocale);
+const copy = {
+	es: {
+		title: 'Dos plataformas, una para cada sector',
+		text: 'Las dos comparten la misma base: cuentas, pagos, permisos y soporte. Cambian los módulos, porque un gimnasio y un colegio no trabajan igual.',
+		more: 'Conocer',
+	},
+	en: {
+		title: 'Two platforms, one for each sector',
+		text: 'Both share the same base: accounts, payments, permissions and support. The modules change, because a gym and a school do not work the same way.',
+		more: 'Explore',
+	},
+}[lang];
+const rows = products[lang].map((p) => ({
 	...p,
 	featured: p.highlights.map((id) => p.modules.find((m) => m.id === id)!),
 	shot: p.id === 'gyms' ? ('checkin' as const) : ('fees' as const),
@@ -12,11 +27,8 @@ const rows = products.map((p) => ({
 <section id="productos" class="py-24 md:py-36">
 	<div class="wrap">
 		<div class="grid gap-8 md:grid-cols-12 md:items-end">
-			<h2 class="t-h2 md:col-span-7">Dos plataformas, una para cada rubro</h2>
-			<p class="t-lead measure text-tinta/75 md:col-span-5">
-				Las dos comparten la misma base: cuentas, pagos, permisos y soporte. Cambian los módulos, porque un gimnasio y un colegio no
-				trabajan igual.
-			</p>
+			<h2 class="t-h2 md:col-span-7">{copy.title}</h2>
+			<p class="t-lead measure text-tinta/75 md:col-span-5">{copy.text}</p>
 		</div>
 
 		<div class="mt-16 grid gap-20 md:mt-24 md:gap-32">
@@ -24,8 +36,11 @@ const rows = products.map((p) => ({
 				rows.map((p, i) => (
 					<article class:list={[`theme-${p.id}`, 'grid items-center gap-10 lg:grid-cols-12 lg:gap-14']}>
 						<div class:list={['lg:col-span-5', i % 2 === 1 && 'lg:order-2 lg:col-start-8']}>
-							<p class="font-display text-[1.1rem] font-medium text-[var(--accent)]">Jangol for</p>
-							<h3 class="t-display text-[clamp(3.5rem,2rem+6vw,7rem)]">{p.short}</h3>
+							<p class="font-display text-[1.1rem] font-medium text-[var(--accent)]">{p.heading}</p>
+							<h3 class="t-display text-[clamp(3.5rem,2rem+6vw,7rem)]">
+								<span class="sr-only">Jangol for </span>
+								{p.short}
+							</h3>
 							<p class="t-h3 mt-6 max-w-[26ch]">{p.tagline}</p>
 							<p class="mt-3 text-tinta/70">{p.audience}</p>
 							<dl class="mt-8 border-b border-tinta/15">
@@ -38,10 +53,10 @@ const rows = products.map((p) => ({
 							</dl>
 							<div class="mt-8 flex flex-wrap gap-3">
 								<a href={p.href} class="btn bg-[var(--accent)] text-[var(--accent-ink)] hover:bg-[var(--accent-deep)]">
-									Conocer {p.name}
+									{copy.more} {p.name}
 								</a>
-								<a href={`/contacto?interes=${p.id}`} class="btn btn-ghost">
-									Pedir demo
+								<a href={`${path('contact', lang)}?interes=${p.id}`} class="btn btn-ghost">
+									{t(lang).demo}
 								</a>
 							</div>
 						</div>

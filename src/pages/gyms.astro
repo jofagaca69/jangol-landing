@@ -1,14 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProductPage from '../components/product/ProductPage.astro';
-import { productById } from '../data/products';
-
-const product = productById('gyms');
+import View from '../views/Product.astro';
 ---
 
-<Layout
-	title={product.name}
-	description="Software para gimnasios, boxes y estudios: membresías, check-in con QR, reservas de clases, cobros recurrentes y seguimiento de asistencia."
->
-	<ProductPage product={product} />
-</Layout>
+<View id="gyms" />

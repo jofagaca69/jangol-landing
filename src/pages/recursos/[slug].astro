@@ -1,42 +1,10 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { render, type CollectionEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import CtaBand from '../../components/CtaBand.astro';
-import { formatDate, getRecursos, topics } from '../../lib/recursos';
-import { productById } from '../../data/products';
+import { getRecursos, recursoSlug } from '../../lib/recursos';
+import Article from '../../views/Article.astro';
 
-export const getStaticPaths = (async () => {
-	const recursos = await getRecursos();
-	return recursos.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
-}) satisfies GetStaticPaths;
-
-const { entry } = Astro.props as { entry: CollectionEntry<'recursos'> };
-const { Content } = await render(entry);
-const { topic } = entry.data;
-const cta =
-	topic === 'custom'
-		? { title: '¿Tienes un proyecto en mente?', href: '/contacto?interes=custom', label: 'Cuéntanos tu proyecto' }
-		: { title: `Conoce ${productById(topic).name}`, href: productById(topic).href, label: `Ver ${productById(topic).name}` };
+export const getStaticPaths = (async () =>
+	(await getRecursos('es')).map((entry) => ({ params: { slug: recursoSlug(entry) }, props: { entry } }))) satisfies GetStaticPaths;
 ---
 
-<Layout title={entry.data.title} description={entry.data.description}>
-	<article>
-		<header class="on-dark bg-tinta pt-32 pb-16 text-crema md:pt-40 md:pb-20">
-			<div class="wrap">
-				<a href="/recursos" class="font-display font-medium text-crema/70 hover:text-crema">Recursos</a>
-				<h1 class="t-h2 mt-6 max-w-[20ch]">{entry.data.title}</h1>
-				<p class="t-lead measure mt-6 text-crema/75">{entry.data.description}</p>
-				<p class="mt-8 text-[0.95rem] text-crema/60">
-					{topics[topic]}, <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
-				</p>
-			</div>
-		</header>
-		<div class="wrap py-16 md:py-24">
-			<div class="prose-jangol mx-auto">
-				<Content />
-			</div>
-		</div>
-	</article>
-	<CtaBand theme={topic} title={cta.title} href={cta.href} label={cta.label} />
-</Layout>
+<Article entry={Astro.props.entry} />

@@ -1,43 +1,75 @@
 ---
 import Frame from './Frame.astro';
+import { asLang } from '../../i18n/routes';
 
-const rows = [
-	{ course: 'Matemática', grades: [16, 17, 18] },
-	{ course: 'Comunicación', grades: [15, 15, 17] },
-	{ course: 'Ciencia y tecnología', grades: [18, 17, 18] },
-	{ course: 'Inglés', grades: [14, 16, 16] },
-	{ course: 'Arte', grades: [19, 18, 19] },
+const lang = asLang(Astro.currentLocale);
+// Decreto 1290 national scale: superior, alto, básico, bajo.
+const c = {
+	es: {
+		title: 'Boletín · Grado 8.° A',
+		attendance: 'Asistencia 96%',
+		subject: 'Asignatura',
+		avg: 'Prom.',
+		courses: ['Matemáticas', 'Lenguaje', 'Ciencias naturales', 'Inglés', 'Artes'],
+		overall: 'Promedio general',
+		level: (n: number) => (n >= 4.6 ? 'Desempeño superior' : n >= 4 ? 'Desempeño alto' : n >= 3 ? 'Desempeño básico' : 'Desempeño bajo'),
+	},
+	en: {
+		title: 'Report card · Grade 8 A',
+		attendance: 'Attendance 96%',
+		subject: 'Subject',
+		avg: 'Avg.',
+		courses: ['Math', 'Language', 'Science', 'English', 'Art'],
+		overall: 'Overall average',
+		level: (n: number) => (n >= 4.6 ? 'Superior' : n >= 4 ? 'High' : n >= 3 ? 'Basic' : 'Low'),
+	},
+}[lang];
+const grades = [
+	[4.2, 4.5, 4.6],
+	[3.9, 4.1, 4.4],
+	[4.6, 4.4, 4.7],
+	[3.6, 4.0, 4.1],
+	[4.8, 4.7, 4.9],
 ];
-const avg = (g: number[]) => (g.reduce((a, b) => a + b, 0) / g.length).toFixed(1);
+const num = (n: number) =>
+	n.toLocaleString(lang === 'es' ? 'es-CO' : 'en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const mean = (g: number[]) => g.reduce((a, b) => a + b, 0) / g.length;
+const overall = mean(grades.map(mean));
 ---
 
-<Frame title="Boletín · 2.º secundaria A">
+<Frame title={c.title}>
 	<div class="flex items-center justify-between gap-3">
 		<p class="ui-h">Joaquín Herrera</p>
-		<span class="ui-chip ui-chip-ok">Asistencia 96%</span>
+		<span class="ui-chip ui-chip-ok">{c.attendance}</span>
 	</div>
 	<table class="ui-table mt-3 w-full">
 		<thead>
 			<tr>
-				<th class="text-left">Curso</th>
+				<th class="text-left">{c.subject}</th>
 				<th>I</th>
 				<th>II</th>
 				<th>III</th>
-				<th>Prom.</th>
+				<th>{c.avg}</th>
 			</tr>
 		</thead>
 		<tbody>
 			{
-				rows.map((r, i) => (
+				grades.map((g, i) => (
 					<tr class="ui-in" style={`--i:${i}`}>
-						<td class="truncate text-left font-semibold">{r.course}</td>
-						{r.grades.map((g) => (
-							<td class="tabular-nums">{g}</td>
+						<td class="truncate text-left font-semibold">{c.courses[i]}</td>
+						{g.map((x) => (
+							<td class="tabular-nums">{num(x)}</td>
 						))}
-						<td class="font-semibold tabular-nums text-[var(--accent)]">{avg(r.grades)}</td>
+						<td class="font-semibold tabular-nums text-[var(--accent)]">{num(mean(g))}</td>
 					</tr>
 				))
 			}
 		</tbody>
 	</table>
+	<p class="mt-3 flex justify-between gap-3 rounded-xl bg-tinta/5 px-3 py-2.5">
+		<span>
+			{c.overall} <strong class="font-semibold tabular-nums">{num(overall)}</strong>
+		</span>
+		<span class="font-semibold text-[var(--accent)]">{c.level(overall)}</span>
+	</p>
 </Frame>

@@ -1,27 +1,46 @@
 ---
 import Frame from './Frame.astro';
+import { asLang } from '../../i18n/routes';
 
-const totals = [
-	{ label: 'Pagado', value: '$18.420', share: 0.78, tone: 'ok' },
-	{ label: 'Pendiente', value: '$3.960', share: 0.17, tone: 'warn' },
-	{ label: 'Vencido', value: '$1.180', share: 0.05, tone: 'bad' },
-];
-const moves = [
-	{ name: 'Diego Fernández', what: 'Trimestral', amount: '$165', state: 'ok', label: 'Tarjeta' },
-	{ name: 'Lucía Paredes', what: '12 sesiones', amount: '$90', state: 'ok', label: 'Transferencia' },
-	{ name: 'Mateo Silva', what: 'Mensual libre', amount: '$60', state: 'bad', label: 'Aviso enviado' },
-];
+const c = {
+	es: {
+		title: 'Cobros · Octubre',
+		totals: [
+			{ label: 'Pagado', value: '$ 18,4 M', share: 0.78, tone: 'ok' },
+			{ label: 'Pendiente', value: '$ 4 M', share: 0.17, tone: 'warn' },
+			{ label: 'Vencido', value: '$ 1,2 M', share: 0.05, tone: 'bad' },
+		],
+		moves: [
+			{ name: 'Diego Fernández', what: 'Trimestral', amount: '$ 270.000', state: 'ok', label: 'PSE' },
+			{ name: 'Lucía Paredes', what: '12 sesiones', amount: '$ 180.000', state: 'ok', label: 'Nequi' },
+			{ name: 'Mateo Silva', what: 'Mensual libre', amount: '$ 99.000', state: 'bad', label: 'Aviso enviado' },
+		],
+	},
+	en: {
+		title: 'Payments · October',
+		totals: [
+			{ label: 'Paid', value: 'COP 18.4M', share: 0.78, tone: 'ok' },
+			{ label: 'Pending', value: 'COP 4M', share: 0.17, tone: 'warn' },
+			{ label: 'Overdue', value: 'COP 1.2M', share: 0.05, tone: 'bad' },
+		],
+		moves: [
+			{ name: 'Diego Fernández', what: 'Quarterly', amount: 'COP 270,000', state: 'ok', label: 'PSE' },
+			{ name: 'Lucía Paredes', what: '12 sessions', amount: 'COP 180,000', state: 'ok', label: 'Nequi' },
+			{ name: 'Mateo Silva', what: 'Monthly unlimited', amount: 'COP 99,000', state: 'bad', label: 'Reminder sent' },
+		],
+	},
+}[asLang(Astro.currentLocale)];
 ---
 
-<Frame title="Cobros · Octubre">
+<Frame title={c.title}>
 	<div class="ui-in flex h-2.5 overflow-hidden rounded-full">
-		{totals.map((t) => <span class:list={['ui-split', `ui-split-${t.tone}`]} style={`--v:${t.share}`} />)}
+		{c.totals.map((t) => <span class:list={['ui-split', `ui-split-${t.tone}`]} style={`--v:${t.share}`} />)}
 	</div>
 	<dl class="mt-3 grid grid-cols-3 gap-2">
 		{
-			totals.map((t) => (
+			c.totals.map((t) => (
 				<div>
-					<dt class="text-tinta/55">{t.label}</dt>
+					<dt class="text-tinta/65">{t.label}</dt>
 					<dd class="font-display text-[1.05em] font-semibold tabular-nums">{t.value}</dd>
 				</div>
 			))
@@ -29,11 +48,11 @@ const moves = [
 	</dl>
 	<ul class="mt-3 grid gap-1">
 		{
-			moves.map((m, i) => (
+			c.moves.map((m, i) => (
 				<li class="ui-row ui-in grid-cols-[1fr_auto_auto]" style={`--i:${i}`}>
 					<span class="min-w-0">
 						<span class="block truncate font-semibold">{m.name}</span>
-						<span class="block truncate text-tinta/55">{m.what}</span>
+						<span class="block truncate text-tinta/65">{m.what}</span>
 					</span>
 					<span class="font-semibold tabular-nums">{m.amount}</span>
 					<span class:list={['ui-chip', `ui-chip-${m.state}`]}>{m.label}</span>

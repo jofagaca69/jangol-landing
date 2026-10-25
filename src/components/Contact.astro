@@ -1,72 +1,135 @@
 ---
-import { CONTACT_EMAIL, products } from '../data/products';
+import { products } from '../data/products';
+import { company, whatsappUrl } from '../data/company';
+import { asLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
 
+const lang = asLang(Astro.currentLocale);
+const s = t(lang);
+const f = s.form;
 const interests = [
-	...products.map((p) => ({ value: p.id, label: p.name })),
-	{ value: 'custom', label: 'Software a la medida' },
-	{ value: 'unsure', label: 'Aún no lo sé' },
+	...products[lang].map((p) => ({ value: p.id, label: p.name })),
+	{ value: 'custom', label: s.footer.customSoftware },
+	{ value: 'unsure', label: f.unsure },
 ];
+const copy = {
+	es: {
+		title: 'Pide una demo o cuéntanos tu idea',
+		direct: 'Si prefieres escribir directo, nuestro correo es',
+		next: 'Qué pasa después',
+		steps: [
+			'Te escribimos en un día hábil para coordinar una llamada.',
+			'En la llamada vemos cómo trabajas hoy y te mostramos la plataforma, o conversamos sobre tu proyecto.',
+			'Te enviamos una propuesta con alcance, plazos y costo.',
+		],
+		subject: 'Nuevo mensaje desde jangol.com.co',
+	},
+	en: {
+		title: 'Book a demo or tell us your idea',
+		direct: 'If you would rather write directly, our email is',
+		next: 'What happens next',
+		steps: [
+			'We write back within one business day to set up a call.',
+			'On the call we look at how you work today and show you the platform, or talk through your project.',
+			'We send you a proposal with scope, timeline and cost.',
+		],
+		subject: 'New message from jangol.com.co',
+	},
+}[lang];
 const field =
-	'mt-2 w-full rounded-xl border border-crema/25 bg-tinta-soft px-4 py-3.5 text-crema placeholder:text-crema/40 focus:border-agua focus:outline-none';
-const next = [
-	'Te escribimos en un día hábil para coordinar una llamada.',
-	'En la llamada vemos cómo trabajas hoy y te mostramos la plataforma o conversamos tu proyecto.',
-	'Te enviamos una propuesta con alcance, plazos y costo.',
-];
+	'mt-2 w-full rounded-xl border border-crema/30 bg-tinta-soft px-4 py-3.5 text-crema placeholder:text-crema/50 focus:border-agua focus:outline-none aria-[invalid=true]:border-[#f2a7b8]';
 ---
 
 <section id="contacto" class="on-dark bg-tinta pt-32 pb-24 text-crema md:pt-40 md:pb-32">
 	<div class="wrap grid gap-14 md:grid-cols-12">
 		<div class="md:col-span-5">
-			<h1 class="t-h2 max-w-[12ch]">Pide una demo o cuéntanos tu idea</h1>
-			<p class="t-lead measure mt-8 text-crema/75">
-				Si prefieres escribir directo, nuestro correo es{' '}
-				<a href={`mailto:${CONTACT_EMAIL}`} class="text-agua underline underline-offset-4">{CONTACT_EMAIL}</a>.
+			<h1 class="t-h2 max-w-[12ch]">{copy.title}</h1>
+			<p class="t-lead measure mt-8 text-crema/80">
+				{copy.direct}{' '}
+				<a href={`mailto:${company.email}`} class="text-agua underline underline-offset-4">{company.email}</a>
+				{whatsappUrl && (
+					<>
+						{' '}{lang === 'es' ? 'o por' : 'or on'}{' '}
+						<a href={whatsappUrl} class="text-agua underline underline-offset-4">WhatsApp</a>
+					</>
+				)}.
 			</p>
-			<h2 class="mt-14 font-display text-[1.1rem] font-semibold">Qué pasa después</h2>
+			<h2 class="mt-14 font-display text-[1.1rem] font-semibold">{copy.next}</h2>
 			<ol class="mt-5 grid gap-5">
 				{
-					next.map((n, i) => (
+					copy.steps.map((n, i) => (
 						<li class="grid grid-cols-[2rem_1fr] gap-3">
 							<span class="grid size-8 place-items-center rounded-full border border-crema/30 font-display text-[0.9rem] font-semibold">
 								{i + 1}
 							</span>
-							<span class="pt-1 text-crema/80">{n}</span>
+							<span class="pt-1 text-crema/85">{n}</span>
 						</li>
 					))
 				}
 			</ol>
 		</div>
 
-		<form class="grid content-start gap-6 md:col-span-6 md:col-start-7" data-contact data-email={CONTACT_EMAIL} novalidate>
+		<form
+			class="grid content-start gap-6 md:col-span-6 md:col-start-7"
+			action="https://api.web3forms.com/submit"
+			method="POST"
+			data-contact
+			data-email={company.email}
+			data-msg-name={f.errName}
+			data-msg-email={f.errEmail}
+			data-msg-consent={f.errConsent}
+			data-msg-ok={f.ok}
+			data-msg-fail={`${f.fail} ${company.email}.`}
+			data-msg-sending={f.sending}
+			novalidate
+		>
+			<input type="hidden" name="access_key" value={company.web3formsKey} />
+			<input type="hidden" name="subject" value={copy.subject} />
+			<input type="hidden" name="from_name" value="jangol.com.co" />
+			<input type="hidden" name="language" value={lang} />
+			<input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 			<div class="grid gap-6 sm:grid-cols-2">
 				<label class="block">
-					<span class="font-display font-medium">Nombre</span>
-					<input class={field} name="name" autocomplete="name" required />
+					<span class="font-display font-medium">{f.name}</span>
+					<input class={field} name="name" autocomplete="name" required aria-required="true" aria-describedby="contact-status" />
 				</label>
 				<label class="block">
-					<span class="font-display font-medium">Correo</span>
-					<input class={field} name="email" type="email" autocomplete="email" required />
+					<span class="font-display font-medium">{f.email}</span>
+					<input class={field} name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="contact-status" />
 				</label>
 			</div>
 			<label class="block">
-				<span class="font-display font-medium">Empresa o institución <span class="text-crema/50">(opcional)</span></span>
+				<span class="font-display font-medium">{f.company} <span class="text-crema/60">{f.optional}</span></span>
 				<input class={field} name="company" autocomplete="organization" />
 			</label>
 			<label class="block">
-				<span class="font-display font-medium">¿Qué te interesa?</span>
+				<span class="font-display font-medium">{f.interest}</span>
 				<select class={field} name="interest" data-interest>
 					{interests.map((o) => <option value={o.value}>{o.label}</option>)}
 				</select>
 			</label>
 			<label class="block">
-				<span class="font-display font-medium">Mensaje</span>
-				<textarea class={`${field} min-h-36 resize-y`} name="message" placeholder="Cuántas sedes o estudiantes tienes, qué usas hoy, qué te gustaría resolver."></textarea>
+				<span class="font-display font-medium">{f.message}</span>
+				<textarea class={`${field} min-h-36 resize-y`} name="message" placeholder={f.messagePlaceholder}></textarea>
 			</label>
-			<p class="min-h-6 text-[0.95rem] text-agua" role="status" data-contact-status></p>
+			<label class="flex items-start gap-3 text-[0.95rem] text-crema/85">
+				<input
+					type="checkbox"
+					name="consent"
+					value="yes"
+					required
+					aria-required="true"
+					aria-describedby="contact-status"
+					class="mt-0.5 size-6 shrink-0 accent-[var(--color-agua)]"
+				/>
+				<span>
+					{f.consentBefore} <a href={path('privacy', lang)} class="text-agua underline underline-offset-4">{f.consentLink}</a>.
+				</span>
+			</label>
+			<p id="contact-status" class="min-h-6 text-[0.95rem] text-agua" role="status" aria-live="polite" data-contact-status></p>
 			<div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-				<button type="submit" class="btn btn-crema">Enviar mensaje</button>
-				<p class="text-[0.9rem] text-crema/60">Se abrirá tu correo con el mensaje listo para enviar.</p>
+				<button type="submit" class="btn btn-crema" data-contact-submit>{f.submit}</button>
+				<p class="text-[0.9rem] text-crema/70">{f.hint}</p>
 			</div>
 		</form>
 	</div>
