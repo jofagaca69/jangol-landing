@@ -1,25 +1,55 @@
 ---
 import Frame from './Frame.astro';
+import { asLang } from '../../i18n/routes';
+
+const c = {
+	es: {
+		title: 'Circulares',
+		subject: 'Salida al Museo del Oro',
+		sent: 'Enviada a grado 4.° A y B',
+		read: 'Leída',
+		allowed: 'Autorizada',
+		of: 'de',
+		remind: 'Recordar a 14 familias',
+		from: 'Colegio · hace 2 h',
+		headline: 'Salida al museo el viernes 14',
+		body: 'Salimos a las 9:00 a. m. y volvemos a la 1:00 p. m. Enviar lonchera.',
+		ok: 'Autorizo',
+	},
+	en: {
+		title: 'Notices',
+		subject: 'Trip to the Gold Museum',
+		sent: 'Sent to grade 4 A and B',
+		read: 'Read',
+		allowed: 'Permission given',
+		of: 'of',
+		remind: 'Remind 14 families',
+		from: 'School · 2 h ago',
+		headline: 'Museum trip on Friday the 14th',
+		body: 'We leave at 9:00 a.m. and come back at 1:00 p.m. Pack a snack.',
+		ok: 'I give permission',
+	},
+}[asLang(Astro.currentLocale)];
 ---
 
 <div class="relative pb-4 sm:pl-32">
-	<Frame title="Circulares" class="w-full">
-		<p class="ui-label">Salida al Museo de Historia Natural</p>
-		<p class="mt-1 text-tinta/55">Enviada a 4.º primaria A y B</p>
+	<Frame title={c.title} class="w-full">
+		<p class="ui-label">{c.subject}</p>
+		<p class="mt-1 text-tinta/65">{c.sent}</p>
 		<div class="ui-in mt-3">
-			<div class="flex justify-between"><span>Leída</span><span class="tabular-nums">51 de 58</span></div>
+			<div class="flex justify-between"><span>{c.read}</span><span class="tabular-nums">51 {c.of} 58</span></div>
 			<span class="ui-meter mt-1.5" style="--v:0.88"></span>
 		</div>
 		<div class="ui-in mt-3" style="--i:1">
-			<div class="flex justify-between"><span>Autorizada</span><span class="tabular-nums">44 de 58</span></div>
+			<div class="flex justify-between"><span>{c.allowed}</span><span class="tabular-nums">44 {c.of} 58</span></div>
 			<span class="ui-meter mt-1.5" style="--v:0.76"></span>
 		</div>
-		<span class="ui-btn mt-4 inline-flex">Recordar a 14 familias</span>
+		<span class="ui-btn mt-4 inline-flex">{c.remind}</span>
 	</Frame>
 	<Frame kind="phone" class="ui-in absolute bottom-0 left-0 w-[9.5rem] max-sm:hidden">
-		<p class="text-tinta/55">Colegio · hace 2 h</p>
-		<p class="mt-1 font-semibold">Salida al museo el viernes 14</p>
-		<p class="mt-1 text-tinta/70">Salimos a las 9:00 y volvemos a las 13:00. Enviar lonchera.</p>
-		<span class="ui-btn mt-3 flex w-full justify-center">Autorizo</span>
+		<p class="text-tinta/65">{c.from}</p>
+		<p class="mt-1 font-semibold">{c.headline}</p>
+		<p class="mt-1 text-tinta/75">{c.body}</p>
+		<span class="ui-btn mt-3 flex w-full justify-center">{c.ok}</span>
 	</Frame>
 </div>

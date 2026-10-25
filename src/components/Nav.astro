@@ -1,48 +1,60 @@
 ---
 import Monogram from './Monogram.astro';
+import { alternatesFor, asLang, htmlLang, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
 
 interface Props {
 	home?: boolean;
 }
 
 const { home = false } = Astro.props;
+const lang = asLang(Astro.currentLocale);
+const other = lang === 'es' ? 'en' : 'es';
+const s = t(lang);
 const links = [
-	{ href: '/gyms', label: 'Gyms' },
-	{ href: '/schools', label: 'Schools' },
-	{ href: '/a-la-medida', label: 'A la medida' },
-	{ href: '/recursos', label: 'Recursos' },
+	{ href: path('gyms', lang), label: s.nav.gyms },
+	{ href: path('schools', lang), label: s.nav.schools },
+	{ href: path('custom', lang), label: s.nav.custom },
+	{ href: path('resources', lang), label: s.nav.resources },
 ];
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? 'page' : undefined);
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+// The same page in the other language, or that language's home page when there is no translation.
+const switchHref = alternatesFor(pathname)?.[other] ?? path('home', other);
+const current = (href: string) => (pathname === href || (href !== path('home', lang) && pathname.startsWith(href)) ? 'page' : undefined);
 ---
 
 <header class="nav on-dark text-crema" data-nav data-home={home ? '' : undefined}>
-	<nav class="wrap flex items-center justify-between py-4" aria-label="Principal">
-		<a href="/" class="relative z-10 flex items-center gap-2.5" aria-label="Jangol, inicio">
+	<nav class="wrap flex items-center justify-between py-4" aria-label={s.navAria}>
+		<a href={path('home', lang)} class="relative z-10 flex items-center gap-2.5 py-1" aria-label={s.homeAria}>
 			<Monogram class="h-8 w-auto" />
 			<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
 		</a>
-		<div class="flex items-center gap-7">
-			<ul class="hidden items-center gap-7 md:flex">
+		<div class="flex items-center gap-5 lg:gap-7">
+			<ul class="hidden items-center gap-6 md:flex lg:gap-7">
 				{
 					links.map((l) => (
 						<li>
-							<a href={l.href} class="nav-link font-display text-[0.98rem] font-medium" aria-current={current(l.href)}>
+							<a href={l.href} class="nav-link inline-flex min-h-11 items-center font-display text-[0.98rem] font-medium" aria-current={current(l.href)}>
 								{l.label}
 							</a>
 						</li>
 					))
 				}
 			</ul>
-			<a href="/contacto" class="btn btn-crema !px-5 !py-2.5 max-md:hidden" aria-current={current('/contacto')}>Pedir demo</a>
-			<button
-				type="button"
-				class="nav-toggle relative z-10 md:hidden"
-				aria-expanded="false"
-				aria-controls="menu-movil"
-				data-nav-toggle
+			<a
+				href={switchHref}
+				hreflang={htmlLang[other]}
+				lang={htmlLang[other]}
+				class="nav-link inline-flex min-h-11 min-w-11 items-center justify-center font-display text-[0.98rem] font-medium max-md:hidden"
+				aria-label={`${other.toUpperCase()}, ${s.langSwitch.aria}`}
 			>
-				<span class="sr-only">Menú</span>
+				{other.toUpperCase()}
+			</a>
+			<a href={path('contact', lang)} class="btn btn-crema !px-5 !py-2.5 max-md:hidden" aria-current={current(path('contact', lang))}>
+				{s.demo}
+			</a>
+			<button type="button" class="nav-toggle relative z-10 md:hidden" aria-expanded="false" aria-controls="menu-movil" data-nav-toggle>
+				<span class="sr-only">{s.menu}</span>
 				<span class="nav-toggle-bars" aria-hidden="true"></span>
 			</button>
 		</div>
@@ -60,7 +72,10 @@ const current = (href: string) => (path === href || path.startsWith(`${href}/`) 
 				))
 			}
 			<li class="mt-8">
-				<a href="/contacto" class="btn btn-crema w-full">Pedir demo</a>
+				<a href={path('contact', lang)} class="btn btn-crema w-full">{s.demo}</a>
+			</li>
+			<li class="mt-4">
+				<a href={switchHref} hreflang={htmlLang[other]} lang={htmlLang[other]} class="btn btn-ghost w-full">{s.langSwitch.label}</a>
 			</li>
 		</ul>
 	</div>

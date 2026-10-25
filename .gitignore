@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+# SEO result
+jangol.com.co-audit/
+
 # dependencies
 node_modules/
 

@@ -2,6 +2,8 @@
 import type { Product } from '../../data/products';
 import { onboarding, products, shared } from '../../data/products';
 import { GRID, circles, partialMonogram } from '../../lib/dots';
+import { asLang, path } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
 import ProductHero from './ProductHero.astro';
 import ModuleRow from './ModuleRow.astro';
 import Faq from '../Faq.astro';
@@ -12,22 +14,54 @@ interface Props {
 }
 
 const { product: p } = Astro.props;
-const other = products.find((o) => o.id !== p.id)!;
-const steps = onboarding.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / onboarding.length) }));
+const lang = asLang(Astro.currentLocale);
+const s = t(lang);
+const other = products[lang].find((o) => o.id !== p.id)!;
+const steps = onboarding[lang].map((st, i) => ({ ...st, ...partialMonogram((i + 1) / onboarding[lang].length) }));
+const copy = {
+	es: {
+		what: `Qué hace ${p.name}`,
+		sharedTitle: 'Lo que viene en las dos plataformas',
+		sharedText: `${p.name} y ${other.name} están construidas sobre la misma base, así que las cuentas, los cobros y los permisos funcionan igual en las dos.`,
+		meet: `Conocer ${other.name}`,
+		startTitle: 'Cómo empiezas',
+		startText: 'Nosotros hacemos la configuración y la migración. Tu equipo empieza a usarla con sus datos reales.',
+		ctaTitle: `Mira ${p.name} con los datos de tu ${p.id === 'gyms' ? 'gimnasio' : 'colegio'}`,
+		ctaText: 'En la demo revisamos cómo trabajas hoy y qué módulos necesitas. Después te enviamos una propuesta.',
+		ctaLabel: `Pedir demo de ${p.name}`,
+	},
+	en: {
+		what: `What ${p.name} does`,
+		sharedTitle: 'What both platforms include',
+		sharedText: `${p.name} and ${other.name} are built on the same base, so accounts, payments and permissions work the same way in both.`,
+		meet: `Explore ${other.name}`,
+		startTitle: 'How you get started',
+		startText: 'We handle the setup and the migration. Your team starts using it with real data.',
+		ctaTitle: `See ${p.name} with your ${p.id === 'gyms' ? 'gym' : 'school'}'s data`,
+		ctaText: 'In the demo we review how you work today and which modules you need. Then we send you a proposal.',
+		ctaLabel: `Book a ${p.name} demo`,
+	},
+}[lang];
 ---
 
 <div class={`theme-${p.id}`}>
 	<ProductHero product={p} />
 
+	<section class="border-b border-tinta/10 py-16 md:py-20">
+		<div class="wrap">
+			<p class="t-lead measure-wide text-tinta/85">{p.definition}</p>
+		</div>
+	</section>
+
 	<section id="modulos" class="scroll-mt-20 py-24 md:py-32">
 		<div class="wrap">
 			<div class="grid gap-8 md:grid-cols-12 md:items-end">
-				<h2 class="t-h2 md:col-span-7">Qué hace {p.name}</h2>
+				<h2 class="t-h2 md:col-span-7">{copy.what}</h2>
 				<p class="t-lead measure text-tinta/75 md:col-span-5">{p.intro}</p>
 			</div>
 
 			<div class="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12">
-				<nav class="max-lg:hidden lg:col-span-3" aria-label="Módulos">
+				<nav class="max-lg:hidden lg:col-span-3" aria-label={s.product.modulesAria}>
 					<ol class="sticky top-28 grid gap-1 border-l border-tinta/15" data-spy>
 						{
 							p.modules.map((m) => (
@@ -50,21 +84,18 @@ const steps = onboarding.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / onb
 	<section class="bg-crema-deep py-24 md:py-32">
 		<div class="wrap grid gap-12 md:grid-cols-12">
 			<div class="md:col-span-5">
-				<h2 class="t-h2 max-w-[12ch]">Lo que viene en las dos plataformas</h2>
-				<p class="t-lead measure mt-6 text-tinta/75">
-					{p.name} y {other.name} están construidas sobre la misma base, así que las cuentas, los cobros y los permisos funcionan igual en
-					las dos.
-				</p>
-				<a href={other.href} class="mt-8 inline-block font-display font-semibold underline decoration-2 underline-offset-4">
-					Conocer {other.name}
+				<h2 class="t-h2 max-w-[12ch]">{copy.sharedTitle}</h2>
+				<p class="t-lead measure mt-6 text-tinta/75">{copy.sharedText}</p>
+				<a href={other.href} class="mt-6 inline-flex min-h-11 items-center font-display font-semibold underline decoration-2 underline-offset-4">
+					{copy.meet}
 				</a>
 			</div>
 			<dl class="grid gap-x-10 sm:grid-cols-2 md:col-span-6 md:col-start-7">
 				{
-					shared.map((s) => (
+					shared[lang].map((sh) => (
 						<div class="border-t border-tinta/20 py-6">
-							<dt class="t-h3">{s.title}</dt>
-							<dd class="mt-2 text-tinta/75">{s.desc}</dd>
+							<dt class="t-h3">{sh.title}</dt>
+							<dd class="mt-2 text-tinta/75">{sh.desc}</dd>
 						</div>
 					))
 				}
@@ -74,19 +105,21 @@ const steps = onboarding.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / onb
 
 	<section class="py-24 md:py-32">
 		<div class="wrap">
-			<h2 class="t-h2 max-w-[16ch]">Cómo empiezas</h2>
-			<p class="t-lead measure mt-6 text-tinta/75">Nosotros hacemos la configuración y la migración. Tu equipo empieza a usarla con sus datos reales.</p>
+			<h2 class="t-h2 max-w-[16ch]">{copy.startTitle}</h2>
+			<p class="t-lead measure mt-6 text-tinta/75">{copy.startText}</p>
 			<ol class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
 				{
-					steps.map((s, i) => (
+					steps.map((st, i) => (
 						<li>
 							<svg class="dots h-24 w-auto text-[var(--accent)]" viewBox={`3 2.5 ${GRID - 6} 15`} aria-hidden="true">
-								<g class="text-tinta/15" set:html={circles(s.off)} />
-								<g set:html={circles(s.on)} />
+								<g class="text-tinta/15" set:html={circles(st.off)} />
+								<g set:html={circles(st.on)} />
 							</svg>
-							<p class="mt-6 font-display text-[0.95rem] font-medium text-tinta/60">Paso {i + 1}</p>
-							<h3 class="t-h3 mt-1">{s.title}</h3>
-							<p class="mt-2 max-w-[32ch] text-tinta/80">{s.desc}</p>
+							<p class="mt-6 font-display text-[0.95rem] font-medium text-tinta/65">
+								{s.step} {i + 1}
+							</p>
+							<h3 class="t-h3 mt-1">{st.title}</h3>
+							<p class="mt-2 max-w-[32ch] text-tinta/80">{st.desc}</p>
 						</li>
 					))
 				}
@@ -98,11 +131,5 @@ const steps = onboarding.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / onb
 		<Faq items={p.faqs} />
 	</div>
 
-	<CtaBand
-		theme={p.id}
-		title={`Mira ${p.name} con los datos de tu ${p.id === 'gyms' ? 'gimnasio' : 'colegio'}`}
-		text="En la demo revisamos cómo trabajas hoy y qué módulos necesitas. Después te enviamos una propuesta."
-		href={`/contacto?interes=${p.id}`}
-		label={`Pedir demo de ${p.name}`}
-	/>
+	<CtaBand theme={p.id} title={copy.ctaTitle} text={copy.ctaText} href={`${path('contact', lang)}?interes=${p.id}`} label={copy.ctaLabel} />
 </div>

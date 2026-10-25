@@ -1,7 +1,30 @@
 ---
 import Frame from './Frame.astro';
 import { circles, qrDots } from '../../lib/dots';
+import { asLang } from '../../i18n/routes';
 
+const c = {
+	es: {
+		title: 'Recepción · Sede Centro',
+		ok: 'Acceso permitido',
+		plan: 'Camila Rojas · Mensual libre hasta el 28 oct',
+		latest: 'Últimas entradas',
+		in: 'Entró',
+		expired: 'Plan vencido',
+		code: 'Tu código',
+		show: 'Muéstralo en recepción',
+	},
+	en: {
+		title: 'Front desk · Downtown',
+		ok: 'Access granted',
+		plan: 'Camila Rojas · Monthly unlimited until Oct 28',
+		latest: 'Latest check-ins',
+		in: 'Checked in',
+		expired: 'Plan expired',
+		code: 'Your code',
+		show: 'Show it at the front desk',
+	},
+}[asLang(Astro.currentLocale)];
 const log = [
 	{ name: 'Camila Rojas', time: '07:02', ok: true },
 	{ name: 'Andrés Vega', time: '06:58', ok: true },
@@ -10,32 +33,32 @@ const log = [
 ---
 
 <div class="relative pb-6 sm:pr-32">
-	<Frame title="Recepción · Sede Centro" class="w-full">
+	<Frame title={c.title} class="w-full">
 		<div class="ui-in ui-pop flex items-center gap-3 rounded-xl bg-[var(--accent)] p-3 text-[var(--accent-ink)]">
 			<span class="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--accent-ink)] text-[var(--accent)]">
 				<svg viewBox="0 0 16 16" class="size-4" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" /></svg>
 			</span>
 			<span>
-				<span class="block font-semibold">Acceso permitido</span>
-				<span class="block opacity-80">Camila Rojas · Mensual libre hasta el 28 oct</span>
+				<span class="block font-semibold">{c.ok}</span>
+				<span class="block opacity-85">{c.plan}</span>
 			</span>
 		</div>
-		<p class="ui-label mt-4">Últimas entradas</p>
+		<p class="ui-label mt-4">{c.latest}</p>
 		<ul class="mt-1.5 grid gap-1">
 			{
 				log.map((l, i) => (
 					<li class="ui-row ui-in grid-cols-[1fr_auto_auto]" style={`--i:${i + 1}`}>
 						<span class="truncate font-semibold">{l.name}</span>
-						<span class="text-tinta/55">{l.time}</span>
-						<span class:list={['ui-chip', l.ok ? 'ui-chip-ok' : 'ui-chip-bad']}>{l.ok ? 'Entró' : 'Plan vencido'}</span>
+						<span class="text-tinta/65">{l.time}</span>
+						<span class:list={['ui-chip', l.ok ? 'ui-chip-ok' : 'ui-chip-bad']}>{l.ok ? c.in : c.expired}</span>
 					</li>
 				))
 			}
 		</ul>
 	</Frame>
 	<Frame kind="phone" class="ui-in absolute right-0 bottom-0 w-[9rem] max-sm:hidden">
-		<p class="text-center font-semibold">Tu código</p>
+		<p class="text-center font-semibold">{c.code}</p>
 		<svg class="dots ui-qr mt-2 text-tinta" viewBox="0 0 21 21" aria-hidden="true" set:html={circles(qrDots(3))} />
-		<p class="mt-2 text-center text-tinta/55">Muéstralo en recepción</p>
+		<p class="mt-2 text-center text-tinta/65">{c.show}</p>
 	</Frame>
 </div>

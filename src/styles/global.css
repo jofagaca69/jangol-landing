@@ -83,6 +83,18 @@
 	.measure {
 		max-width: 62ch;
 	}
+	.measure-wide {
+		max-width: 72ch;
+	}
+	.link {
+		color: var(--color-burdeos);
+		text-decoration: underline;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.2em;
+	}
+	.on-dark .link {
+		color: inherit;
+	}
 
 	.wrap {
 		@apply mx-auto w-full max-w-[84rem] px-4 sm:px-8 lg:px-12;
@@ -249,7 +261,7 @@
 .ui {
 	--surface: #fbf8f3;
 	font-family: var(--font-sans);
-	font-size: 0.8rem;
+	font-size: 0.85rem;
 	line-height: 1.35;
 	color: var(--color-tinta);
 	text-align: left;
@@ -316,13 +328,13 @@
 	border-radius: 50%;
 	background: var(--accent);
 	color: var(--accent-ink);
-	font-size: 0.62rem;
+	font-size: 0.7rem;
 	font-weight: 600;
 }
 .ui-chip {
 	padding: 0.18rem 0.55rem;
 	border-radius: 999px;
-	font-size: 0.7rem;
+	font-size: 0.74rem;
 	font-weight: 600;
 	white-space: nowrap;
 }
@@ -464,7 +476,7 @@
 	display: grid;
 	grid-template-columns: 2.4rem repeat(var(--cols), minmax(0, 1fr));
 	gap: 0.25rem;
-	font-size: 0.66rem;
+	font-size: 0.7rem;
 	align-items: center;
 }
 .ui-block {
@@ -640,12 +652,21 @@
 .fighter[data-id='custom'] .cursor {
 	stroke: var(--color-burdeos);
 }
+.select-title {
+	top: 4.9rem;
+	font-size: clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
+	white-space: nowrap;
+}
+/* The active panel is wider from the first paint, so the script never resizes it on load. */
+.fighter[aria-current='true'] {
+	flex-grow: 1.6;
+}
 .fighter[aria-current='false'] {
-	filter: saturate(0.35) brightness(0.62);
+	filter: saturate(0.45) brightness(0.72);
 }
 /* Dimming a light panel the same way turns it grey; keep it warm. */
 .fighter[data-id='custom'][aria-current='false'] {
-	filter: sepia(0.3) brightness(0.68);
+	filter: sepia(0.3) brightness(0.76);
 }
 .fighter-inner {
 	position: absolute;
@@ -768,7 +789,21 @@
 		padding: 1.25rem 1rem;
 	}
 	.fighter[data-id='gyms'] .fighter-inner {
-		padding: 4.5rem 1rem calc(var(--slant) + 0.25rem);
+		padding: 7.25rem 1rem calc(var(--slant) + 0.25rem);
+	}
+	.fighter[aria-current='true'] {
+		flex-grow: 1.15;
+	}
+	.select-title {
+		top: 4.4rem;
+		width: max-content;
+		max-width: calc(100% - 2rem);
+		font-size: 1rem;
+		white-space: normal;
+	}
+	/* Horizontal lists that scroll fade out at the edge, so it is clear there is more. */
+	.scroll-cue {
+		mask-image: linear-gradient(to right, #000 85%, transparent);
 	}
 	.fighter[data-id='schools'] .fighter-inner {
 		padding: calc(var(--slant) + 0.25rem) 1rem;

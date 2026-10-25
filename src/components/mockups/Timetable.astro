@@ -1,46 +1,65 @@
 ---
 import Frame from './Frame.astro';
+import { asLang } from '../../i18n/routes';
 
-const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
-const hours = ['8:00', '9:00', '10:30', '11:30'];
-// [day, hour, course, tone]
+const c = {
+	es: {
+		title: 'Horario · Grado 6.° B',
+		days: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'],
+		subjects: { math: 'Matemát.', lang: 'Lenguaje', sci: 'Ciencias', art: 'Artes', eng: 'Inglés', pe: 'Ed. física' },
+		clash: 'Cruce: Prof. Ruiz',
+	},
+	en: {
+		title: 'Timetable · Grade 6 B',
+		days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+		subjects: { math: 'Math', lang: 'Language', sci: 'Science', art: 'Art', eng: 'English', pe: 'P.E.' },
+		clash: 'Clash: Mr. Ruiz',
+	},
+}[asLang(Astro.currentLocale)];
+const hours = ['7:00', '8:00', '9:30', '10:30'];
+const s = c.subjects;
+// [day, hour, subject, tone]
 const blocks: [number, number, string, 'a' | 'b' | 'c' | 'd'][] = [
-	[0, 0, 'Matemát.', 'a'],
-	[1, 0, 'Comunic.', 'b'],
-	[2, 0, 'Matemát.', 'a'],
-	[3, 0, 'Ciencia', 'c'],
-	[4, 0, 'Comunic.', 'b'],
-	[0, 1, 'Ciencia', 'c'],
-	[1, 1, 'Arte', 'd'],
-	[2, 1, 'Inglés', 'b'],
-	[3, 1, 'Matemát.', 'a'],
-	[4, 1, 'Ed. física', 'd'],
-	[0, 2, 'Inglés', 'b'],
-	[1, 2, 'Matemát.', 'a'],
-	[2, 2, 'Ciencia', 'c'],
-	[4, 2, 'Arte', 'd'],
-	[0, 3, 'Comunic.', 'b'],
-	[2, 3, 'Ed. física', 'd'],
-	[3, 3, 'Inglés', 'b'],
-	[4, 3, 'Matemát.', 'a'],
+	[0, 0, s.math, 'a'],
+	[1, 0, s.lang, 'b'],
+	[2, 0, s.math, 'a'],
+	[3, 0, s.sci, 'c'],
+	[4, 0, s.lang, 'b'],
+	[0, 1, s.sci, 'c'],
+	[1, 1, s.art, 'd'],
+	[2, 1, s.eng, 'b'],
+	[3, 1, s.math, 'a'],
+	[4, 1, s.pe, 'd'],
+	[0, 2, s.eng, 'b'],
+	[1, 2, s.math, 'a'],
+	[2, 2, s.sci, 'c'],
+	[4, 2, s.art, 'd'],
+	[0, 3, s.lang, 'b'],
+	[2, 3, s.pe, 'd'],
+	[3, 3, s.eng, 'b'],
+	[4, 3, s.math, 'a'],
 ];
 ---
 
-<Frame title="Horario · 1.º secundaria B">
-	<div class="ui-grid" style={`--cols:${days.length}`}>
+<Frame title={c.title}>
+	<div class="ui-grid" style={`--cols:${c.days.length}`}>
 		<span />
-		{days.map((d) => <span class="text-center font-semibold">{d}</span>)}
+		{c.days.map((d) => <span class="text-center font-semibold">{d}</span>)}
 		{
 			hours.map((h, y) => (
 				<>
-					<span class="text-tinta/55 tabular-nums">{h}</span>
-					{days.map((_, x) => {
+					<span class="text-tinta/65 tabular-nums">{h}</span>
+					{c.days.map((_, x) => {
 						const b = blocks.find(([bx, by]) => bx === x && by === y);
 						const clash = x === 3 && y === 2;
 						return b ? (
-							<span class:list={['ui-block ui-in', `ui-block-${b[3]}`]} style={`--i:${x + y}`}>{b[2]}</span>
+							<span class:list={['ui-block ui-in', `ui-block-${b[3]}`]} style={`--i:${x + y}`}>
+								{b[2]}
+							</span>
 						) : clash ? (
-							<span class="ui-block ui-block-clash ui-in" style={`--i:${x + y}`}>Cruce: Prof. Ruiz</span>
+							<span class="ui-block ui-block-clash ui-in" style={`--i:${x + y}`}>
+								{c.clash}
+							</span>
 						) : (
 							<span />
 						);
