@@ -7,6 +7,8 @@ dist/
 # SEO result
 jangol.com.co-audit/
 
+.playwright-mcp/
+
 # dependencies
 node_modules/
 
