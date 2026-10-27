@@ -1,4 +1,5 @@
-import { CAP, CODE, KETTLEBELL } from '../lib/dots';
+import { CAP, CODE, DUMBBELL, MEGAPHONE } from '../lib/dots';
+import { marketingFighter } from './marketing';
 import { path, type Lang } from '../i18n/routes';
 
 export type ProductId = 'gyms' | 'schools';
@@ -160,7 +161,7 @@ const productsEs: Product[] = [
 				a: 'Depende del número de sedes y de socios. En la demo vemos tu caso y te enviamos una propuesta.',
 			},
 		],
-		sprite: KETTLEBELL,
+		sprite: DUMBBELL,
 	},
 	{
 		id: 'schools',
@@ -384,7 +385,7 @@ const productsEn: Product[] = [
 				a: 'It depends on the number of locations and members. In the demo we look at your case and then send you a proposal.',
 			},
 		],
-		sprite: KETTLEBELL,
+		sprite: DUMBBELL,
 	},
 	{
 		id: 'schools',
@@ -533,7 +534,7 @@ export const onboarding: Record<Lang, { title: string; desc: string }[]> = {
 	],
 };
 
-export type FighterId = ProductId | 'custom';
+export type FighterId = ProductId | 'marketing' | 'custom';
 
 export interface Fighter {
 	id: FighterId;
@@ -567,7 +568,7 @@ const customFighter: Record<Lang, Omit<Fighter, 'id' | 'sprite'>> = {
 	},
 };
 
-/** Hero panels: both platforms, plus custom software as a third option. */
+/** Hero panels: both platforms, then the two services, marketing and custom software. */
 export const fighters = (lang: Lang): Fighter[] => [
 	...products[lang].map((p) => ({
 		id: p.id,
@@ -579,5 +580,6 @@ export const fighters = (lang: Lang): Fighter[] => [
 		sprite: p.sprite,
 		label: 'Jangol for',
 	})),
+	{ id: 'marketing', sprite: MEGAPHONE, href: path('marketing', lang), ...marketingFighter[lang] },
 	{ id: 'custom', sprite: CODE, ...customFighter[lang] },
 ];

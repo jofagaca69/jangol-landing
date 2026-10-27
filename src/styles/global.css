@@ -133,6 +133,11 @@
 	--accent-deep: var(--color-petroleo-deep);
 	--accent-ink: var(--color-agua);
 }
+.theme-marketing {
+	--accent: var(--color-tinta-soft);
+	--accent-deep: var(--color-tinta);
+	--accent-ink: var(--color-crema);
+}
 .theme-custom {
 	--accent: var(--color-tinta);
 	--accent-deep: var(--color-tinta);
@@ -615,7 +620,8 @@
 
 /* ---------- Character select ---------- */
 .select {
-	--slant: 7vw;
+	--slant: 5.5vw;
+	--pad: clamp(1rem, 3vw, 3rem);
 	position: relative;
 	display: flex;
 	height: 100%;
@@ -636,11 +642,16 @@
 	--ink: var(--color-crema);
 	clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }
-.fighter[data-id='schools'] {
+.fighter[data-id='schools'],
+.fighter[data-id='marketing'] {
 	--bg: var(--color-petroleo);
 	--ink: var(--color-agua);
 	margin-left: calc(var(--slant) * -1 + 10px);
 	clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+.fighter[data-id='marketing'] {
+	--bg: var(--color-tinta-soft);
+	--ink: var(--color-crema);
 }
 /* The light panel: a service, not a platform. */
 .fighter[data-id='custom'] {
@@ -668,35 +679,51 @@
 .fighter[data-id='custom'][aria-current='false'] {
 	filter: sepia(0.3) brightness(0.76);
 }
+/* Already near black: the usual dimming would merge it with the seams between panels. */
+.fighter[data-id='marketing'][aria-current='false'] {
+	filter: brightness(0.92);
+}
 .fighter-inner {
+	--pad-l: var(--pad);
+	--pad-r: var(--pad);
 	position: absolute;
 	inset: 0;
 	display: grid;
 	grid-template-rows: minmax(0, 1fr) auto;
 	grid-template-columns: minmax(0, 1fr);
-	padding: 7.5rem clamp(1rem, 3vw, 3rem) 7.5rem;
+	padding: 7.5rem var(--pad-r) 7.5rem var(--pad-l);
 }
+/* --center: where the middle of the visible, slanted strip falls at the icon's height
+ * (about a third of the way down), measured from the middle of the panel. */
 .fighter[data-id='gyms'] .fighter-inner {
-	padding-right: calc(var(--slant) + 1.5rem);
+	--pad-r: calc(var(--slant) + 1.5rem);
+	--center: calc(var(--slant) * -0.17);
 }
 /* The copy sits low, where the left edge has slanted outward and the right inward. */
-.fighter[data-id='schools'] .fighter-inner {
-	padding-left: calc(var(--slant) * 0.35 + 1.5rem);
-	padding-right: calc(var(--slant) + 1.5rem);
+.fighter[data-id='schools'] .fighter-inner,
+.fighter[data-id='marketing'] .fighter-inner {
+	--pad-l: calc(var(--slant) * 0.35 + 1.5rem);
+	--pad-r: calc(var(--slant) + 1.5rem);
+	--center: calc(var(--slant) * 0.16);
 	text-align: center;
 }
 .fighter[data-id='custom'] .fighter-inner {
-	padding-left: calc(var(--slant) + 1.5rem);
+	--pad-l: calc(var(--slant) + 1.5rem);
+	--center: calc(var(--slant) * 0.33);
 	text-align: right;
 }
 .portrait {
 	position: relative;
+	/* Centred on the visible strip rather than on the padded box, which the slant pushes aside.
+	 * `left` instead of `translate`, because GSAP owns this element's transform. */
+	left: calc(var(--center, 0px) - (var(--pad-l) - var(--pad-r)) / 2);
 	align-self: center;
 	justify-self: center;
-	/* Sized from the row it sits in, leaving room for the cursor corners. */
-	height: min(86%, 28rem);
-	max-width: 100%;
-	aspect-ratio: 1;
+	/* Sized from the row it sits in, and from the visible width of the panel, not the padded one. */
+	height: min(82%, 30rem);
+	/* The visible strip is narrowest at the top, where the slant cuts deepest; keep the cursor corners inside it. */
+	max-width: calc(100cqi - var(--slant) * 1.5 - 3rem);
+	aspect-ratio: 5 / 4;
 }
 .cursor {
 	position: absolute;
@@ -718,6 +745,9 @@
 }
 .fighter[data-id='schools'] .fighter-name {
 	font-size: clamp(2.75rem, 13cqi, 9rem);
+}
+.fighter[data-id='marketing'] .fighter-name {
+	font-size: clamp(2.25rem, 11cqi, 7.5rem);
 }
 .fighter[data-id='custom'] .fighter-name {
 	font-size: clamp(2.25rem, 10cqi, 7rem);
@@ -747,7 +777,8 @@
 	background: currentColor;
 	vertical-align: 0.12em;
 }
-.fighter[data-id='schools'] .moves {
+.fighter[data-id='schools'] .moves,
+.fighter[data-id='marketing'] .moves {
 	justify-content: center;
 	margin-inline: auto;
 }
@@ -768,17 +799,30 @@
 	.select {
 		--slant: 6svh;
 		flex-direction: column;
+		min-height: 100svh;
+	}
+	/* Stacked, each panel is as tall as its content and grows to share the rest of the screen;
+	 * on a short phone the hero gets taller instead of covering text. */
+	.fighter {
+		container-type: normal;
+		flex: 1 0 auto;
+	}
+	.fighter-inner {
+		position: relative;
+		inset: auto;
 	}
 	.fighter[data-id='gyms'] {
 		clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slant)), 0 100%);
 	}
 	.fighter[data-id='schools'],
+	.fighter[data-id='marketing'],
 	.fighter[data-id='custom'] {
 		margin-left: 0;
 		margin-top: calc(var(--slant) * -1 + 8px);
 		clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
 	}
-	.fighter[data-id='schools'] {
+	.fighter[data-id='schools'],
+	.fighter[data-id='marketing'] {
 		clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
 	}
 	.fighter-inner {
@@ -788,11 +832,17 @@
 		gap: 1rem;
 		padding: 1.25rem 1rem;
 	}
+	/* Below the nav and the slogan, which wraps to two lines on the narrowest phones. */
 	.fighter[data-id='gyms'] .fighter-inner {
-		padding: 7.25rem 1rem calc(var(--slant) + 0.25rem);
+		padding: 8rem 1rem calc(var(--slant) + 0.25rem);
+	}
+	@media (max-width: 359px) {
+		.fighter[data-id='gyms'] .fighter-inner {
+			padding-top: 9.75rem;
+		}
 	}
 	.fighter[aria-current='true'] {
-		flex-grow: 1.15;
+		flex-grow: 1;
 	}
 	.select-title {
 		top: 4.4rem;
@@ -805,28 +855,34 @@
 	.scroll-cue {
 		mask-image: linear-gradient(to right, #000 85%, transparent);
 	}
-	.fighter[data-id='schools'] .fighter-inner {
+	.fighter[data-id='schools'] .fighter-inner,
+	.fighter[data-id='marketing'] .fighter-inner {
 		padding: calc(var(--slant) + 0.25rem) 1rem;
 		text-align: left;
 	}
 	.fighter[data-id='custom'] .fighter-inner {
-		padding: calc(var(--slant) + 0.25rem) 1rem 7.75rem;
+		padding: calc(var(--slant) + 0.25rem) 1rem 8.75rem;
 		text-align: left;
 	}
-	/* Room for the confirm button that sits over this panel. */
-	.fighter[data-id='custom'] {
-		flex-basis: 5.5rem;
-	}
 	.portrait {
+		left: 0;
 		height: auto;
-		width: min(28vw, 15svh);
+		width: min(30vw, 13svh);
+		max-width: none;
 		grid-column: 2;
 		grid-row: 1;
 	}
-	.fighter[data-id='schools'] .portrait {
+	/* Icons alternate sides down the stack. */
+	.fighter[data-id='schools'] .fighter-inner,
+	.fighter[data-id='custom'] .fighter-inner {
+		grid-template-columns: auto minmax(0, 1fr);
+	}
+	.fighter[data-id='schools'] .portrait,
+	.fighter[data-id='custom'] .portrait {
 		grid-column: 1;
 	}
-	.fighter[data-id='schools'] .fighter-copy {
+	.fighter[data-id='schools'] .fighter-copy,
+	.fighter[data-id='custom'] .fighter-copy {
 		grid-column: 2;
 	}
 	.fighter-copy {

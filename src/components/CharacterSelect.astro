@@ -10,13 +10,16 @@ const copy = {
 	en: { group: 'Choose where to start', choose: 'Choose', hintDesktop: 'Switch with ← → or the pointer.', hintTouch: 'Tap to switch.' },
 }[lang];
 const monogram = parseSprite(MONOGRAM);
+// Every hero sprite is at most 15 rows tall, so the empty top and bottom of the grid are cropped
+// and the icons fill a wider 5:4 frame.
+const VIEW_TOP = 2;
 const fighters = rosterFor(lang).map((p, i) => {
 	const sprite = parseSprite(p.sprite);
 	return { ...p, dots: sprite, count: Math.max(sprite.length, monogram.length), active: i === 0 };
 });
 ---
 
-<section id="top" class="on-dark relative h-[100svh] min-h-[38rem] overflow-hidden bg-tinta text-crema" data-select>
+<section id="top" class="on-dark relative min-h-[100svh] overflow-hidden md:h-[100svh] md:min-h-[38rem] bg-tinta text-crema" data-select>
 	<h1
 		class="select-title absolute left-1/2 z-10 -translate-x-1/2 rounded-full bg-tinta px-5 py-2 text-center font-display font-semibold"
 		data-select-title
@@ -35,7 +38,7 @@ const fighters = rosterFor(lang).map((p, i) => {
 							</svg>
 							<svg
 								class="dots"
-								viewBox={`0 0 ${GRID} ${GRID}`}
+								viewBox={`0 ${VIEW_TOP} ${GRID} ${GRID - VIEW_TOP * 2}`}
 								aria-hidden="true"
 								data-dots
 								data-sprite={f.id}

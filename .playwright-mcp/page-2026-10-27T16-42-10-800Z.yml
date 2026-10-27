@@ -1,0 +1,361 @@
+- generic [active] [ref=f1e1]:
+  - link "Saltar al contenido" [ref=f1e2] [cursor=pointer]:
+    - /url: "#contenido"
+  - banner [ref=f1e3]:
+    - navigation "Principal" [ref=f1e4]:
+      - link "Jangol, inicio" [ref=f1e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f1e87]: Jangol
+      - generic [ref=f1e88]:
+        - list [ref=f1e89]:
+          - listitem [ref=f1e90]:
+            - link "Gyms" [ref=f1e91] [cursor=pointer]:
+              - /url: /gyms/
+          - listitem [ref=f1e92]:
+            - link "Schools" [ref=f1e93] [cursor=pointer]:
+              - /url: /schools/
+          - listitem [ref=f1e94]:
+            - link "Marketing" [ref=f1e95] [cursor=pointer]:
+              - /url: /marketing-digital/
+          - listitem [ref=f1e96]:
+            - link "A la medida" [ref=f1e97] [cursor=pointer]:
+              - /url: /a-la-medida/
+          - listitem [ref=f1e98]:
+            - link "Recursos" [ref=f1e99] [cursor=pointer]:
+              - /url: /recursos/
+        - link "EN, Read this page in English" [ref=f1e100] [cursor=pointer]:
+          - /url: /en/
+          - text: EN
+        - link "Pedir demo" [ref=f1e101] [cursor=pointer]:
+          - /url: /contacto/
+  - main [ref=f1e102]:
+    - generic [ref=f1e103]:
+      - heading "Software que entiende tu negocio" [level=1] [ref=f1e104]
+      - radiogroup "Elige por dónde empezar" [ref=f1e105]:
+        - article [ref=f1e106]:
+          - generic [ref=f1e205]:
+            - paragraph [ref=f1e206]: Jangol for
+            - heading [level=2] [ref=f1e207]:
+              - radio "Jangol for Gyms" [checked] [ref=f1e208]:
+                - generic [ref=f1e209]: Gyms
+            - paragraph [ref=f1e210]: Membresías, accesos, clases y cobros de tu gimnasio en un solo lugar.
+        - article [ref=f1e211]:
+          - generic [ref=f1e315]:
+            - paragraph [ref=f1e316]: Jangol for
+            - heading [level=2] [ref=f1e317]:
+              - radio "Jangol for Schools" [ref=f1e318]:
+                - generic [ref=f1e319]: Schools
+            - paragraph [ref=f1e320]: Matrícula, asistencia, notas y pensiones de tu colegio, con las familias al tanto.
+        - article [ref=f1e321]:
+          - generic [ref=f1e411]:
+            - paragraph [ref=f1e412]: Hecho por Jangol
+            - heading [level=2] [ref=f1e413]:
+              - radio "Marketing digital" [ref=f1e414]:
+                - generic [ref=f1e415]: Marketing
+            - paragraph [ref=f1e416]: Que tu negocio aparezca en Google y en redes, y que sepas qué te trajo clientes.
+        - article [ref=f1e417]:
+          - generic [ref=f1e507]:
+            - paragraph [ref=f1e508]: Hecho por Jangol
+            - heading [level=2] [ref=f1e509]:
+              - radio "Software a la medida" [ref=f1e510]:
+                - generic [ref=f1e511]: A la medida
+            - paragraph [ref=f1e512]: Si ninguna plataforma encaja, construimos la tuya.
+      - generic [ref=f1e513]:
+        - link "Elegir Jangol for Gyms" [ref=f1e514] [cursor=pointer]:
+          - /url: /gyms/
+        - paragraph [ref=f1e516]: Cambia con ← → o con el cursor.
+    - paragraph [ref=f1e519]:
+      - text: Jangol es una empresa colombiana de software. Tenemos dos plataformas,
+      - link "Jangol for Gyms" [ref=f1e520] [cursor=pointer]:
+        - /url: /gyms/
+      - text: para gimnasios, y
+      - link "Jangol for Schools" [ref=f1e521] [cursor=pointer]:
+        - /url: /schools/
+      - text: para colegios. Cuando un negocio necesita algo que ninguna de las dos resuelve,
+      - link "desarrollamos el software a la medida" [ref=f1e522] [cursor=pointer]:
+        - /url: /a-la-medida/
+      - text: .También hacemos
+      - link "marketing digital" [ref=f1e523] [cursor=pointer]:
+        - /url: /marketing-digital/
+      - text: para que más clientes te encuentren.
+    - generic [ref=f1e525]:
+      - generic [ref=f1e526]:
+        - heading "Dos plataformas, una para cada sector" [level=2] [ref=f1e527]
+        - paragraph [ref=f1e528]: "Las dos comparten la misma base: cuentas, pagos, permisos y soporte. Cambian los módulos, porque un gimnasio y un colegio no trabajan igual."
+      - generic [ref=f1e529]:
+        - article [ref=f1e530]:
+          - generic [ref=f1e531]:
+            - paragraph [ref=f1e532]: Software para gimnasios
+            - heading "Jangol for Gyms" [level=3] [ref=f1e533]:
+              - generic [ref=f1e534]: Jangol for
+              - text: Gyms
+            - paragraph [ref=f1e535]: Membresías, accesos, clases y cobros de tu gimnasio en un solo lugar.
+            - paragraph [ref=f1e536]: Para gimnasios, boxes y estudios en Colombia, con una sede o con varias.
+            - generic [ref=f1e537]:
+              - generic [ref=f1e538]:
+                - term [ref=f1e539]: Check-in con QR
+                - definition [ref=f1e540]: Cada socio muestra un código desde su celular. Recepción ve al instante si el plan está activo y la entrada queda registrada.
+              - generic [ref=f1e541]:
+                - term [ref=f1e542]: Reservas de clases
+                - definition [ref=f1e543]: Publicas el horario con cupos por clase. Los socios reservan, cancelan o entran en lista de espera desde el celular.
+              - generic [ref=f1e544]:
+                - term [ref=f1e545]: Cobros y facturación
+                - definition [ref=f1e546]: Cada plan genera su cobro en la fecha que corresponde. Ves lo pagado, lo pendiente y lo vencido en una sola lista.
+            - generic [ref=f1e547]:
+              - link "Conocer Jangol for Gyms" [ref=f1e548] [cursor=pointer]:
+                - /url: /gyms/
+              - link "Pedir demo" [ref=f1e549] [cursor=pointer]:
+                - /url: /contacto/?interes=gyms
+          - link [aria-hidden] [ref=f1e550] [cursor=pointer]:
+            - /url: /gyms/
+            - generic [ref=f1e552]:
+              - generic [ref=f1e553]:
+                - generic [ref=f1e554]:
+                  - generic [ref=f1e636]: Jangol
+                  - generic [ref=f1e637]: Recepción · Sede Centro
+                - generic [ref=f1e638]:
+                  - generic [ref=f1e643]:
+                    - generic [ref=f1e644]: Acceso permitido
+                    - generic [ref=f1e645]: Camila Rojas · Mensual libre hasta el 28 oct
+                  - paragraph [ref=f1e646]: Últimas entradas
+                  - list [ref=f1e647]:
+                    - listitem [ref=f1e648]:
+                      - generic [ref=f1e649]: Camila Rojas
+                      - generic [ref=f1e650]: 07:02
+                      - generic [ref=f1e651]: Entró
+                    - listitem [ref=f1e652]:
+                      - generic [ref=f1e653]: Andrés Vega
+                      - generic [ref=f1e654]: 06:58
+                      - generic [ref=f1e655]: Entró
+                    - listitem [ref=f1e656]:
+                      - generic [ref=f1e657]: Mateo Silva
+                      - generic [ref=f1e658]: 06:55
+                      - generic [ref=f1e659]: Plan vencido
+              - generic [ref=f1e661]:
+                - paragraph [ref=f1e663]: Tu código
+                - paragraph [ref=f1e892]: Muéstralo en recepción
+        - article [ref=f1e893]:
+          - generic [ref=f1e894]:
+            - paragraph [ref=f1e895]: Software para colegios
+            - heading "Jangol for Schools" [level=3] [ref=f1e896]:
+              - generic [ref=f1e897]: Jangol for
+              - text: Schools
+            - paragraph [ref=f1e898]: Matrícula, asistencia, notas y pensiones de tu colegio, con las familias al tanto.
+            - paragraph [ref=f1e899]: Para colegios, academias e institutos en Colombia.
+            - generic [ref=f1e900]:
+              - generic [ref=f1e901]:
+                - term [ref=f1e902]: Matrícula en línea
+                - definition [ref=f1e903]: Las familias llenan la ficha y suben los documentos desde la casa. Secretaría revisa, pide lo que falte y confirma el cupo.
+              - generic [ref=f1e904]:
+                - term [ref=f1e905]: Asistencia y notas
+                - definition [ref=f1e906]: Los docentes registran asistencia y calificaciones desde el salón. Al cierre del periodo, el boletín ya está armado.
+              - generic [ref=f1e907]:
+                - term [ref=f1e908]: Pensiones y pagos
+                - definition [ref=f1e909]: Cada estudiante tiene su estado de cuenta con las cuotas del año. Las familias lo consultan y reciben recordatorios antes del vencimiento.
+            - generic [ref=f1e910]:
+              - link "Conocer Jangol for Schools" [ref=f1e911] [cursor=pointer]:
+                - /url: /schools/
+              - link "Pedir demo" [ref=f1e912] [cursor=pointer]:
+                - /url: /contacto/?interes=schools
+          - link [aria-hidden] [ref=f1e913] [cursor=pointer]:
+            - /url: /schools/
+            - generic [ref=f1e915]:
+              - generic [ref=f1e916]:
+                - generic [ref=f1e998]: Jangol
+                - generic [ref=f1e999]: Estado de cuenta
+              - generic [ref=f1e1000]:
+                - generic [ref=f1e1002]:
+                  - generic [ref=f1e1003]: Sofía Mendoza
+                  - generic [ref=f1e1004]: Grado 3.° · Descuento por hermanos 10%
+                - list [ref=f1e1005]:
+                  - listitem [ref=f1e1006]:
+                    - generic [ref=f1e1007]: Pensión de febrero
+                    - generic [ref=f1e1008]: $ 485.000
+                    - generic [ref=f1e1009]: Pagada
+                  - listitem [ref=f1e1010]:
+                    - generic [ref=f1e1011]: Pensión de marzo
+                    - generic [ref=f1e1012]: $ 485.000
+                    - generic [ref=f1e1013]: Pagada
+                  - listitem [ref=f1e1014]:
+                    - generic [ref=f1e1015]: Pensión de abril
+                    - generic [ref=f1e1016]: $ 485.000
+                    - generic [ref=f1e1017]: Pagada
+                  - listitem [ref=f1e1018]:
+                    - generic [ref=f1e1019]: Pensión de mayo
+                    - generic [ref=f1e1020]: $ 485.000
+                    - generic [ref=f1e1021]: Vence el 30
+                  - listitem [ref=f1e1022]:
+                    - generic [ref=f1e1023]: Pensión de junio
+                    - generic [ref=f1e1024]: $ 485.000
+                    - generic [ref=f1e1025]: Por emitir
+                - generic [ref=f1e1026]:
+                  - generic [ref=f1e1027]:
+                    - text: Por pagar este mes
+                    - strong [ref=f1e1028]: $ 485.000
+                  - generic [ref=f1e1029]: Pagar con PSE
+    - generic [ref=f1e1031]:
+      - generic [ref=f1e1032]:
+        - heading "Y si lo que necesitas no existe, lo construimos" [level=2] [ref=f1e1033]
+        - paragraph [ref=f1e1034]: Jangol también desarrolla software a la medida. El mismo equipo define la solución contigo, la construye y la sigue mejorando después del lanzamiento.
+        - link "Ver software a la medida" [ref=f1e1035] [cursor=pointer]:
+          - /url: /a-la-medida/
+      - list [ref=f1e1036]:
+        - listitem [ref=f1e1037]:
+          - heading "Aplicaciones web y móviles" [level=3] [ref=f1e1038]
+          - paragraph [ref=f1e1039]: Herramientas internas para tu equipo, portales para tus clientes o un producto nuevo que quieres lanzar.
+        - listitem [ref=f1e1040]:
+          - heading "Integraciones" [level=3] [ref=f1e1041]
+          - paragraph [ref=f1e1042]: Conectamos tu software con pasarelas de pago, facturación electrónica DIAN, CRM o los sistemas que ya usas, para que nadie copie datos a mano.
+        - listitem [ref=f1e1043]:
+          - heading "Automatización" [level=3] [ref=f1e1044]
+          - paragraph [ref=f1e1045]: Los procesos que hoy dependen de hojas de cálculo y correos pasan a un sistema que los registra y avisa a quien tiene que actuar.
+        - listitem [ref=f1e1046]:
+          - heading "Mantenimiento y evolución" [level=3] [ref=f1e1047]
+          - paragraph [ref=f1e1048]: "Seguimos con el producto después del lanzamiento: corregimos, actualizamos dependencias y agregamos lo que el negocio vaya pidiendo."
+    - region [ref=f1e1049]:
+      - generic [ref=f1e1050]:
+        - heading "Hemos hecho sitios para" [level=2] [ref=f1e1051]
+        - button "Pausar logos" [ref=f1e1052]
+      - generic [ref=f1e1056]:
+        - list [ref=f1e1057]:
+          - listitem [ref=f1e1058]:
+            - img "Logo de GtM Alliance" [ref=f1e1059]
+          - listitem [ref=f1e1060]:
+            - img "Logo de Precocidos Coldfood" [ref=f1e1061]
+          - listitem [aria-hidden] [ref=f1e1062]
+          - listitem [aria-hidden] [ref=f1e1063]
+          - listitem [aria-hidden] [ref=f1e1064]
+          - listitem [aria-hidden] [ref=f1e1065]
+          - listitem [aria-hidden] [ref=f1e1066]
+          - listitem [aria-hidden] [ref=f1e1067]
+        - list [aria-hidden] [ref=f1e1068]:
+          - listitem [aria-hidden] [ref=f1e1069]
+          - listitem [aria-hidden] [ref=f1e1070]
+          - listitem [aria-hidden] [ref=f1e1071]
+          - listitem [aria-hidden] [ref=f1e1072]
+          - listitem [aria-hidden] [ref=f1e1073]
+          - listitem [aria-hidden] [ref=f1e1074]
+          - listitem [aria-hidden] [ref=f1e1075]
+          - listitem [aria-hidden] [ref=f1e1076]
+    - generic [ref=f1e1078]:
+      - heading "Cómo trabajamos" [level=2] [ref=f1e1079]
+      - paragraph [ref=f1e1080]: Seguimos el mismo proceso para un producto nuevo y para adaptar Gyms o Schools a tu operación.
+      - list [ref=f1e1081]:
+        - listitem [ref=f1e1082]:
+          - paragraph [ref=f1e1166]: Paso 1
+          - heading "Definir" [level=3] [ref=f1e1167]
+          - paragraph [ref=f1e1168]: Entendemos cómo funciona tu negocio y acordamos qué problema resolvemos primero.
+        - listitem [ref=f1e1169]:
+          - paragraph [ref=f1e1253]: Paso 2
+          - heading "Diseñar" [level=3] [ref=f1e1254]
+          - paragraph [ref=f1e1255]: Pantallas y flujos que pruebas antes de que escribamos código.
+        - listitem [ref=f1e1256]:
+          - paragraph [ref=f1e1340]: Paso 3
+          - heading "Construir" [level=3] [ref=f1e1341]
+          - paragraph [ref=f1e1342]: Entregas cada dos semanas, en un entorno donde puedes usarlas.
+        - listitem [ref=f1e1343]:
+          - paragraph [ref=f1e1426]: Paso 4
+          - heading "Evolucionar" [level=3] [ref=f1e1427]
+          - paragraph [ref=f1e1428]: Medimos el uso real y añadimos módulos a medida que tu negocio crece.
+    - generic [ref=f1e1430]:
+      - generic [ref=f1e1431]:
+        - heading "Guías para tu negocio" [level=2] [ref=f1e1432]
+        - link "Ver todos los recursos" [ref=f1e1433] [cursor=pointer]:
+          - /url: /recursos/
+      - list [ref=f1e1435]:
+        - listitem [ref=f1e1436]:
+          - link [ref=f1e1437] [cursor=pointer]:
+            - /url: /recursos/socios-que-dejan-de-venir/
+            - paragraph [ref=f1e1438]:
+              - text: Gimnasios
+              - time [ref=f1e1439]: 6 de octubre de 2026
+            - generic [ref=f1e1440]:
+              - heading "Cómo detectar a los socios que están por irse" [level=3] [ref=f1e1441]
+              - paragraph [ref=f1e1442]: La mayoría de las bajas en un gimnasio se ven venir semanas antes en la asistencia. Qué mirar, cómo calcularlo y qué hacer cuando lo ves.
+        - listitem [ref=f1e1443]:
+          - link [ref=f1e1444] [cursor=pointer]:
+            - /url: /recursos/matricula-en-linea-checklist/
+            - paragraph [ref=f1e1445]:
+              - text: Colegios
+              - time [ref=f1e1446]: 22 de septiembre de 2026
+            - generic [ref=f1e1447]:
+              - heading "Lista para pasar la matrícula de tu colegio a digital" [level=3] [ref=f1e1448]
+              - paragraph [ref=f1e1449]: Qué decidir antes de abrir la matrícula en línea en un colegio en Colombia, para que las familias no terminen haciendo fila de todas formas.
+        - listitem [ref=f1e1450]:
+          - link [ref=f1e1451] [cursor=pointer]:
+            - /url: /recursos/plataforma-o-a-la-medida/
+            - paragraph [ref=f1e1452]:
+              - text: Software a la medida
+              - time [ref=f1e1453]: 8 de septiembre de 2026
+            - generic [ref=f1e1454]:
+              - heading "¿Plataforma o software a la medida?" [level=3] [ref=f1e1455]
+              - paragraph [ref=f1e1456]: Cinco preguntas para decidir si a tu negocio le conviene adaptar una plataforma existente o desarrollar software a la medida en Colombia.
+    - generic [ref=f1e1459]:
+      - heading "Pide una demo o cuéntanos tu idea" [level=2] [ref=f1e1460]
+      - paragraph [ref=f1e1461]: Te respondemos en un día hábil.
+      - link "Pedir demo" [ref=f1e1462] [cursor=pointer]:
+        - /url: /contacto/
+  - contentinfo [ref=f1e1544]:
+    - generic [ref=f1e1545]:
+      - generic [ref=f1e1546]:
+        - generic [ref=f1e1547]:
+          - link "Jangol, inicio" [ref=f1e1548] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f1e1630]: Jangol
+          - paragraph [ref=f1e1631]: Software que entiende tu negocio. Hacemos plataformas para gimnasios y colegios, y desarrollamos software a la medida en Colombia.
+        - generic [ref=f1e1632]:
+          - generic [ref=f1e1633]:
+            - paragraph [ref=f1e1634]: Plataformas
+            - list [ref=f1e1635]:
+              - listitem [ref=f1e1636]:
+                - link "Jangol for Gyms" [ref=f1e1637] [cursor=pointer]:
+                  - /url: /gyms/
+              - listitem [ref=f1e1638]:
+                - link "Jangol for Schools" [ref=f1e1639] [cursor=pointer]:
+                  - /url: /schools/
+          - generic [ref=f1e1640]:
+            - paragraph [ref=f1e1641]: Servicios
+            - list [ref=f1e1642]:
+              - listitem [ref=f1e1643]:
+                - link "Marketing digital" [ref=f1e1644] [cursor=pointer]:
+                  - /url: /marketing-digital/
+              - listitem [ref=f1e1645]:
+                - link "Software a la medida" [ref=f1e1646] [cursor=pointer]:
+                  - /url: /a-la-medida/
+              - listitem [ref=f1e1647]:
+                - link "Cómo trabajamos" [ref=f1e1648] [cursor=pointer]:
+                  - /url: /a-la-medida/#proceso
+              - listitem [ref=f1e1649]:
+                - link "Artículos y guías" [ref=f1e1650] [cursor=pointer]:
+                  - /url: /recursos/
+          - generic [ref=f1e1651]:
+            - paragraph [ref=f1e1652]: Empresa
+            - list [ref=f1e1653]:
+              - listitem [ref=f1e1654]:
+                - link "Nosotros" [ref=f1e1655] [cursor=pointer]:
+                  - /url: /nosotros/
+              - listitem [ref=f1e1656]:
+                - link "Política de privacidad" [ref=f1e1657] [cursor=pointer]:
+                  - /url: /privacidad/
+              - listitem [ref=f1e1658]:
+                - link "Términos de uso" [ref=f1e1659] [cursor=pointer]:
+                  - /url: /terminos/
+          - generic [ref=f1e1660]:
+            - paragraph [ref=f1e1661]: Contacto
+            - list [ref=f1e1662]:
+              - listitem [ref=f1e1663]:
+                - link "Pedir demo" [ref=f1e1664] [cursor=pointer]:
+                  - /url: /contacto/
+              - listitem [ref=f1e1665]:
+                - link "hola@jangol.com.co" [ref=f1e1666] [cursor=pointer]:
+                  - /url: mailto:hola@jangol.com.co
+      - generic [ref=f1e1667]:
+        - paragraph [ref=f1e1668]: © 2026 Jangol
+        - paragraph [ref=f1e1669]:
+          - generic [ref=f1e1670]: "Información legal:"
+          - text: "[POR COMPLETAR: razón social, ej. Jangol S.A.S.] · NIT [POR COMPLETAR: NIT] · Colombia"
+  - generic [ref=f1e1673]:
+    - button [ref=f1e1674]
+    - button [ref=f1e1680]
+    - button [ref=f1e1684]
+    - button [ref=f1e1689]

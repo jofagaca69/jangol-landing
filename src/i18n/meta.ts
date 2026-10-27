@@ -24,6 +24,12 @@ export const meta: Record<Lang, Record<MetaKey, PageMeta>> = {
 				'Diseñamos, construimos y mantenemos sitios web, aplicaciones web y móviles, integraciones y automatizaciones para negocios en Colombia.',
 			ogHeading: 'Desarrollo de software a la medida',
 		},
+		marketing: {
+			title: 'Marketing digital en Colombia: SEO, Google Ads y redes | Jangol',
+			description:
+				'SEO, pauta en Google y Meta Ads, y manejo de redes sociales para negocios en Colombia. Cada mes te mostramos de dónde llegaron los clientes.',
+			ogHeading: 'Marketing digital para tu negocio',
+		},
 		contact: {
 			title: 'Pide una demo | Jangol',
 			description:
@@ -64,6 +70,12 @@ export const meta: Record<Lang, Record<MetaKey, PageMeta>> = {
 			description:
 				'We design, build and maintain websites, web and mobile apps, integrations and automations for businesses in Colombia.',
 			ogHeading: 'Custom software development',
+		},
+		marketing: {
+			title: 'Digital Marketing in Colombia: SEO, Google Ads and Social | Jangol',
+			description:
+				'SEO, Google and Meta Ads, and social media management for businesses in Colombia. Every month we show you where your customers came from.',
+			ogHeading: 'Digital marketing for your business',
 		},
 		contact: {
 			title: 'Book a demo | Jangol',

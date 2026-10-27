@@ -34,26 +34,36 @@ export const MONOGRAM = [
 	'  OOOOO',
 ];
 
-/** Kettlebell, shaded with smaller dots on its right flank. */
-export const KETTLEBELL = [
-	'      OOOOOO',
-	'    OOOOOOOOoo',
-	'   OOO      Ooo',
-	'   OO        oo',
-	'   OO        o:',
-	'   OOO      Oo:',
-	'   OOOOOOOOOOo:',
-	'  OOOOOOOOOOOoo:',
-	' OOOOOOOOOOOOOo::',
-	'OOOOOOOOOOOOOOoo:.',
-	'OOOOOOOOOOOOOOoo:.',
-	'OOOOOOOOOOOOOOoo:.',
-	'OOOOOOOOOOOOOOoo:.',
-	'OOOOOOOOOOOOOOo::.',
-	' OOOOOOOOOOOOOo::',
-	'  OOOOOOOOOOOo::',
-	'   OOOOOOOOOo:',
-	'     OOOOOOo',
+/** Dumbbell seen from the side: two plates per end on a short bar, shaded on the right. */
+export const DUMBBELL = [
+	' :O:            :o: ',
+	' OOO            OOo ',
+	' OOOOO        OOOOo ',
+	' OOOOO        OOOOo ',
+	' OOOOO        OOOOo ',
+	'OOOOOOOOOOOOOOOOOOo:',
+	'OOOOOOOOOOOOOOOOOOo:',
+	' OOOOO        OOOOo ',
+	' OOOOO        OOOOo ',
+	' OOOOO        OOOOo ',
+	' OOO            OOo ',
+	' :O:            :o: ',
+];
+
+/** Megaphone pointing right, with two arcs of sound in front of the bell. */
+export const MEGAPHONE = [
+	'            Oo',
+	'          OOOo',
+	'        OOOOOo   .',
+	' OOO  OOOOOOOo    :',
+	'OOOOOOOOOOOOOo :   :',
+	'OOOOOOOOOOOOOo  :  :',
+	'OOOOOOOOOOOOOo :   :',
+	' OOO  OOOOOOOo    :',
+	'  OO    OOOOOo   .',
+	'  OO      OOOo',
+	'  OO        Oo',
+	'  oo',
 ];
 
 /** Graduation cap with its tassel, shaded underneath the board. */

@@ -17,7 +17,7 @@ export interface OgPage {
 	slug: string;
 	heading: string;
 	label: string;
-	theme: 'gyms' | 'schools' | 'custom';
+	theme: 'gyms' | 'schools' | 'marketing' | 'custom';
 	lang: Lang;
 }
 
@@ -35,7 +35,7 @@ export async function ogPages(): Promise<OgPage[]> {
 				slug: slugOf(path(key, lang)),
 				heading: product ? product.heading : meta[lang][key as Exclude<RouteKey, 'gyms' | 'schools'>].ogHeading,
 				label: product ? product.name : 'Jangol',
-				theme: product ? product.id : 'custom',
+				theme: product ? product.id : key === 'marketing' ? 'marketing' : 'custom',
 				lang,
 			});
 		}
@@ -65,6 +65,7 @@ const loadFonts = () =>
 const palette = {
 	gyms: { bg: '#751c39', ink: '#efe7db' },
 	schools: { bg: '#0c3d45', ink: '#cce6e8' },
+	marketing: { bg: '#2a2826', ink: '#efe7db' },
 	custom: { bg: '#1a1a1a', ink: '#efe7db' },
 };
 
