@@ -8,7 +8,7 @@ Las plataformas funcionan con cobros por PSE, Nequi y Daviplata y emiten factura
 
 - [Jangol for Gyms: software para gimnasios](https://jangol.com.co/gyms/): membresías, check-in con QR, reservas de clases, cobros y seguimiento de asistencia.
 - [Jangol for Schools: software para colegios](https://jangol.com.co/schools/): matrícula en línea, asistencia y notas, pensiones, comunicación con familias y horarios.
-- [Desarrollo de software a la medida](https://jangol.com.co/a-la-medida/): aplicaciones web y móviles, integraciones, automatización y mantenimiento.
+- [Desarrollo de software a la medida](https://jangol.com.co/a-la-medida/): sitios web, aplicaciones web y móviles, integraciones, automatización y mantenimiento.
 
 ## Guías
 

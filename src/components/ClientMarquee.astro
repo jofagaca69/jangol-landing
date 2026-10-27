@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import { clients, web } from '../data/custom';
+import { asLang } from '../i18n/routes';
+
+/* Client logos on an endless strip. The script moves it and lets the visitor pause it;
+ * without the script, or with reduced motion, each logo shows once, centred. */
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+const lang = asLang(Astro.currentLocale);
+const copy = web[lang];
+// Enough repeats that one group is wider than a large screen, so the loop never shows a gap.
+const REPEATS = 4;
+const groups = [0, 1];
+---
+
+<section class:list={['marquee py-20 md:py-28', className]} data-marquee aria-labelledby="clientes-title">
+	<div class="wrap flex items-end justify-between gap-6">
+		<h2 id="clientes-title" class="t-h3 max-w-[20ch] text-tinta/75">{copy.clientsTitle}</h2>
+		<button type="button" class="marquee-toggle" data-marquee-toggle data-pause={copy.pause} data-play={copy.play} aria-pressed="false">
+			<span class="marquee-icon" aria-hidden="true"></span>
+			<span data-marquee-label>{copy.pause}</span>
+		</button>
+	</div>
+
+	<div class="marquee-viewport mt-12">
+		<div class="marquee-track" data-marquee-track>
+			{
+				groups.map((g) => (
+					<ul class="marquee-group" aria-hidden={g > 0 ? 'true' : undefined} data-dup={g > 0 ? '' : undefined}>
+						{Array.from({ length: REPEATS }, (_, r) =>
+							clients.map((c) => {
+								const dup = g > 0 || r > 0;
+								const img = (
+									<Image
+										src={c.logo}
+										alt={dup ? '' : c.name}
+										height={Math.round(c.height * 16)}
+										densities={[1, 2]}
+										format="webp"
+										quality={90}
+										loading="lazy"
+										decoding="async"
+										class="marquee-logo"
+										style={`--h:${c.height}rem`}
+									/>
+								);
+								return (
+									<li class="marquee-item" data-dup={dup ? "" : undefined} aria-hidden={dup ? "true" : undefined}>
+										{c.url && !dup ? (
+											<a href={c.url} rel="noopener" target="_blank">
+												{img}
+											</a>
+										) : (
+											img
+										)}
+									</li>
+								);
+							}),
+						)}
+					</ul>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../scripts/web.ts';
+</script>

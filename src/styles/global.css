@@ -844,8 +844,471 @@
 	}
 }
 
+/* ---------- Website build (custom page) ----------
+ * One sample site in four stages, set by data-stage on [data-site]:
+ * 1 wireframe, 2 copy, 3 design, 4 live. The default, 4, is what shows without the script. */
+.build-steps {
+	padding-left: 2.25rem;
+}
+.build-rail {
+	position: absolute;
+	left: 0.6rem;
+	top: 0.5rem;
+	bottom: 0.5rem;
+	width: 2px;
+	border-radius: 2px;
+	background: rgb(239 231 219 / 0.15);
+}
+.build-rail > span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--color-agua);
+	transform-origin: top;
+}
+.build-step {
+	position: relative;
+	transition: opacity 0.4s;
+}
+.build-num {
+	position: absolute;
+	left: -2.25rem;
+	top: 0.05em;
+	display: grid;
+	place-items: center;
+	width: 1.3rem;
+	height: 1.3rem;
+	border: 2px solid var(--color-agua);
+	border-radius: 50%;
+	background: var(--color-agua);
+	color: var(--color-petroleo);
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0;
+	transition:
+		background-color 0.35s,
+		color 0.35s,
+		border-color 0.35s;
+}
+[data-build][data-live] .build-step:not([data-on]) {
+	opacity: 0.38;
+}
+[data-build][data-live] .build-step:not([data-on]) .build-num {
+	border-color: rgb(239 231 219 / 0.45);
+	background: var(--color-tinta);
+	color: var(--color-crema);
+}
+
+.site {
+	--line: rgb(26 26 26 / 0.22);
+	--ghost: rgb(26 26 26 / 0.07);
+	overflow: hidden;
+	border-radius: 1rem;
+	background: #fbf8f3;
+	box-shadow: 0 50px 90px -40px rgb(0 0 0 / 0.85);
+}
+.site-bar {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	padding: 0.7rem 0.95rem;
+	border-bottom: 1px solid rgb(26 26 26 / 0.08);
+}
+.site-lights {
+	display: flex;
+	gap: 0.35rem;
+}
+.site-lights i {
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	background: var(--color-crema-deep);
+}
+.site-url {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	max-width: 22rem;
+	margin-inline: auto;
+	padding: 0.3rem 0.8rem;
+	border-radius: 999px;
+	background: rgb(26 26 26 / 0.05);
+	color: rgb(26 26 26 / 0.6);
+	font-size: 0.78rem;
+}
+.site-lock {
+	width: 0;
+	height: 0.8rem;
+	fill: none;
+	stroke: var(--color-petroleo);
+	stroke-width: 1.6;
+	transition: width 0.4s var(--ease-snap);
+}
+.site-badge {
+	display: grid;
+	font-size: 0.72rem;
+	font-weight: 600;
+	white-space: nowrap;
+}
+.site-badge > span {
+	grid-area: 1 / 1;
+	padding: 0.18rem 0.6rem;
+	border-radius: 999px;
+	text-align: center;
+	transition:
+		opacity 0.3s,
+		transform 0.45s var(--ease-snap);
+}
+.site-badge-draft {
+	background: #f1dfbd;
+	color: #6d4a10;
+}
+.site-badge-live {
+	background: var(--color-agua);
+	color: var(--color-petroleo);
+	opacity: 0;
+	transform: scale(0.6);
+}
+
+.site-page {
+	padding: 1rem 1.25rem 1.35rem;
+	font-size: 0.86rem;
+	line-height: 1.35;
+}
+.site-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 0.9rem;
+}
+.site-logo {
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: 50%;
+	background: var(--color-burdeos);
+}
+.site-pill-ghost {
+	padding: 0.25rem 0.75rem;
+	border: 1.5px solid currentColor;
+	border-radius: 999px;
+	font-weight: 600;
+}
+.site-hero {
+	display: grid;
+	grid-template-columns: 1.15fr 0.85fr;
+	gap: 1.25rem;
+	align-items: center;
+	padding: 1.35rem 1.35rem 1.35rem 1.6rem;
+	border-radius: 0.9rem;
+	background: var(--color-burdeos);
+	color: var(--color-crema);
+}
+.site-h {
+	font-family: var(--font-display);
+	font-size: clamp(1.25rem, 0.75rem + 1.6vw, 2.15rem);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.035em;
+}
+.site-p {
+	margin: 0.75rem 0 1.1rem;
+	opacity: 0.85;
+}
+.site-btn {
+	display: inline-block;
+	padding: 0.45rem 1rem;
+	border-radius: 999px;
+	background: var(--color-crema);
+	color: var(--color-burdeos);
+	font-family: var(--font-display);
+	font-weight: 600;
+}
+.site-img {
+	position: relative;
+	display: grid;
+	place-items: center;
+	border-radius: 0.7rem;
+	background-color: var(--color-petroleo);
+	background-image: radial-gradient(rgb(204 230 232 / 0.22) 1.2px, transparent 1.5px);
+	background-size: 12px 12px;
+}
+.site-img-hero {
+	aspect-ratio: 5 / 4;
+}
+.site-img-tile {
+	display: block;
+	aspect-ratio: 16 / 9;
+}
+.site-tile:nth-child(2) .site-img-tile {
+	background-color: var(--color-agua);
+	background-image: radial-gradient(rgb(12 61 69 / 0.2) 1.2px, transparent 1.5px);
+}
+.site-tile:nth-child(3) .site-img-tile {
+	background-color: var(--color-crema-deep);
+	background-image: radial-gradient(rgb(117 28 57 / 0.25) 1.2px, transparent 1.5px);
+}
+.site-mark {
+	height: 58%;
+	width: auto;
+	fill: var(--color-agua);
+	stroke: var(--color-petroleo);
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	transform: rotate(-24deg);
+	transition: opacity 0.5s;
+}
+.site-tiles {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.9rem;
+	margin-top: 1rem;
+}
+.site-type {
+	font-family: var(--font-display);
+}
+
+.site :is(.sk, .site-hero, .site-img, .site-btn, .site-h, .site-p) {
+	transition:
+		color 0.45s,
+		background-color 0.5s,
+		outline-color 0.5s,
+		opacity 0.45s;
+}
+/* Before design: no brand colour or type, just content on a neutral page. */
+.site:is([data-stage='1'], [data-stage='2']) :is(.site-hero, .site-btn, .site-logo) {
+	background: var(--ghost);
+	color: var(--color-tinta);
+}
+.site:is([data-stage='1'], [data-stage='2']) :is(.site-type, .site-h, .site-btn) {
+	font-family: var(--font-sans);
+	letter-spacing: 0;
+}
+.site:is([data-stage='1'], [data-stage='2']) .site-h {
+	font-weight: 600;
+}
+.site:is([data-stage='1'], [data-stage='2']) :is(.site-hero, .site-img) {
+	outline: 1.5px dashed var(--line);
+	outline-offset: -1.5px;
+}
+.site:is([data-stage='1'], [data-stage='2']) .site-img {
+	background-color: transparent;
+	/* The wireframe placeholder for an image: a box with an X through it. */
+	background-image:
+		linear-gradient(to top right, transparent calc(50% - 0.75px), var(--line) calc(50% - 0.75px), var(--line) calc(50% + 0.75px), transparent calc(50% + 0.75px)),
+		linear-gradient(to bottom right, transparent calc(50% - 0.75px), var(--line) calc(50% - 0.75px), var(--line) calc(50% + 0.75px), transparent calc(50% + 0.75px));
+	background-size: 100% 100%;
+}
+.site:is([data-stage='1'], [data-stage='2']) .site-mark {
+	opacity: 0;
+}
+/* Structure only: every word becomes a grey bar the length of the text it holds. */
+.site[data-stage='1'] .sk:not(.site-img, .site-logo) {
+	border-radius: 0.3rem;
+	/* Shorter than the line box, so wrapped lines read as separate bars. */
+	background: linear-gradient(rgb(26 26 26 / 0.1), rgb(26 26 26 / 0.1)) center / 100% 82% no-repeat;
+	color: transparent;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
+.site[data-stage='1'] .site-pill-ghost {
+	border-color: transparent;
+}
+.site[data-stage='4'] .site-lock {
+	width: 0.7rem;
+}
+.site[data-stage='4'] .site-badge-draft {
+	opacity: 0;
+	transform: scale(0.6);
+}
+.site[data-stage='4'] .site-badge-live {
+	opacity: 1;
+	transform: none;
+}
+
+/* The phone version slides in when the site goes live. */
+.site-phone {
+	position: absolute;
+	right: -0.75rem;
+	bottom: -2.5rem;
+	width: clamp(6.5rem, 4rem + 8vw, 10rem);
+	padding: 0.35rem;
+	border-radius: 1.4rem;
+	background: var(--color-tinta-soft);
+	box-shadow:
+		0 0 0 1px rgb(239 231 219 / 0.14),
+		0 40px 70px -30px rgb(0 0 0 / 0.9);
+	opacity: 0;
+	transform: translateY(2.5rem) rotate(4deg);
+	transition:
+		opacity 0.5s,
+		transform 0.8s var(--ease-snap);
+}
+.site[data-stage='4'] + .site-phone {
+	opacity: 1;
+	transform: rotate(-3deg);
+}
+.site-phone-screen {
+	display: grid;
+	gap: 0.5rem;
+	padding: 0.7rem 0.6rem 0.9rem;
+	border-radius: 1.1rem;
+	background: var(--color-burdeos);
+	color: var(--color-crema);
+	font-size: 0.6rem;
+}
+.site-phone-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.site-phone-nav i {
+	width: 0.8rem;
+	height: 2px;
+	background: currentColor;
+	box-shadow: 0 4px 0 currentColor;
+	transform: translateY(-2px);
+}
+.site-img-phone {
+	aspect-ratio: 4 / 3;
+}
+.site-h-phone {
+	font-size: 0.95rem;
+}
+.site-btn-phone {
+	justify-self: start;
+	padding: 0.3rem 0.6rem;
+}
+
+@media (max-width: 639px) {
+	.site-page {
+		padding: 0.8rem 0.8rem 1rem;
+		font-size: 0.72rem;
+	}
+	.site-hero {
+		grid-template-columns: 1fr;
+		padding: 1rem;
+	}
+	.site-img-hero {
+		display: none;
+	}
+	.site-tiles {
+		gap: 0.5rem;
+	}
+	.site-bar {
+		gap: 0.5rem;
+	}
+	.site-phone {
+		bottom: -2rem;
+		right: -0.25rem;
+		width: 5.75rem;
+		padding: 0.25rem;
+		border-radius: 1.1rem;
+	}
+	.site-phone-screen {
+		gap: 0.35rem;
+		padding: 0.5rem 0.45rem 0.6rem;
+		border-radius: 0.9rem;
+		font-size: 0.5rem;
+	}
+	.site-h-phone {
+		font-size: 0.7rem;
+	}
+}
+
+/* ---------- Client logos ---------- */
+.marquee-viewport {
+	overflow: hidden;
+	mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track {
+	display: flex;
+	width: max-content;
+}
+.marquee-group {
+	display: flex;
+	align-items: center;
+}
+.marquee-item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding-inline: clamp(2.25rem, 1rem + 4vw, 5.5rem);
+}
+/* The Jangol dot between logos. */
+.marquee-item::after {
+	content: '';
+	position: absolute;
+	right: -0.3rem;
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	background: var(--color-burdeos);
+}
+.marquee-logo {
+	display: block;
+	width: auto;
+	height: calc(var(--h) * 0.72);
+	max-width: none;
+}
+@media (min-width: 768px) {
+	.marquee-logo {
+		height: var(--h);
+	}
+}
+.marquee-toggle {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	gap: 0.55rem;
+	min-height: 2.75rem;
+	font-family: var(--font-display);
+	font-weight: 600;
+	color: rgb(26 26 26 / 0.7);
+	transition: color 0.2s;
+}
+.marquee-toggle:hover {
+	color: var(--color-tinta);
+}
+.marquee-icon {
+	width: 0.7rem;
+	height: 0.8rem;
+	border-inline: 3px solid currentColor;
+}
+.marquee-toggle[aria-pressed='true'] .marquee-icon {
+	width: 0;
+	height: 0;
+	border-inline: 0;
+	border-block: 0.42rem solid transparent;
+	border-left: 0.7rem solid currentColor;
+}
+/* Static strip, without the script or with reduced motion: each client once, centred. */
+[data-marquee]:not([data-running]) :is(.marquee-toggle, [data-dup]) {
+	display: none;
+}
+[data-marquee]:not([data-running]) .marquee-viewport {
+	mask-image: none;
+}
+[data-marquee]:not([data-running]) .marquee-track {
+	width: auto;
+	justify-content: center;
+}
+[data-marquee]:not([data-running]) .marquee-group {
+	flex-wrap: wrap;
+	justify-content: center;
+	row-gap: 2rem;
+}
+[data-marquee]:not([data-running]) .marquee-item::after {
+	display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.fighter,
+	.site *,
+	.site-phone,
+	.build-step,
 	.ui-in,
 	.ui-meter::after,
 	.nav,
