@@ -111,7 +111,7 @@ function initContact() {
 	const submit = $<HTMLButtonElement>('[data-contact-submit]', form)!;
 	const field = <T extends HTMLElement>(name: string) => form.elements.namedItem(name) as unknown as T;
 
-	// Links across the site pass the product as ?interes=gyms|schools|custom.
+	// Links across the site pass the product as ?interes=gyms|schools|marketing|custom.
 	const preset = new URLSearchParams(window.location.search).get('interes');
 	if (preset && [...interest.options].some((o) => o.value === preset)) interest.value = preset;
 

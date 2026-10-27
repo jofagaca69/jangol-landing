@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Process from '../components/Process.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { marketingFaqs, marketingPage, marketingProcess, marketingServices } from '../data/marketing';
+import { GRID, MEGAPHONE, circles, parseSprite } from '../lib/dots';
+import { meta } from '../i18n/meta';
+import { asLang, path } from '../i18n/routes';
+import { breadcrumbs, service, webPage } from '../lib/schema';
+
+const lang = asLang(Astro.currentLocale);
+const m = meta[lang].marketing;
+const copy = marketingPage[lang];
+const contact = `${path('contact', lang)}?interes=marketing`;
+const schema = [
+	webPage({ url: path('marketing', lang), name: m.title, description: m.description, lang }),
+	service({ url: path('marketing', lang), name: copy.h1, description: copy.lead, lang, offers: marketingServices[lang] }),
+	breadcrumbs(lang, [{ name: copy.crumb, url: path('marketing', lang) }]),
+];
+---
+
+<Layout title={m.title} description={m.description} schema={schema}>
+	<section class="on-dark bg-tinta-soft pt-32 pb-20 text-crema md:pt-40 md:pb-28">
+		<div class="wrap grid gap-10 md:grid-cols-12">
+			<div class="md:col-span-8">
+				<p class="font-display text-[clamp(1.1rem,0.95rem+0.6vw,1.6rem)] font-medium opacity-85">{copy.label}</p>
+				<h1 class="t-display max-w-[13ch] text-[clamp(3.25rem,1.5rem+7vw,8rem)]">{copy.h1}</h1>
+				<p class="t-lead measure mt-8 text-crema/85">{copy.lead}</p>
+				<div class="mt-10 flex flex-wrap gap-3">
+					<a href={contact} class="btn btn-crema">{copy.tell}</a>
+					<a href="#proceso" class="btn btn-ghost">{copy.how}</a>
+				</div>
+			</div>
+			<svg
+				class="dots self-end text-crema-deep max-md:hidden md:col-span-4"
+				viewBox={`0 0 ${GRID} ${GRID}`}
+				aria-hidden="true"
+				set:html={circles(parseSprite(MEGAPHONE))}
+			/>
+		</div>
+	</section>
+
+	<section class="py-24 md:py-32">
+		<div class="wrap">
+			<h2 class="t-h2 max-w-[14ch]">{copy.what}</h2>
+			<div class="mt-14 border-b border-tinta/15">
+				{
+					marketingServices[lang].map((s) => (
+						<article class="grid gap-6 border-t border-tinta/15 py-10 md:grid-cols-12">
+							<h3 class="font-display text-[clamp(1.6rem,1.3rem+1.2vw,2.3rem)] leading-[1.05] font-bold tracking-[-0.03em] md:col-span-4">{s.title}</h3>
+							<p class="measure text-[1.1rem] text-tinta/85 md:col-span-4">{s.desc}</p>
+							<ul class="grid content-start gap-2 text-tinta/70 md:col-span-4">
+								{s.examples.map((e) => (
+									<li class="grid grid-cols-[0.9rem_1fr] gap-2">
+										<span class="mt-[0.6em] size-[0.42rem] rounded-full bg-burdeos" aria-hidden="true" />
+										{e}
+									</li>
+								))}
+							</ul>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<div class="bg-crema-deep">
+		<Process copy={marketingProcess[lang]} />
+	</div>
+
+	<Faq items={marketingFaqs[lang]} />
+
+	<CtaBand theme="marketing" title={copy.ctaTitle} text={copy.ctaText} href={contact} label={copy.tell} />
+</Layout>

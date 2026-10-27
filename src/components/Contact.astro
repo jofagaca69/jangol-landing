@@ -9,6 +9,7 @@ const s = t(lang);
 const f = s.form;
 const interests = [
 	...products[lang].map((p) => ({ value: p.id, label: p.name })),
+	{ value: 'marketing', label: s.footer.marketing },
 	{ value: 'custom', label: s.footer.customSoftware },
 	{ value: 'unsure', label: f.unsure },
 ];

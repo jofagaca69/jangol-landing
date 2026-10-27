@@ -19,6 +19,7 @@ export const routes = {
 	gyms: { es: '/gyms/', en: '/en/gyms/' },
 	schools: { es: '/schools/', en: '/en/schools/' },
 	custom: { es: '/a-la-medida/', en: '/en/custom-software/' },
+	marketing: { es: '/marketing-digital/', en: '/en/digital-marketing/' },
 	contact: { es: '/contacto/', en: '/en/contact/' },
 	resources: { es: '/recursos/', en: '/en/resources/' },
 	about: { es: '/nosotros/', en: '/en/about/' },

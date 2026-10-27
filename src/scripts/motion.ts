@@ -2,7 +2,7 @@
 import gsap from 'gsap';
 import Lenis from 'lenis';
 import type { FighterId } from '../data/products';
-import { CAP, CODE, KETTLEBELL, MONOGRAM, burst, fit, parseSprite, type Dot } from '../lib/dots';
+import { CAP, CODE, DUMBBELL, MEGAPHONE, MONOGRAM, burst, fit, parseSprite, type Dot } from '../lib/dots';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -14,8 +14,13 @@ const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = doc
 const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(`--color-${name}`).trim();
 
 const monogram = parseSprite(MONOGRAM);
-const sprites: Record<FighterId, Dot[]> = { gyms: parseSprite(KETTLEBELL), schools: parseSprite(CAP), custom: parseSprite(CODE) };
-const productColor: Record<FighterId, string> = { gyms: 'burdeos', schools: 'petroleo', custom: 'tinta' };
+const sprites: Record<FighterId, Dot[]> = {
+	gyms: parseSprite(DUMBBELL),
+	schools: parseSprite(CAP),
+	marketing: parseSprite(MEGAPHONE),
+	custom: parseSprite(CODE),
+};
+const productColor: Record<FighterId, string> = { gyms: 'burdeos', schools: 'petroleo', marketing: 'tinta-soft', custom: 'tinta' };
 
 /* ---------- Dots ---------- */
 function morph(circles: SVGCircleElement[], target: Dot[], vars: gsap.TweenVars = {}) {
@@ -53,10 +58,23 @@ function initCharacterSelect() {
 	const confirmBtn = $<HTMLAnchorElement>('[data-confirm]', root)!;
 	const confirmName = $('[data-confirm-name]', root)!;
 	const flash = $('[data-flash]', root)!;
-	const grow = (on: boolean) => (on ? (narrow.matches ? 1.15 : 1.6) : 1);
+	// Stacked on a phone, a growing panel would push the others around; colour and the cursor mark it instead.
+	const grow = (on: boolean) => (on && !narrow.matches ? 1.6 : 1);
 
 	let active = (panels.find((f) => f.getAttribute('aria-current') === 'true')?.dataset.id ?? 'gyms') as FighterId;
 	let busy = false;
+	// While the entrance plays, hovering only remembers the panel: animating the dots then
+	// would kill the entrance tweens halfway and leave a panel stuck as a J or a half-built icon.
+	let introPlaying = false;
+	let pending: FighterId | null = null;
+
+	/** Puts every panel's dots exactly on its icon. */
+	const settle = () =>
+		panels.forEach((f) => {
+			const c = circlesOf(f);
+			const s = fit(sprites[f.dataset.id as FighterId], c.length);
+			gsap.set(c, { attr: { cx: (i: number) => s[i].x, cy: (i: number) => s[i].y, r: (i: number) => s[i].r } });
+		});
 
 	function activate(id: FighterId, animate = true) {
 		const changed = id !== active;
@@ -73,9 +91,9 @@ function initCharacterSelect() {
 			pick.tabIndex = on ? 0 : -1;
 
 			const d = animate && !reduceMotion ? 0.75 : 0;
-			// Three stacked panels on a phone leave little room to grow.
+			// Panels only grow side by side; see `grow`.
 			gsap.to(f, { flexGrow: grow(on), duration: d, ease: 'expo.out' });
-			gsap.to($('[data-portrait]', f), { scale: on ? 1 : 0.8, duration: d, ease: 'expo.out' });
+			gsap.to($('[data-portrait]', f), { scale: on ? 1 : 0.88, duration: d, ease: 'expo.out' });
 
 			const cursor = $('[data-cursor]', f)!;
 			const moves = $$('[data-moves] li', f);
@@ -90,7 +108,7 @@ function initCharacterSelect() {
 		});
 
 		// The chosen panel "powers up": its dots swell outward from the centre.
-		if (animate && changed && !reduceMotion) {
+		if (animate && changed && !reduceMotion && !introPlaying) {
 			const c = circlesOf(panel);
 			const base = fit(sprites[id], c.length);
 			gsap.fromTo(
@@ -98,7 +116,8 @@ function initCharacterSelect() {
 				{ attr: { r: (i: number) => base[i].r } },
 				{
 					attr: { r: (i: number) => base[i].r * 1.35 },
-					overwrite: true,
+					// Only replaces an earlier power-up's radius; positions are never touched.
+					overwrite: 'auto',
 					duration: 0.16,
 					ease: 'power2.out',
 					yoyo: true,
@@ -133,17 +152,18 @@ function initCharacterSelect() {
 		if (!e.persisted) return;
 		busy = false;
 		gsap.set(flash, { opacity: 0 });
-		panels.forEach((f) => {
-			const c = circlesOf(f);
-			const s = fit(sprites[f.dataset.id as FighterId], c.length);
-			gsap.set(c, { attr: { cx: (i: number) => s[i].x, cy: (i: number) => s[i].y, r: (i: number) => s[i].r } });
-		});
+		settle();
 	});
 
 	panels.forEach((f) => {
 		const id = f.dataset.id as FighterId;
 		const pick = $<HTMLButtonElement>('[data-pick]', f)!;
-		if (finePointer) f.addEventListener('pointerenter', () => !busy && activate(id));
+		if (finePointer)
+			f.addEventListener('pointerenter', () => {
+				if (busy) return;
+				if (introPlaying) pending = id;
+				else activate(id);
+			});
 		pick.addEventListener('click', () => (id === active ? confirm() : activate(id)));
 	});
 	confirmBtn.addEventListener('click', (e) => {
@@ -190,14 +210,27 @@ function initCharacterSelect() {
 			gsap.set(c, { attr: { cx: (i: number) => j[i].x, cy: (i: number) => j[i].y, r: 0 } });
 		});
 
-		const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+		introPlaying = true;
+		const tl = gsap.timeline({
+			defaults: { ease: 'expo.out' },
+			onComplete: () => {
+				introPlaying = false;
+				settle();
+				if (pending) activate(pending);
+				pending = null;
+			},
+		});
 		panels.forEach((f) => {
 			const c = circlesOf(f);
 			const j = fit(monogram, c.length);
 			tl.to(c, { attr: { r: (i: number) => j[i].r }, duration: 0.5, ease: 'back.out(2)', stagger: { each: 0.004, from: 'end' } }, 0.1);
 			tl.add(morph(c, sprites[f.dataset.id as FighterId], { duration: 1 }), 0.9);
 		});
-		tl.add(() => activate(active), 1.6);
+		// The cursor shows up while the last dots are still settling.
+		tl.add(() => {
+			activate(pending ?? active);
+			pending = null;
+		}, 1.6);
 
 		// Any interaction skips straight to the selection screen.
 		const skip = () => tl.progress() < 1 && tl.progress(1);

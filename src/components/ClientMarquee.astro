@@ -12,6 +12,7 @@ interface Props {
 const { class: className } = Astro.props;
 const lang = asLang(Astro.currentLocale);
 const copy = web[lang];
+const logoAlt = (name: string) => (lang === 'es' ? `Logo de ${name}` : `${name} logo`);
 // Enough repeats that one group is wider than a large screen, so the loop never shows a gap.
 const REPEATS = 4;
 const groups = [0, 1];
@@ -34,16 +35,20 @@ const groups = [0, 1];
 						{Array.from({ length: REPEATS }, (_, r) =>
 							clients.map((c) => {
 								const dup = g > 0 || r > 0;
+								// Copies that only fill the loop stay out of the accessibility tree and image search.
 								const img = (
 									<Image
 										src={c.logo}
-										alt={dup ? '' : c.name}
+										alt={dup ? '' : logoAlt(c.name)}
+										title={dup ? undefined : c.name}
+										width={Math.round((c.logo.width * c.height * 16) / c.logo.height)}
 										height={Math.round(c.height * 16)}
 										densities={[1, 2]}
 										format="webp"
 										quality={90}
 										loading="lazy"
 										decoding="async"
+										fetchpriority="low"
 										class="marquee-logo"
 										style={`--h:${c.height}rem`}
 									/>
@@ -51,7 +56,7 @@ const groups = [0, 1];
 								return (
 									<li class="marquee-item" data-dup={dup ? "" : undefined} aria-hidden={dup ? "true" : undefined}>
 										{c.url && !dup ? (
-											<a href={c.url} rel="noopener" target="_blank">
+											<a href={c.url} rel="noopener" target="_blank" title={c.name}>
 												{img}
 											</a>
 										) : (

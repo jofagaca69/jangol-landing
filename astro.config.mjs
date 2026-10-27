@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { alternatesFor, htmlLang, routes, site } from './src/i18n/routes';
 
 /** Date of the last content review for pages that are not articles. Bump it when page copy changes. */
-const PAGES_UPDATED = '2026-10-26';
+const PAGES_UPDATED = '2026-10-27';
 
 /** Article URL → last modified date, read from each article's frontmatter. */
 const articleDates = new Map();

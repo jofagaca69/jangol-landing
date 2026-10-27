@@ -4,8 +4,13 @@ import { process } from '../data/custom';
 import { asLang } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
+interface Props {
+	/** Steps for a page with its own process; defaults to the software process. */
+	copy?: (typeof process)['es'];
+}
+
 const lang = asLang(Astro.currentLocale);
-const copy = process[lang];
+const copy = Astro.props.copy ?? process[lang];
 const steps = copy.steps.map((s, i) => ({ ...s, ...partialMonogram((i + 1) / copy.steps.length) }));
 ---
 

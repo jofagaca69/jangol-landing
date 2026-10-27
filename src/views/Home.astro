@@ -22,6 +22,9 @@ const copy = {
 		and: 'para gimnasios, y',
 		forSchools: 'para colegios. Cuando un negocio necesita algo que ninguna de las dos resuelve,',
 		custom: 'desarrollamos el software a la medida',
+		alsoBefore: 'También hacemos',
+		marketing: 'marketing digital',
+		alsoAfter: 'para que más clientes te encuentren.',
 		ctaTitle: 'Pide una demo o cuéntanos tu idea',
 		ctaText: 'Te respondemos en un día hábil.',
 	},
@@ -30,6 +33,9 @@ const copy = {
 		and: 'for gyms, and',
 		forSchools: 'for schools. When a business needs something neither of them covers,',
 		custom: 'we build the software for it',
+		alsoBefore: 'We also do',
+		marketing: 'digital marketing',
+		alsoAfter: 'so more customers find you.',
 		ctaTitle: 'Book a demo or tell us your idea',
 		ctaText: 'We answer within one business day.',
 	},
@@ -45,6 +51,8 @@ const schema = [website(), webPage({ url: path('home', lang), name: m.title, des
 				{copy.intro} <a href={gyms.href} class="link">{gyms.name}</a>
 				{copy.and} <a href={schools.href} class="link">{schools.name}</a>
 				{copy.forSchools} <a href={path('custom', lang)} class="link">{copy.custom}</a>.
+				{copy.alsoBefore} <a href={path('marketing', lang)} class="link">{copy.marketing}</a>
+				{copy.alsoAfter}
 			</p>
 		</div>
 	</section>
