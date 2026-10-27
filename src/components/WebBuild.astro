@@ -1,0 +1,151 @@
+---
+import { web } from '../data/custom';
+import { asLang, path } from '../i18n/routes';
+
+/* The websites block. A browser window builds a sample site in the same four steps
+ * listed beside it: wireframe, copy, design, live. Without JavaScript, or with reduced
+ * motion, it shows the finished site. */
+const lang = asLang(Astro.currentLocale);
+const copy = web[lang];
+const contact = `${path('contact', lang)}?interes=custom`;
+const demo = {
+	es: {
+		domain: 'tumarca.co',
+		draft: 'Borrador',
+		live: 'En línea',
+		brand: 'Tu marca',
+		nav: ['Cafés', 'Origen', 'Contacto'],
+		cart: 'Carrito',
+		h: 'Café de origen, tostado esta semana',
+		p: 'Envíos a toda Colombia en dos o tres días.',
+		btn: 'Comprar café',
+		tiles: [
+			['Castillo', '$38.000'],
+			['Caturra', '$42.000'],
+			['Geisha', '$64.000'],
+		],
+	},
+	en: {
+		domain: 'yourbrand.co',
+		draft: 'Draft',
+		live: 'Live',
+		brand: 'Your brand',
+		nav: ['Coffee', 'Origin', 'Contact'],
+		cart: 'Cart',
+		h: 'Single-origin coffee, roasted this week',
+		p: 'Shipping across Colombia in two or three days.',
+		btn: 'Shop coffee',
+		tiles: [
+			['Castillo', '$38.000'],
+			['Caturra', '$42.000'],
+			['Geisha', '$64.000'],
+		],
+	},
+}[lang];
+---
+
+<section id="sitios-web" class="on-dark bg-tinta py-24 text-crema md:py-32" data-build>
+	<div class="wrap">
+		<div class="grid gap-10 md:grid-cols-12">
+			<div class="md:col-span-6">
+				<h2 class="t-display text-[clamp(3rem,1.6rem+6vw,7rem)]">{copy.title}</h2>
+				<p class="t-lead measure mt-8 text-crema/85">{copy.lead}</p>
+				<a href={contact} class="btn btn-crema mt-10">{copy.cta}</a>
+			</div>
+			<ul class="self-end border-b border-crema/15 md:col-span-5 md:col-start-8">
+				{
+					copy.includes.map((i) => (
+						<li class="grid grid-cols-[1.4rem_1fr] border-t border-crema/15 py-4 text-crema/85">
+							<span class="mt-[0.55em] size-[0.42rem] rounded-full bg-agua" aria-hidden="true" />
+							{i}
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="build mt-20 grid items-center gap-12 lg:mt-28 lg:grid-cols-12" data-build-pin>
+			<ol class="build-steps relative grid gap-7 lg:col-span-4">
+				<span class="build-rail" aria-hidden="true"><span data-rail></span></span>
+				{
+					copy.steps.map((s, i) => (
+						<li class="build-step" data-step>
+							<h3 class="t-h3">
+								<span class="build-num" aria-hidden="true">{i + 1}</span>
+								{s.title}
+							</h3>
+							<p class="mt-1.5 max-w-[36ch] text-crema/75">{s.desc}</p>
+						</li>
+					))
+				}
+			</ol>
+
+			<div class="relative max-lg:order-first max-lg:mb-6 lg:col-span-8" aria-hidden="true">
+				<div class="ui site" data-site data-stage="4">
+					<div class="site-bar">
+						<span class="site-lights"><i></i><i></i><i></i></span>
+						<span class="site-url">
+							<svg class="site-lock" viewBox="0 0 12 14"><rect x="1" y="6" width="10" height="7.5" rx="1.6"></rect><path d="M3.5 6V4.2a2.5 2.5 0 0 1 5 0V6"></path></svg>
+							<span>{demo.domain}</span>
+						</span>
+						<span class="site-badge">
+							<span class="site-badge-draft">{demo.draft}</span>
+							<span class="site-badge-live">{demo.live}</span>
+						</span>
+					</div>
+
+					<div class="site-page">
+						<div class="site-nav">
+							<span class="flex items-center gap-2">
+								<span class="site-logo sk"></span>
+								<b class="sk site-type">{demo.brand}</b>
+							</span>
+							<span class="flex items-center gap-4 max-sm:hidden">
+								{demo.nav.map((n) => <span class="sk">{n}</span>)}
+							</span>
+							<span class="sk site-pill-ghost">{demo.cart}</span>
+						</div>
+
+						<div class="site-hero">
+							<div class="site-hero-copy">
+								<p class="site-h"><span class="sk">{demo.h}</span></p>
+								<p class="site-p"><span class="sk">{demo.p}</span></p>
+								<span class="site-btn sk">{demo.btn}</span>
+							</div>
+							<div class="site-img site-img-hero sk">
+								<svg class="site-mark" viewBox="0 0 40 56"><ellipse cx="20" cy="28" rx="16" ry="24"></ellipse><path d="M21 5c-9 13 7 21-2 46"></path></svg>
+							</div>
+						</div>
+
+						<div class="site-tiles">
+							{
+								demo.tiles.map(([name, price]) => (
+									<div class="site-tile">
+										<span class="site-img site-img-tile sk" />
+										<span class="mt-2 flex justify-between gap-2">
+											<b class="sk site-type">{name}</b>
+											<span class="sk">{price}</span>
+										</span>
+									</div>
+								))
+							}
+						</div>
+					</div>
+				</div>
+
+				<div class="ui site-phone">
+					<div class="site-phone-screen">
+						<span class="site-phone-nav"><b class="site-type">{demo.brand}</b><i></i></span>
+						<span class="site-img site-img-phone"><svg class="site-mark" viewBox="0 0 40 56"><ellipse cx="20" cy="28" rx="16" ry="24"></ellipse><path d="M21 5c-9 13 7 21-2 46"></path></svg></span>
+						<p class="site-h site-h-phone">{demo.h}</p>
+						<span class="site-btn site-btn-phone">{demo.btn}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../scripts/web.ts';
+</script>

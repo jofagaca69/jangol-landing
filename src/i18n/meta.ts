@@ -19,9 +19,9 @@ export const meta: Record<Lang, Record<MetaKey, PageMeta>> = {
 			ogHeading: 'Software que entiende tu negocio',
 		},
 		custom: {
-			title: 'Desarrollo de software a la medida en Colombia | Jangol',
+			title: 'Software a la medida y diseño web en Colombia | Jangol',
 			description:
-				'Diseñamos, construimos y mantenemos aplicaciones web y móviles, integraciones y automatizaciones para negocios en Colombia.',
+				'Diseñamos, construimos y mantenemos sitios web, aplicaciones web y móviles, integraciones y automatizaciones para negocios en Colombia.',
 			ogHeading: 'Desarrollo de software a la medida',
 		},
 		contact: {
@@ -60,9 +60,9 @@ export const meta: Record<Lang, Record<MetaKey, PageMeta>> = {
 			ogHeading: 'Software that understands your business',
 		},
 		custom: {
-			title: 'Custom Software Development in Colombia | Jangol',
+			title: 'Custom Software and Web Design in Colombia | Jangol',
 			description:
-				'We design, build and maintain web and mobile apps, integrations and automations for businesses in Colombia.',
+				'We design, build and maintain websites, web and mobile apps, integrations and automations for businesses in Colombia.',
 			ogHeading: 'Custom software development',
 		},
 		contact: {

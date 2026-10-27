@@ -3,7 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { customFaqs, fit, services } from '../data/custom';
+import WebBuild from '../components/WebBuild.astro';
+import ClientMarquee from '../components/ClientMarquee.astro';
+import { customFaqs, fit, services, web } from '../data/custom';
 import { products } from '../data/products';
 import { CODE, GRID, circles, parseSprite } from '../lib/dots';
 import { meta } from '../i18n/meta';
@@ -46,7 +48,7 @@ const copy = {
 const guideHref = lang === 'es' ? '/recursos/plataforma-o-a-la-medida/' : '/en/resources/platform-or-custom-software/';
 const schema = [
 	webPage({ url: path('custom', lang), name: m.title, description: m.description, lang }),
-	service({ url: path('custom', lang), name: copy.h1, description: copy.lead, lang, offers: services[lang] }),
+	service({ url: path('custom', lang), name: copy.h1, description: copy.lead, lang, offers: [...services[lang], web[lang].offer] }),
 	breadcrumbs(lang, [{ name: copy.crumb, url: path('custom', lang) }]),
 ];
 const cards = [
@@ -99,6 +101,10 @@ const cards = [
 			</div>
 		</div>
 	</section>
+
+	<WebBuild />
+
+	<ClientMarquee />
 
 	<section class="bg-crema-deep py-24 md:py-32">
 		<div class="wrap">

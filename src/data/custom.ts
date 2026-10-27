@@ -1,5 +1,7 @@
 /** Content for the custom software page and the custom block on the home page. */
 import type { Lang } from '../i18n/routes';
+import gtmLogo from '../assets/clients/gtm-alliance-logo.webp';
+import coldfoodLogo from '../assets/clients/coldfood-precocidos-logo.webp';
 
 interface Service {
 	title: string;
@@ -144,3 +146,82 @@ export const process: Record<Lang, { title: string; intro: string; steps: { titl
 		],
 	},
 };
+
+/** The websites block on the custom page: what we include and the four steps the mockup walks through. */
+export const web: Record<
+	Lang,
+	{
+		title: string;
+		lead: string;
+		includes: string[];
+		cta: string;
+		steps: { title: string; desc: string }[];
+		offer: { title: string; desc: string };
+		clientsTitle: string;
+		pause: string;
+		play: string;
+	}
+> = {
+	es: {
+		title: 'Sitios web',
+		lead: 'Diseñamos sitios web con tu marca, rápidos en el celular y bien armados para que Google los entienda.',
+		includes: [
+			'Sitio de empresa o página para un producto',
+			'Tienda en línea con pagos por PSE y Nequi',
+			'Versión en inglés si vendes afuera',
+			'Si lo necesitas, un panel para cambiar textos y fotos sin depender de nosotros',
+		],
+		cta: 'Cotiza tu sitio web',
+		steps: [
+			{ title: 'Estructura', desc: 'Definimos qué páginas necesitas y qué tiene que encontrar tu cliente en cada una.' },
+			{ title: 'Contenido', desc: 'Escribimos los textos contigo o pulimos los que ya tienes. Los cerramos antes de empezar a diseñar.' },
+			{ title: 'Diseño', desc: 'Llevamos tu marca a la pantalla y probamos cada página en celular y en computador.' },
+			{ title: 'Publicación', desc: 'Lo subimos a tu dominio con certificado de seguridad y analítica, y con los datos que Google usa para entenderlo.' },
+		],
+		offer: {
+			title: 'Diseño y desarrollo de sitios web',
+			desc: 'Sitios de empresa, páginas de producto y tiendas en línea con tu marca, rápidos en el celular y preparados para Google.',
+		},
+		clientsTitle: 'Hemos hecho sitios para',
+		pause: 'Pausar logos',
+		play: 'Mover logos',
+	},
+	en: {
+		title: 'Websites',
+		lead: 'We design websites around your brand that load fast on a phone and are built so Google can understand them.',
+		includes: [
+			'A company site or a page for one product',
+			'An online store with PSE and Nequi payments',
+			'An English version if you sell abroad',
+			'If you need it, a panel to change text and photos without waiting on us',
+		],
+		cta: 'Get a quote for your website',
+		steps: [
+			{ title: 'Structure', desc: 'We decide which pages you need and what your customer has to find on each one.' },
+			{ title: 'Content', desc: 'We write the copy with you or polish what you already have, and settle it before design starts.' },
+			{ title: 'Design', desc: 'We bring your brand to the screen and test every page on a phone and on a computer.' },
+			{ title: 'Launch', desc: 'We put it on your domain with a security certificate and analytics, plus the data Google uses to understand it.' },
+		],
+		offer: {
+			title: 'Website design and development',
+			desc: 'Company sites, product pages and online stores built around your brand, fast on a phone and ready for Google.',
+		},
+		clientsTitle: 'We have built websites for',
+		pause: 'Pause logos',
+		play: 'Play logos',
+	},
+};
+
+export interface Client {
+	name: string;
+	logo: ImageMetadata;
+	/** Live site, linked from the logo once the client confirms it. */
+	url?: string;
+	/** Display height in rem; square marks need more height than wide wordmarks to look the same size. */
+	height: number;
+}
+
+export const clients: Client[] = [
+	{ name: 'GtM Alliance', logo: gtmLogo, height: 5.5 },
+	{ name: 'Precocidos Coldfood', logo: coldfoodLogo, height: 6.5 },
+];
