@@ -1,5 +1,5 @@
 ---
-import Monogram from './Monogram.astro';
+import Logo from './Logo.astro';
 import { alternatesFor, asLang, htmlLang, path } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
@@ -26,16 +26,15 @@ const current = (href: string) => (pathname === href || (href !== path('home', l
 
 <header class="nav on-dark text-crema" data-nav data-home={home ? '' : undefined}>
 	<nav class="wrap flex items-center justify-between py-4" aria-label={s.navAria}>
-		<a href={path('home', lang)} class="relative z-10 flex items-center gap-2.5 py-1" aria-label={s.homeAria}>
-			<Monogram class="h-8 w-auto" />
-			<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
+		<a href={path('home', lang)} class="relative z-10 flex items-center py-1" aria-label={s.homeAria}>
+			<Logo />
 		</a>
 		<div class="flex items-center gap-5 lg:gap-7">
 			<ul class="hidden items-center gap-6 md:flex lg:gap-7">
 				{
 					links.map((l) => (
 						<li>
-							<a href={l.href} class="nav-link inline-flex min-h-11 items-center font-display text-[0.98rem] font-medium" aria-current={current(l.href)}>
+							<a href={l.href} class="nav-link inline-flex min-h-11 items-center font-display text-[1.0625rem] font-medium" aria-current={current(l.href)}>
 								{l.label}
 							</a>
 						</li>
@@ -46,7 +45,7 @@ const current = (href: string) => (pathname === href || (href !== path('home', l
 				href={switchHref}
 				hreflang={htmlLang[other]}
 				lang={htmlLang[other]}
-				class="nav-link inline-flex min-h-11 min-w-11 items-center justify-center font-display text-[0.98rem] font-medium max-md:hidden"
+				class="nav-link inline-flex min-h-11 min-w-11 items-center justify-center font-display text-[1.0625rem] font-medium max-md:hidden"
 				aria-label={`${other.toUpperCase()}, ${s.langSwitch.aria}`}
 			>
 				{other.toUpperCase()}
@@ -66,7 +65,7 @@ const current = (href: string) => (pathname === href || (href !== path('home', l
 			{
 				links.map((l) => (
 					<li>
-						<a href={l.href} class="block py-2 font-display text-[2.5rem] leading-tight font-bold tracking-[-0.03em]" aria-current={current(l.href)}>
+						<a href={l.href} class="block py-2 font-display text-[2.5rem] leading-tight font-semibold tracking-[-0.015em]" aria-current={current(l.href)}>
 							{l.label}
 						</a>
 					</li>

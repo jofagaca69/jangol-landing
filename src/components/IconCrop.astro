@@ -1,0 +1,31 @@
+---
+/*
+ * Recorte del ícono (lámina 19): the J blown up until it runs off the edge of its block.
+ * One per piece. The parent needs `position: relative` and `overflow: hidden`.
+ */
+import Monogram from './Monogram.astro';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<Monogram class:list={['icon-crop', className]} />
+
+<style>
+	/* In the components layer, so utility classes passed in (top-24, max-md:hidden) can override it. */
+	@layer components {
+		:global(.icon-crop) {
+			position: absolute;
+			right: -4%;
+			bottom: -38%;
+			width: auto;
+			height: 150%;
+			max-height: 44rem;
+			pointer-events: none;
+			color: color-mix(in srgb, currentColor 22%, transparent);
+		}
+	}
+</style>

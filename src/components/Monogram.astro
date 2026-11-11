@@ -8,13 +8,12 @@ interface Props {
 
 const { class: className = '', label } = Astro.props;
 const dots = parseSprite(MONOGRAM);
-// Crop the viewBox to the J itself so it sits flush next to the wordmark.
-const pad = 0.5;
-const xs = dots.map((d) => d.x);
-const ys = dots.map((d) => d.y);
-const x0 = Math.min(...xs) - pad;
-const y0 = Math.min(...ys) - pad;
-const vb = `${x0} ${y0} ${Math.max(...xs) - x0 + pad} ${Math.max(...ys) - y0 + pad}`;
+// Crop the viewBox to the edges of the J itself so it sits flush next to the wordmark.
+const x0 = Math.min(...dots.map((d) => d.x - d.r));
+const y0 = Math.min(...dots.map((d) => d.y - d.r));
+const x1 = Math.max(...dots.map((d) => d.x + d.r));
+const y1 = Math.max(...dots.map((d) => d.y + d.r));
+const vb = `${x0.toFixed(2)} ${y0.toFixed(2)} ${(x1 - x0).toFixed(2)} ${(y1 - y0).toFixed(2)}`;
 ---
 
 <svg

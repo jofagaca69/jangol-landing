@@ -1,5 +1,6 @@
 ---
 import Monogram from '../Monogram.astro';
+import Wordmark from '../Wordmark.astro';
 
 interface Props {
 	kind?: 'window' | 'phone';
@@ -23,7 +24,7 @@ const { kind = 'window', title, class: className } = Astro.props;
 		<div class:list={['ui ui-window', className]}>
 			<div class="ui-bar">
 				<Monogram class="h-3.5 w-auto text-[var(--accent)]" />
-				<span class="font-semibold">Jangol</span>
+				<Wordmark label="Jangol" class="h-[0.95rem] w-auto" />
 				{title && <span class="text-tinta/50">{title}</span>}
 			</div>
 			<div class="ui-body">

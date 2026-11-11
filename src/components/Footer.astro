@@ -1,5 +1,5 @@
 ---
-import Monogram from './Monogram.astro';
+import Logo from './Logo.astro';
 import { products } from '../data/products';
 import { company, isSet, whatsappUrl } from '../data/company';
 import { asLang, path } from '../i18n/routes';
@@ -42,9 +42,8 @@ const legal = [company.legalName, `${s.nit} ${company.nit}`, [company.city, comp
 	<div class="wrap">
 		<div class="grid gap-12 border-b border-crema/10 pb-14 md:grid-cols-12">
 			<div class="md:col-span-4">
-				<a href={path('home', lang)} class="inline-flex items-center gap-2.5 py-1 text-crema" aria-label={t(lang).homeAria}>
-					<Monogram class="h-8 w-auto" />
-					<span class="font-display text-[1.6rem] leading-none font-bold tracking-[-0.04em]">Jangol</span>
+				<a href={path('home', lang)} class="inline-flex items-center py-1 text-crema" aria-label={t(lang).homeAria}>
+					<Logo />
 				</a>
 				<p class="mt-5 max-w-[32ch]">{t(lang).slogan}. {s.about}</p>
 			</div>
