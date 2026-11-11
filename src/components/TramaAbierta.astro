@@ -1,0 +1,41 @@
+---
+/*
+ * Trama abierta (lámina 19): the icon's module, full size at one edge and shrinking column by
+ * column until it disappears. It marks an opening or a transition, never sits behind body text.
+ * Each column is one background layer, so the pitch stays fixed in pixels at any size.
+ * Fills its positioned parent; the dot colour follows the text colour.
+ */
+interface Props {
+	/** The edge where the dots are largest. */
+	from?: 'left' | 'right' | 'top' | 'bottom';
+	/** Distance between dot centres, in px. */
+	pitch?: number;
+	/** How many columns it takes for the dots to vanish. */
+	span?: number;
+	class?: string;
+}
+
+const { from = 'left', pitch = 18, span = 22, class: className = '' } = Astro.props;
+const vertical = from === 'top' || from === 'bottom';
+const rMax = pitch * 0.3;
+const layers = Array.from({ length: span }, (_, i) => {
+	const r = rMax * (1 - i / span) ** 1.35;
+	const off = `${i * pitch}px`;
+	const pos = vertical ? `left 0 ${from} ${off}` : `${from} ${off} top 0`;
+	return `radial-gradient(circle, var(--trama-ink) ${r.toFixed(2)}px, transparent ${(r + 0.6).toFixed(2)}px) ${pos} / ${pitch}px ${pitch}px ${vertical ? 'repeat-x' : 'repeat-y'}`;
+});
+---
+
+<div class:list={['trama-abierta', className]} aria-hidden="true" style={`background:${layers.join(',')}`}></div>
+
+<style>
+	/* In the components layer, so utility classes passed in (top-24, max-md:hidden) can override it. */
+	@layer components {
+		.trama-abierta {
+			--trama-ink: color-mix(in srgb, currentColor 24%, transparent);
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+		}
+	}
+</style>

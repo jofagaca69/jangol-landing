@@ -1,0 +1,38 @@
+---
+/*
+ * The Jangol logotype, drawn from the manual's paths rather than set in a font (lámina 13: never retype it).
+ * With `sub`, it becomes the sub-brand lockup, "Jangol for Gyms" or "Jangol for Schools".
+ * One colour, inherited from the text colour; size it by height.
+ */
+import { SUBLINE, WORDMARK, lockupHeight, type SubBrand } from '../lib/logo';
+
+interface Props {
+	class?: string;
+	sub?: SubBrand;
+	/** Accessible name; leave empty when the logo sits next to text that already says it. */
+	label?: string;
+	/** Space around the mark (lámina 10): x, the height of the "o", on all four sides. */
+	clearspace?: boolean;
+}
+
+const { class: className = '', sub, label, clearspace = false } = Astro.props;
+const line = sub ? SUBLINE[sub] : undefined;
+const h = lockupHeight(sub);
+// The "o" is 61 units tall when the wordmark, descender included, is 100.
+const x = clearspace ? 61 : 0;
+const viewBox = `${-x} ${-x} ${WORDMARK.width + x * 2} ${h + x * 2}`;
+---
+
+<svg
+	class:list={['wordmark', className]}
+	viewBox={viewBox}
+	fill="currentColor"
+	fill-rule="evenodd"
+	role={label ? 'img' : undefined}
+	aria-label={label}
+	aria-hidden={label ? undefined : 'true'}
+	focusable="false"
+>
+	<path d={WORDMARK.d} />
+	{line && <path transform={`translate(${(WORDMARK.width - line.width) / 2} ${line.top})`} d={line.d} />}
+</svg>

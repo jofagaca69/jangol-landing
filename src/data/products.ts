@@ -1,4 +1,4 @@
-import { CAP, CODE, DUMBBELL, MEGAPHONE } from '../lib/dots';
+import { CAP, CODE, DUMBBELL, MEGAPHONE, type Sprite } from '../lib/dots';
 import { marketingFighter } from './marketing';
 import { path, type Lang } from '../i18n/routes';
 
@@ -46,7 +46,7 @@ export interface Product {
 	/** Modules featured on the home page. */
 	highlights: string[];
 	faqs: { q: string; a: string }[];
-	sprite: string[];
+	sprite: Sprite;
 }
 
 const productsEs: Product[] = [
@@ -543,7 +543,7 @@ export interface Fighter {
 	short: string;
 	tagline: string;
 	moves: { title: string }[];
-	sprite: string[];
+	sprite: Sprite;
 	/** Small line above the name on the hero panel. */
 	label: string;
 }

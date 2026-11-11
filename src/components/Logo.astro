@@ -1,0 +1,35 @@
+---
+/*
+ * Logotype with icon (lámina 5): the J and the wordmark at the same height, the J's foot level
+ * with the descender of the g. At 36px tall the wordmark is 121px wide, just over the
+ * manual's 120px minimum, so do not set it smaller.
+ */
+import Monogram from './Monogram.astro';
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<span class:list={['logo', className]} aria-hidden="true">
+	<Monogram class="logo-icon" />
+	<Wordmark class="logo-word" />
+</span>
+
+<style>
+	.logo {
+		--h: 2.25rem;
+		display: inline-flex;
+		align-items: stretch;
+		gap: calc(var(--h) * 0.2);
+		height: var(--h);
+	}
+	.logo :global(.logo-icon),
+	.logo :global(.logo-word) {
+		width: auto;
+		height: 100%;
+	}
+</style>

@@ -1,11 +1,14 @@
-@import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/work-sans';
+@import '@fontsource/barlow/500.css';
+@import '@fontsource/barlow/600.css';
+@import '@fontsource-variable/geist';
 @import 'tailwindcss';
 
-/* Paleta "Burdeos y agua" (Jangol_2V, paleta 01) */
+/* Paleta "Burdeos y agua" (manual de marca, lámina 14).
+ * Share of a page: crema 50, tinta 18, burdeos 17, petróleo 10, agua 5.
+ * The -deep and -soft tones are for hover and depth only, never as a sixth colour. */
 @theme {
-	--color-crema: #efe7db;
-	--color-crema-deep: #e4d9c9;
+	--color-crema: #f5f1ea;
+	--color-crema-deep: #ebe4d8;
 	--color-tinta: #1a1a1a;
 	--color-tinta-soft: #2a2826;
 	--color-burdeos: #751c39;
@@ -14,8 +17,9 @@
 	--color-petroleo-deep: #082c32;
 	--color-agua: #cce6e8;
 
-	--font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
-	--font-sans: 'Work Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	/* Barlow for headings, figures, navigation and buttons; Geist for everything you read (láminas 16-17). */
+	--font-display: 'Barlow', ui-sans-serif, system-ui, sans-serif;
+	--font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
 
 	--ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
 }
@@ -38,7 +42,7 @@
 	body {
 		@apply bg-crema font-sans text-tinta;
 		font-size: 1.0625rem;
-		line-height: 1.6;
+		line-height: 1.55;
 		overflow-x: clip;
 	}
 	/* Anchored sections clear the fixed nav. */
@@ -58,26 +62,36 @@
 }
 
 @layer components {
-	/* Type scale, ratio 1.25 */
+	/* Type scale after the manual's hierarchy (lámina 18): display 120/112, title 64/68,
+	 * subtitle in Barlow Medium 36/44, body in Geist 22/34, scaled down for the screen. */
 	.t-display {
-		@apply font-display font-bold;
-		line-height: 0.86;
-		letter-spacing: -0.045em;
+		@apply font-display font-semibold;
+		line-height: 0.93;
+		letter-spacing: -0.02em;
 	}
 	.t-h2 {
-		@apply font-display font-bold;
-		font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.75rem);
-		line-height: 0.98;
-		letter-spacing: -0.035em;
+		@apply font-display font-semibold;
+		font-size: clamp(2.375rem, 1.5rem + 3.6vw, 4.875rem);
+		line-height: 1.02;
+		letter-spacing: -0.015em;
 	}
 	.t-h3 {
 		@apply font-display font-semibold;
-		font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5625rem);
+		font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.6875rem);
 		line-height: 1.15;
-		letter-spacing: -0.015em;
+		letter-spacing: -0.005em;
+	}
+	.t-sub {
+		@apply font-display font-medium;
+		font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.875rem);
+		line-height: 1.22;
 	}
 	.t-lead {
 		font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+		line-height: 1.55;
+	}
+	.t-note {
+		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 	.measure {
@@ -101,7 +115,7 @@
 	}
 
 	.btn {
-		@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-[0.98rem] font-semibold transition-colors duration-300;
+		@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-[1.0625rem] leading-none font-semibold transition-colors duration-300;
 	}
 	.btn-burdeos {
 		@apply bg-burdeos text-crema hover:bg-burdeos-deep;
@@ -119,6 +133,17 @@
 		width: 100%;
 		height: auto;
 		overflow: visible;
+	}
+
+	/* Trama (lámina 19): the icon's module repeated over a flat colour, for backgrounds and empty states.
+	 * The open version, where the module shrinks toward an edge, is the TramaAbierta component.
+	 * --trama-ink sets the dot colour, --trama-size the pitch. */
+	.trama {
+		--trama-ink: color-mix(in srgb, currentColor 16%, transparent);
+		--trama-size: 18px;
+		background-image: radial-gradient(var(--trama-ink) 1.3px, transparent 1.6px);
+		background-size: var(--trama-size) var(--trama-size);
+		background-position: center;
 	}
 }
 
@@ -560,9 +585,9 @@
 	margin-top: 2.2em;
 	font-family: var(--font-display);
 	font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.85rem);
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 1.15;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.01em;
 }
 .prose-jangol h2 + * {
 	margin-top: 0.7em;
@@ -913,7 +938,7 @@
 	bottom: 0.5rem;
 	width: 2px;
 	border-radius: 2px;
-	background: rgb(239 231 219 / 0.15);
+	background: rgb(245 241 234 / 0.15);
 }
 .build-rail > span {
 	display: block;
@@ -950,7 +975,7 @@
 	opacity: 0.38;
 }
 [data-build][data-live] .build-step:not([data-on]) .build-num {
-	border-color: rgb(239 231 219 / 0.45);
+	border-color: rgb(245 241 234 / 0.45);
 	background: var(--color-tinta);
 	color: var(--color-crema);
 }
@@ -1065,9 +1090,9 @@
 .site-h {
 	font-family: var(--font-display);
 	font-size: clamp(1.25rem, 0.75rem + 1.6vw, 2.15rem);
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 1;
-	letter-spacing: -0.035em;
+	letter-spacing: -0.015em;
 }
 .site-p {
 	margin: 0.75rem 0 1.1rem;
@@ -1194,7 +1219,7 @@
 	border-radius: 1.4rem;
 	background: var(--color-tinta-soft);
 	box-shadow:
-		0 0 0 1px rgb(239 231 219 / 0.14),
+		0 0 0 1px rgb(245 241 234 / 0.14),
 		0 40px 70px -30px rgb(0 0 0 / 0.9);
 	opacity: 0;
 	transform: translateY(2.5rem) rotate(4deg);

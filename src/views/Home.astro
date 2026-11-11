@@ -48,10 +48,10 @@ const schema = [website(), webPage({ url: path('home', lang), name: m.title, des
 	<section class="border-b border-tinta/10 py-16 md:py-24">
 		<div class="wrap">
 			<p class="t-lead measure-wide text-tinta/85">
-				{copy.intro} <a href={gyms.href} class="link">{gyms.name}</a>
-				{copy.and} <a href={schools.href} class="link">{schools.name}</a>
-				{copy.forSchools} <a href={path('custom', lang)} class="link">{copy.custom}</a>.
-				{copy.alsoBefore} <a href={path('marketing', lang)} class="link">{copy.marketing}</a>
+				{copy.intro} <a href={gyms.href} class="link">{gyms.name}</a>{' '}
+				{copy.and} <a href={schools.href} class="link">{schools.name}</a>{' '}
+				{copy.forSchools} <a href={path('custom', lang)} class="link">{copy.custom}</a>.{' '}
+				{copy.alsoBefore} <a href={path('marketing', lang)} class="link">{copy.marketing}</a>{' '}
 				{copy.alsoAfter}
 			</p>
 		</div>

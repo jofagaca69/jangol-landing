@@ -1,4 +1,5 @@
 ---
+import Wordmark from './Wordmark.astro';
 import { fighters as rosterFor } from '../data/products';
 import { GRID, MONOGRAM, circles, parseSprite } from '../lib/dots';
 import { asLang } from '../i18n/routes';
@@ -46,7 +47,15 @@ const fighters = rosterFor(lang).map((p, i) => {
 							/>
 						</div>
 						<div class="fighter-copy">
-							<p class="font-display text-[clamp(1rem,0.85rem+0.6vw,1.5rem)] font-medium opacity-85">{f.label}</p>
+							<p class="font-display text-[clamp(1rem,0.85rem+0.6vw,1.5rem)] font-medium opacity-85">
+								{f.label === 'Jangol for' ? (
+									<>
+										<Wordmark label="Jangol" class="inline-block h-[1.05em] w-auto align-[-0.22em]" /> for
+									</>
+								) : (
+									f.label
+								)}
+							</p>
 							<h2>
 								<button
 									type="button"
